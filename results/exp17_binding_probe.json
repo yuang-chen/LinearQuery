@@ -1,0 +1,1635 @@
+{
+  "meta": {
+    "n_train": 600,
+    "n_test": 200,
+    "out": "results/exp17_binding_probe.json"
+  },
+  "sites": [
+    "resid3",
+    "resid7",
+    "resid9",
+    "resid10",
+    "resid11",
+    "resid14",
+    "K15"
+  ],
+  "rows": [
+    {
+      "target": "own key",
+      "cond": "intact",
+      "mode": "retrain",
+      "site": "resid3",
+      "acc": 0.9962499737739563
+    },
+    {
+      "target": "own key",
+      "cond": "intact",
+      "mode": "retrain",
+      "site": "resid7",
+      "acc": 0.996874988079071
+    },
+    {
+      "target": "own key",
+      "cond": "intact",
+      "mode": "retrain",
+      "site": "resid9",
+      "acc": 0.9981249570846558
+    },
+    {
+      "target": "own key",
+      "cond": "intact",
+      "mode": "retrain",
+      "site": "resid10",
+      "acc": 1.0
+    },
+    {
+      "target": "own key",
+      "cond": "intact",
+      "mode": "retrain",
+      "site": "resid11",
+      "acc": 0.9987499713897705
+    },
+    {
+      "target": "own key",
+      "cond": "intact",
+      "mode": "retrain",
+      "site": "resid14",
+      "acc": 0.9993749856948853
+    },
+    {
+      "target": "own key",
+      "cond": "intact",
+      "mode": "retrain",
+      "site": "K15",
+      "acc": 1.0
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1",
+      "mode": "fixed",
+      "site": "resid3",
+      "acc": 0.9962499737739563
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1",
+      "mode": "fixed",
+      "site": "resid7",
+      "acc": 0.07249999791383743
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1",
+      "mode": "fixed",
+      "site": "resid9",
+      "acc": 0.13374999165534973
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1",
+      "mode": "fixed",
+      "site": "resid10",
+      "acc": 0.699999988079071
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1",
+      "mode": "fixed",
+      "site": "resid11",
+      "acc": 0.3375000059604645
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1",
+      "mode": "fixed",
+      "site": "resid14",
+      "acc": 0.9874999523162842
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1",
+      "mode": "fixed",
+      "site": "K15",
+      "acc": 0.9912499785423279
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1",
+      "mode": "retrain",
+      "site": "resid3",
+      "acc": 0.9962499737739563
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1",
+      "mode": "retrain",
+      "site": "resid7",
+      "acc": 0.9412499666213989
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1",
+      "mode": "retrain",
+      "site": "resid9",
+      "acc": 0.9937499761581421
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1",
+      "mode": "retrain",
+      "site": "resid10",
+      "acc": 0.9993749856948853
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1",
+      "mode": "retrain",
+      "site": "resid11",
+      "acc": 0.9962499737739563
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1",
+      "mode": "retrain",
+      "site": "resid14",
+      "acc": 1.0
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1",
+      "mode": "retrain",
+      "site": "K15",
+      "acc": 1.0
+    },
+    {
+      "target": "own key",
+      "cond": "remove G2",
+      "mode": "fixed",
+      "site": "resid3",
+      "acc": 0.9962499737739563
+    },
+    {
+      "target": "own key",
+      "cond": "remove G2",
+      "mode": "fixed",
+      "site": "resid7",
+      "acc": 0.996874988079071
+    },
+    {
+      "target": "own key",
+      "cond": "remove G2",
+      "mode": "fixed",
+      "site": "resid9",
+      "acc": 0.43562498688697815
+    },
+    {
+      "target": "own key",
+      "cond": "remove G2",
+      "mode": "fixed",
+      "site": "resid10",
+      "acc": 0.3149999976158142
+    },
+    {
+      "target": "own key",
+      "cond": "remove G2",
+      "mode": "fixed",
+      "site": "resid11",
+      "acc": 0.3187499940395355
+    },
+    {
+      "target": "own key",
+      "cond": "remove G2",
+      "mode": "fixed",
+      "site": "resid14",
+      "acc": 0.9950000047683716
+    },
+    {
+      "target": "own key",
+      "cond": "remove G2",
+      "mode": "fixed",
+      "site": "K15",
+      "acc": 0.9899999499320984
+    },
+    {
+      "target": "own key",
+      "cond": "remove G2",
+      "mode": "retrain",
+      "site": "resid3",
+      "acc": 0.9962499737739563
+    },
+    {
+      "target": "own key",
+      "cond": "remove G2",
+      "mode": "retrain",
+      "site": "resid7",
+      "acc": 0.996874988079071
+    },
+    {
+      "target": "own key",
+      "cond": "remove G2",
+      "mode": "retrain",
+      "site": "resid9",
+      "acc": 0.9956249594688416
+    },
+    {
+      "target": "own key",
+      "cond": "remove G2",
+      "mode": "retrain",
+      "site": "resid10",
+      "acc": 0.9937499761581421
+    },
+    {
+      "target": "own key",
+      "cond": "remove G2",
+      "mode": "retrain",
+      "site": "resid11",
+      "acc": 0.9906249642372131
+    },
+    {
+      "target": "own key",
+      "cond": "remove G2",
+      "mode": "retrain",
+      "site": "resid14",
+      "acc": 1.0
+    },
+    {
+      "target": "own key",
+      "cond": "remove G2",
+      "mode": "retrain",
+      "site": "K15",
+      "acc": 1.0
+    },
+    {
+      "target": "own key",
+      "cond": "remove L10",
+      "mode": "fixed",
+      "site": "resid3",
+      "acc": 0.9962499737739563
+    },
+    {
+      "target": "own key",
+      "cond": "remove L10",
+      "mode": "fixed",
+      "site": "resid7",
+      "acc": 0.996874988079071
+    },
+    {
+      "target": "own key",
+      "cond": "remove L10",
+      "mode": "fixed",
+      "site": "resid9",
+      "acc": 0.9981249570846558
+    },
+    {
+      "target": "own key",
+      "cond": "remove L10",
+      "mode": "fixed",
+      "site": "resid10",
+      "acc": 0.49937498569488525
+    },
+    {
+      "target": "own key",
+      "cond": "remove L10",
+      "mode": "fixed",
+      "site": "resid11",
+      "acc": 0.5887500047683716
+    },
+    {
+      "target": "own key",
+      "cond": "remove L10",
+      "mode": "fixed",
+      "site": "resid14",
+      "acc": 0.9993749856948853
+    },
+    {
+      "target": "own key",
+      "cond": "remove L10",
+      "mode": "fixed",
+      "site": "K15",
+      "acc": 1.0
+    },
+    {
+      "target": "own key",
+      "cond": "remove L10",
+      "mode": "retrain",
+      "site": "resid3",
+      "acc": 0.9962499737739563
+    },
+    {
+      "target": "own key",
+      "cond": "remove L10",
+      "mode": "retrain",
+      "site": "resid7",
+      "acc": 0.996874988079071
+    },
+    {
+      "target": "own key",
+      "cond": "remove L10",
+      "mode": "retrain",
+      "site": "resid9",
+      "acc": 0.9981249570846558
+    },
+    {
+      "target": "own key",
+      "cond": "remove L10",
+      "mode": "retrain",
+      "site": "resid10",
+      "acc": 0.9975000023841858
+    },
+    {
+      "target": "own key",
+      "cond": "remove L10",
+      "mode": "retrain",
+      "site": "resid11",
+      "acc": 0.9937499761581421
+    },
+    {
+      "target": "own key",
+      "cond": "remove L10",
+      "mode": "retrain",
+      "site": "resid14",
+      "acc": 0.9993749856948853
+    },
+    {
+      "target": "own key",
+      "cond": "remove L10",
+      "mode": "retrain",
+      "site": "K15",
+      "acc": 1.0
+    },
+    {
+      "target": "own key",
+      "cond": "remove G3",
+      "mode": "fixed",
+      "site": "resid3",
+      "acc": 0.9962499737739563
+    },
+    {
+      "target": "own key",
+      "cond": "remove G3",
+      "mode": "fixed",
+      "site": "resid7",
+      "acc": 0.996874988079071
+    },
+    {
+      "target": "own key",
+      "cond": "remove G3",
+      "mode": "fixed",
+      "site": "resid9",
+      "acc": 0.9981249570846558
+    },
+    {
+      "target": "own key",
+      "cond": "remove G3",
+      "mode": "fixed",
+      "site": "resid10",
+      "acc": 1.0
+    },
+    {
+      "target": "own key",
+      "cond": "remove G3",
+      "mode": "fixed",
+      "site": "resid11",
+      "acc": 0.9987499713897705
+    },
+    {
+      "target": "own key",
+      "cond": "remove G3",
+      "mode": "fixed",
+      "site": "resid14",
+      "acc": 0.6150000095367432
+    },
+    {
+      "target": "own key",
+      "cond": "remove G3",
+      "mode": "fixed",
+      "site": "K15",
+      "acc": 0.5518749952316284
+    },
+    {
+      "target": "own key",
+      "cond": "remove G3",
+      "mode": "retrain",
+      "site": "resid3",
+      "acc": 0.9962499737739563
+    },
+    {
+      "target": "own key",
+      "cond": "remove G3",
+      "mode": "retrain",
+      "site": "resid7",
+      "acc": 0.996874988079071
+    },
+    {
+      "target": "own key",
+      "cond": "remove G3",
+      "mode": "retrain",
+      "site": "resid9",
+      "acc": 0.9981249570846558
+    },
+    {
+      "target": "own key",
+      "cond": "remove G3",
+      "mode": "retrain",
+      "site": "resid10",
+      "acc": 1.0
+    },
+    {
+      "target": "own key",
+      "cond": "remove G3",
+      "mode": "retrain",
+      "site": "resid11",
+      "acc": 0.9987499713897705
+    },
+    {
+      "target": "own key",
+      "cond": "remove G3",
+      "mode": "retrain",
+      "site": "resid14",
+      "acc": 0.9925000071525574
+    },
+    {
+      "target": "own key",
+      "cond": "remove G3",
+      "mode": "retrain",
+      "site": "K15",
+      "acc": 0.9824999570846558
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1+G2",
+      "mode": "fixed",
+      "site": "resid3",
+      "acc": 0.9962499737739563
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1+G2",
+      "mode": "fixed",
+      "site": "resid7",
+      "acc": 0.07249999791383743
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1+G2",
+      "mode": "fixed",
+      "site": "resid9",
+      "acc": 0.0612499974668026
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1+G2",
+      "mode": "fixed",
+      "site": "resid10",
+      "acc": 0.060624998062849045
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1+G2",
+      "mode": "fixed",
+      "site": "resid11",
+      "acc": 0.057499997317790985
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1+G2",
+      "mode": "fixed",
+      "site": "resid14",
+      "acc": 0.8687499761581421
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1+G2",
+      "mode": "fixed",
+      "site": "K15",
+      "acc": 0.7643749713897705
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1+G2",
+      "mode": "retrain",
+      "site": "resid3",
+      "acc": 0.9962499737739563
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1+G2",
+      "mode": "retrain",
+      "site": "resid7",
+      "acc": 0.9412499666213989
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1+G2",
+      "mode": "retrain",
+      "site": "resid9",
+      "acc": 0.9093749523162842
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1+G2",
+      "mode": "retrain",
+      "site": "resid10",
+      "acc": 0.8937499523162842
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1+G2",
+      "mode": "retrain",
+      "site": "resid11",
+      "acc": 0.8349999785423279
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1+G2",
+      "mode": "retrain",
+      "site": "resid14",
+      "acc": 1.0
+    },
+    {
+      "target": "own key",
+      "cond": "remove G1+G2",
+      "mode": "retrain",
+      "site": "K15",
+      "acc": 1.0
+    },
+    {
+      "target": "prev key",
+      "cond": "intact",
+      "mode": "retrain",
+      "site": "resid3",
+      "acc": 0.3814285695552826
+    },
+    {
+      "target": "prev key",
+      "cond": "intact",
+      "mode": "retrain",
+      "site": "resid7",
+      "acc": 0.6607142686843872
+    },
+    {
+      "target": "prev key",
+      "cond": "intact",
+      "mode": "retrain",
+      "site": "resid9",
+      "acc": 0.7157142758369446
+    },
+    {
+      "target": "prev key",
+      "cond": "intact",
+      "mode": "retrain",
+      "site": "resid10",
+      "acc": 0.8071428537368774
+    },
+    {
+      "target": "prev key",
+      "cond": "intact",
+      "mode": "retrain",
+      "site": "resid11",
+      "acc": 0.7149999737739563
+    },
+    {
+      "target": "prev key",
+      "cond": "intact",
+      "mode": "retrain",
+      "site": "resid14",
+      "acc": 0.9399999976158142
+    },
+    {
+      "target": "prev key",
+      "cond": "intact",
+      "mode": "retrain",
+      "site": "K15",
+      "acc": 0.9257142543792725
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1",
+      "mode": "fixed",
+      "site": "resid3",
+      "acc": 0.3814285695552826
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1",
+      "mode": "fixed",
+      "site": "resid7",
+      "acc": 0.07285714149475098
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1",
+      "mode": "fixed",
+      "site": "resid9",
+      "acc": 0.07071428745985031
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1",
+      "mode": "fixed",
+      "site": "resid10",
+      "acc": 0.06428571045398712
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1",
+      "mode": "fixed",
+      "site": "resid11",
+      "acc": 0.07642856985330582
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1",
+      "mode": "fixed",
+      "site": "resid14",
+      "acc": 0.1792857050895691
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1",
+      "mode": "fixed",
+      "site": "K15",
+      "acc": 0.1307142823934555
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1",
+      "mode": "retrain",
+      "site": "resid3",
+      "acc": 0.3814285695552826
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1",
+      "mode": "retrain",
+      "site": "resid7",
+      "acc": 0.3092857003211975
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1",
+      "mode": "retrain",
+      "site": "resid9",
+      "acc": 0.415714293718338
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1",
+      "mode": "retrain",
+      "site": "resid10",
+      "acc": 0.5771428346633911
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1",
+      "mode": "retrain",
+      "site": "resid11",
+      "acc": 0.48642855882644653
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1",
+      "mode": "retrain",
+      "site": "resid14",
+      "acc": 0.8149999976158142
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1",
+      "mode": "retrain",
+      "site": "K15",
+      "acc": 0.7400000095367432
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G2",
+      "mode": "fixed",
+      "site": "resid3",
+      "acc": 0.3814285695552826
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G2",
+      "mode": "fixed",
+      "site": "resid7",
+      "acc": 0.6607142686843872
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G2",
+      "mode": "fixed",
+      "site": "resid9",
+      "acc": 0.14571428298950195
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G2",
+      "mode": "fixed",
+      "site": "resid10",
+      "acc": 0.1428571343421936
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G2",
+      "mode": "fixed",
+      "site": "resid11",
+      "acc": 0.09642857313156128
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G2",
+      "mode": "fixed",
+      "site": "resid14",
+      "acc": 0.29428571462631226
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G2",
+      "mode": "fixed",
+      "site": "K15",
+      "acc": 0.20357142388820648
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G2",
+      "mode": "retrain",
+      "site": "resid3",
+      "acc": 0.3814285695552826
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G2",
+      "mode": "retrain",
+      "site": "resid7",
+      "acc": 0.6607142686843872
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G2",
+      "mode": "retrain",
+      "site": "resid9",
+      "acc": 0.5600000023841858
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G2",
+      "mode": "retrain",
+      "site": "resid10",
+      "acc": 0.552142858505249
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G2",
+      "mode": "retrain",
+      "site": "resid11",
+      "acc": 0.5149999856948853
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G2",
+      "mode": "retrain",
+      "site": "resid14",
+      "acc": 0.897857129573822
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G2",
+      "mode": "retrain",
+      "site": "K15",
+      "acc": 0.8492857217788696
+    },
+    {
+      "target": "prev key",
+      "cond": "remove L10",
+      "mode": "fixed",
+      "site": "resid3",
+      "acc": 0.3814285695552826
+    },
+    {
+      "target": "prev key",
+      "cond": "remove L10",
+      "mode": "fixed",
+      "site": "resid7",
+      "acc": 0.6607142686843872
+    },
+    {
+      "target": "prev key",
+      "cond": "remove L10",
+      "mode": "fixed",
+      "site": "resid9",
+      "acc": 0.7157142758369446
+    },
+    {
+      "target": "prev key",
+      "cond": "remove L10",
+      "mode": "fixed",
+      "site": "resid10",
+      "acc": 0.23428571224212646
+    },
+    {
+      "target": "prev key",
+      "cond": "remove L10",
+      "mode": "fixed",
+      "site": "resid11",
+      "acc": 0.13857142627239227
+    },
+    {
+      "target": "prev key",
+      "cond": "remove L10",
+      "mode": "fixed",
+      "site": "resid14",
+      "acc": 0.5642856955528259
+    },
+    {
+      "target": "prev key",
+      "cond": "remove L10",
+      "mode": "fixed",
+      "site": "K15",
+      "acc": 0.31357142329216003
+    },
+    {
+      "target": "prev key",
+      "cond": "remove L10",
+      "mode": "retrain",
+      "site": "resid3",
+      "acc": 0.3814285695552826
+    },
+    {
+      "target": "prev key",
+      "cond": "remove L10",
+      "mode": "retrain",
+      "site": "resid7",
+      "acc": 0.6607142686843872
+    },
+    {
+      "target": "prev key",
+      "cond": "remove L10",
+      "mode": "retrain",
+      "site": "resid9",
+      "acc": 0.7157142758369446
+    },
+    {
+      "target": "prev key",
+      "cond": "remove L10",
+      "mode": "retrain",
+      "site": "resid10",
+      "acc": 0.6714285612106323
+    },
+    {
+      "target": "prev key",
+      "cond": "remove L10",
+      "mode": "retrain",
+      "site": "resid11",
+      "acc": 0.5928571224212646
+    },
+    {
+      "target": "prev key",
+      "cond": "remove L10",
+      "mode": "retrain",
+      "site": "resid14",
+      "acc": 0.8878571391105652
+    },
+    {
+      "target": "prev key",
+      "cond": "remove L10",
+      "mode": "retrain",
+      "site": "K15",
+      "acc": 0.8335714340209961
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G3",
+      "mode": "fixed",
+      "site": "resid3",
+      "acc": 0.3814285695552826
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G3",
+      "mode": "fixed",
+      "site": "resid7",
+      "acc": 0.6607142686843872
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G3",
+      "mode": "fixed",
+      "site": "resid9",
+      "acc": 0.7157142758369446
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G3",
+      "mode": "fixed",
+      "site": "resid10",
+      "acc": 0.8071428537368774
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G3",
+      "mode": "fixed",
+      "site": "resid11",
+      "acc": 0.7149999737739563
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G3",
+      "mode": "fixed",
+      "site": "resid14",
+      "acc": 0.09857142716646194
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G3",
+      "mode": "fixed",
+      "site": "K15",
+      "acc": 0.06928571313619614
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G3",
+      "mode": "retrain",
+      "site": "resid3",
+      "acc": 0.3814285695552826
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G3",
+      "mode": "retrain",
+      "site": "resid7",
+      "acc": 0.6607142686843872
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G3",
+      "mode": "retrain",
+      "site": "resid9",
+      "acc": 0.7157142758369446
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G3",
+      "mode": "retrain",
+      "site": "resid10",
+      "acc": 0.8071428537368774
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G3",
+      "mode": "retrain",
+      "site": "resid11",
+      "acc": 0.7149999737739563
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G3",
+      "mode": "retrain",
+      "site": "resid14",
+      "acc": 0.6007142663002014
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G3",
+      "mode": "retrain",
+      "site": "K15",
+      "acc": 0.4571428596973419
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1+G2",
+      "mode": "fixed",
+      "site": "resid3",
+      "acc": 0.3814285695552826
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1+G2",
+      "mode": "fixed",
+      "site": "resid7",
+      "acc": 0.07285714149475098
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1+G2",
+      "mode": "fixed",
+      "site": "resid9",
+      "acc": 0.05428571254014969
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1+G2",
+      "mode": "fixed",
+      "site": "resid10",
+      "acc": 0.054999999701976776
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1+G2",
+      "mode": "fixed",
+      "site": "resid11",
+      "acc": 0.0535714291036129
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1+G2",
+      "mode": "fixed",
+      "site": "resid14",
+      "acc": 0.051428571343421936
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1+G2",
+      "mode": "fixed",
+      "site": "K15",
+      "acc": 0.06285714358091354
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1+G2",
+      "mode": "retrain",
+      "site": "resid3",
+      "acc": 0.3814285695552826
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1+G2",
+      "mode": "retrain",
+      "site": "resid7",
+      "acc": 0.3092857003211975
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1+G2",
+      "mode": "retrain",
+      "site": "resid9",
+      "acc": 0.27071428298950195
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1+G2",
+      "mode": "retrain",
+      "site": "resid10",
+      "acc": 0.25357142090797424
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1+G2",
+      "mode": "retrain",
+      "site": "resid11",
+      "acc": 0.25357142090797424
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1+G2",
+      "mode": "retrain",
+      "site": "resid14",
+      "acc": 0.5278571248054504
+    },
+    {
+      "target": "prev key",
+      "cond": "remove G1+G2",
+      "mode": "retrain",
+      "site": "K15",
+      "acc": 0.4642857015132904
+    },
+    {
+      "target": "own value",
+      "cond": "intact",
+      "mode": "retrain",
+      "site": "resid3",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "intact",
+      "mode": "retrain",
+      "site": "resid7",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "intact",
+      "mode": "retrain",
+      "site": "resid9",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "intact",
+      "mode": "retrain",
+      "site": "resid10",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "intact",
+      "mode": "retrain",
+      "site": "resid11",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "intact",
+      "mode": "retrain",
+      "site": "resid14",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "intact",
+      "mode": "retrain",
+      "site": "K15",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1",
+      "mode": "fixed",
+      "site": "resid3",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1",
+      "mode": "fixed",
+      "site": "resid7",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1",
+      "mode": "fixed",
+      "site": "resid9",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1",
+      "mode": "fixed",
+      "site": "resid10",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1",
+      "mode": "fixed",
+      "site": "resid11",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1",
+      "mode": "fixed",
+      "site": "resid14",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1",
+      "mode": "fixed",
+      "site": "K15",
+      "acc": 0.9950000047683716
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1",
+      "mode": "retrain",
+      "site": "resid3",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1",
+      "mode": "retrain",
+      "site": "resid7",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1",
+      "mode": "retrain",
+      "site": "resid9",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1",
+      "mode": "retrain",
+      "site": "resid10",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1",
+      "mode": "retrain",
+      "site": "resid11",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1",
+      "mode": "retrain",
+      "site": "resid14",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1",
+      "mode": "retrain",
+      "site": "K15",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G2",
+      "mode": "fixed",
+      "site": "resid3",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G2",
+      "mode": "fixed",
+      "site": "resid7",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G2",
+      "mode": "fixed",
+      "site": "resid9",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G2",
+      "mode": "fixed",
+      "site": "resid10",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G2",
+      "mode": "fixed",
+      "site": "resid11",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G2",
+      "mode": "fixed",
+      "site": "resid14",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G2",
+      "mode": "fixed",
+      "site": "K15",
+      "acc": 0.9593749642372131
+    },
+    {
+      "target": "own value",
+      "cond": "remove G2",
+      "mode": "retrain",
+      "site": "resid3",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G2",
+      "mode": "retrain",
+      "site": "resid7",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G2",
+      "mode": "retrain",
+      "site": "resid9",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G2",
+      "mode": "retrain",
+      "site": "resid10",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G2",
+      "mode": "retrain",
+      "site": "resid11",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G2",
+      "mode": "retrain",
+      "site": "resid14",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G2",
+      "mode": "retrain",
+      "site": "K15",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove L10",
+      "mode": "fixed",
+      "site": "resid3",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove L10",
+      "mode": "fixed",
+      "site": "resid7",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove L10",
+      "mode": "fixed",
+      "site": "resid9",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove L10",
+      "mode": "fixed",
+      "site": "resid10",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove L10",
+      "mode": "fixed",
+      "site": "resid11",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove L10",
+      "mode": "fixed",
+      "site": "resid14",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove L10",
+      "mode": "fixed",
+      "site": "K15",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove L10",
+      "mode": "retrain",
+      "site": "resid3",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove L10",
+      "mode": "retrain",
+      "site": "resid7",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove L10",
+      "mode": "retrain",
+      "site": "resid9",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove L10",
+      "mode": "retrain",
+      "site": "resid10",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove L10",
+      "mode": "retrain",
+      "site": "resid11",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove L10",
+      "mode": "retrain",
+      "site": "resid14",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove L10",
+      "mode": "retrain",
+      "site": "K15",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G3",
+      "mode": "fixed",
+      "site": "resid3",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G3",
+      "mode": "fixed",
+      "site": "resid7",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G3",
+      "mode": "fixed",
+      "site": "resid9",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G3",
+      "mode": "fixed",
+      "site": "resid10",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G3",
+      "mode": "fixed",
+      "site": "resid11",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G3",
+      "mode": "fixed",
+      "site": "resid14",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G3",
+      "mode": "fixed",
+      "site": "K15",
+      "acc": 0.9756249785423279
+    },
+    {
+      "target": "own value",
+      "cond": "remove G3",
+      "mode": "retrain",
+      "site": "resid3",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G3",
+      "mode": "retrain",
+      "site": "resid7",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G3",
+      "mode": "retrain",
+      "site": "resid9",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G3",
+      "mode": "retrain",
+      "site": "resid10",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G3",
+      "mode": "retrain",
+      "site": "resid11",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G3",
+      "mode": "retrain",
+      "site": "resid14",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G3",
+      "mode": "retrain",
+      "site": "K15",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1+G2",
+      "mode": "fixed",
+      "site": "resid3",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1+G2",
+      "mode": "fixed",
+      "site": "resid7",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1+G2",
+      "mode": "fixed",
+      "site": "resid9",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1+G2",
+      "mode": "fixed",
+      "site": "resid10",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1+G2",
+      "mode": "fixed",
+      "site": "resid11",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1+G2",
+      "mode": "fixed",
+      "site": "resid14",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1+G2",
+      "mode": "fixed",
+      "site": "K15",
+      "acc": 0.7306249737739563
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1+G2",
+      "mode": "retrain",
+      "site": "resid3",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1+G2",
+      "mode": "retrain",
+      "site": "resid7",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1+G2",
+      "mode": "retrain",
+      "site": "resid9",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1+G2",
+      "mode": "retrain",
+      "site": "resid10",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1+G2",
+      "mode": "retrain",
+      "site": "resid11",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1+G2",
+      "mode": "retrain",
+      "site": "resid14",
+      "acc": 1.0
+    },
+    {
+      "target": "own value",
+      "cond": "remove G1+G2",
+      "mode": "retrain",
+      "site": "K15",
+      "acc": 1.0
+    }
+  ]
+}

@@ -1,0 +1,249 @@
+{
+  "meta": {
+    "n_seq": 16,
+    "seq_len": 512,
+    "windows": "1,2,4,8,16,32,64,128,256,inf",
+    "n_random": 3,
+    "out": "results/exp8_horizon_ppl.json"
+  },
+  "rows": [
+    {
+      "name": "baseline",
+      "window": null,
+      "nll": 3.0846147686243057,
+      "ppl": 21.859045028686523,
+      "sem": 0.06937799269404896
+    },
+    {
+      "name": "state reset every 1 tok",
+      "window": 1,
+      "nll": 5.781275063753128,
+      "ppl": 324.1723327636719,
+      "sem": 0.10900719444160986
+    },
+    {
+      "name": "state reset every 2 tok",
+      "window": 2,
+      "nll": 5.3797191977500916,
+      "ppl": 216.9613494873047,
+      "sem": 0.10332420176752355
+    },
+    {
+      "name": "state reset every 4 tok",
+      "window": 4,
+      "nll": 4.8618385791778564,
+      "ppl": 129.26161193847656,
+      "sem": 0.08775032923825399
+    },
+    {
+      "name": "state reset every 8 tok",
+      "window": 8,
+      "nll": 4.327372193336487,
+      "ppl": 75.7449722290039,
+      "sem": 0.08844561413295468
+    },
+    {
+      "name": "state reset every 16 tok",
+      "window": 16,
+      "nll": 3.898015409708023,
+      "ppl": 49.304508209228516,
+      "sem": 0.08084705594511989
+    },
+    {
+      "name": "state reset every 32 tok",
+      "window": 32,
+      "nll": 3.584342122077942,
+      "ppl": 36.02964401245117,
+      "sem": 0.07299360115937066
+    },
+    {
+      "name": "state reset every 64 tok",
+      "window": 64,
+      "nll": 3.368011385202408,
+      "ppl": 29.020761489868164,
+      "sem": 0.06833239344694364
+    },
+    {
+      "name": "state reset every 128 tok",
+      "window": 128,
+      "nll": 3.2254505157470703,
+      "ppl": 25.16490936279297,
+      "sem": 0.06819068118923233
+    },
+    {
+      "name": "state reset every 256 tok",
+      "window": 256,
+      "nll": 3.1373694390058517,
+      "ppl": 23.043169021606445,
+      "sem": 0.0705012956508994
+    },
+    {
+      "name": "all GDN layers skipped",
+      "window": null,
+      "nll": 13.458083510398865,
+      "ppl": 699473.5,
+      "sem": 0.10742669735892309
+    },
+    {
+      "name": "all softmax layers skipped",
+      "window": null,
+      "nll": 7.494093507528305,
+      "ppl": 1797.39453125,
+      "sem": 0.11745859433991873
+    },
+    {
+      "name": "all GDN mixers zeroed (MLP kept)",
+      "window": null,
+      "nll": 12.068166077136993,
+      "ppl": 174235.96875,
+      "sem": 0.11194837953280244
+    },
+    {
+      "name": "all softmax mixers zeroed (MLP kept)",
+      "window": null,
+      "nll": 4.533455461263657,
+      "ppl": 93.07962799072266,
+      "sem": 0.04140895245871528
+    },
+    {
+      "name": "GDN layer 0 skipped",
+      "window": null,
+      "nll": 10.475197851657867,
+      "ppl": 35425.875,
+      "sem": 0.06779192221219783
+    },
+    {
+      "name": "GDN layer 0 mixer zeroed",
+      "window": null,
+      "nll": 10.54567003250122,
+      "ppl": 38012.46875,
+      "sem": 0.053562393108847015
+    },
+    {
+      "name": "18 random layers skipped (trial 0)",
+      "window": null,
+      "nll": 14.31473970413208,
+      "ppl": 1647450.0,
+      "sem": 0.08838436599022143,
+      "layers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        8,
+        9,
+        10,
+        12,
+        13,
+        15,
+        16,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ]
+    },
+    {
+      "name": "18 random layers skipped (trial 1)",
+      "window": null,
+      "nll": 13.293354988098145,
+      "ppl": 593240.375,
+      "sem": 0.08490051045612929,
+      "layers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        12,
+        14,
+        15,
+        17,
+        18,
+        19,
+        21,
+        23
+      ]
+    },
+    {
+      "name": "18 random layers skipped (trial 2)",
+      "window": null,
+      "nll": 14.822602570056915,
+      "ppl": 2737627.5,
+      "sem": 0.06250445996336515,
+      "layers": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        8,
+        9,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        19,
+        20,
+        21,
+        22
+      ]
+    },
+    {
+      "name": "6 random layers skipped (trial 0)",
+      "window": null,
+      "nll": 5.436134427785873,
+      "ppl": 229.55308532714844,
+      "sem": 0.0774485382406898,
+      "layers": [
+        2,
+        4,
+        10,
+        14,
+        17,
+        20
+      ]
+    },
+    {
+      "name": "6 random layers skipped (trial 1)",
+      "window": null,
+      "nll": 4.270922362804413,
+      "ppl": 71.5876235961914,
+      "sem": 0.08611974874844515,
+      "layers": [
+        3,
+        9,
+        15,
+        16,
+        17,
+        20
+      ]
+    },
+    {
+      "name": "6 random layers skipped (trial 2)",
+      "window": null,
+      "nll": 5.011016458272934,
+      "ppl": 150.0571746826172,
+      "sem": 0.08817892388702334,
+      "layers": [
+        3,
+        6,
+        10,
+        17,
+        21,
+        22
+      ]
+    }
+  ]
+}

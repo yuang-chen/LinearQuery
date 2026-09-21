@@ -1,0 +1,30 @@
+L15H5 scores at the 8 value tokens (clean prompts, 200 examples), s = pre-softmax score
+
+== ablation G2 [8, 9, 10] ==
+  Q from   K from    margin   top1  tgt-sink  oth-sink  spread
+  intact   intact     +3.54  1.000     +2.68     -2.90    1.40
+  intact   G2         +1.91  1.000     -0.24     -3.52    0.95
+  G2       intact     +1.61  0.980     +3.71     +0.76    0.92
+  G2       G2         +0.80  0.840     +1.69     -0.17    0.74
+
+== ablation L10 [10] ==
+  Q from   K from    margin   top1  tgt-sink  oth-sink  spread
+  intact   intact     +3.54  1.000     +2.68     -2.90    1.40
+  intact   L10        +2.44  1.000     +0.91     -2.96    1.01
+  L10      intact     +2.63  1.000     +3.90     -0.33    1.12
+  L10      L10        +1.67  0.960     +2.78     -0.18    0.89
+
+== ablation G3 [12, 13, 14] ==
+  Q from   K from    margin   top1  tgt-sink  oth-sink  spread
+  intact   intact     +3.54  1.000     +2.68     -2.90    1.40
+  intact   G3         +4.29  0.990     +0.83     -6.60    2.03
+  G3       intact     -1.39  0.110     -0.62     -0.81    0.99
+  G3       G3         -2.89  0.090     -2.63     -2.85    1.80
+
+== key geometry: H5's KV head, k_proj output at the 8 value tokens ==
+  keys from intact  mean pairwise cos 0.806  entry-specific share 0.172
+  keys from G2      mean pairwise cos 0.843  entry-specific share 0.139
+  keys from L10     mean pairwise cos 0.849  entry-specific share 0.134
+  keys from G3      mean pairwise cos 0.721  entry-specific share 0.245
+
+wrote results/exp20_qk_selectivity.json

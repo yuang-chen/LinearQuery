@@ -1,0 +1,99 @@
+Loading weights:   0%|          | 0/320 [00:00<?, ?it/s]Loading weights:   0%|          | 1/320 [00:00<00:39,  8.17it/s]Loading weights:  66%|██████▋   | 212/320 [00:00<00:00, 1125.10it/s]Loading weights: 100%|██████████| 320/320 [00:00<00:00, 1043.57it/s]
+GDN: 16 value heads x 128 dims
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (308567 > 262144). Running this sequence through the model will result in indexing errors
+intact: PPL 22.36  acc 1.000  gap +20.81  L15H5 attn 0.782
+
+== A. subsets of G3 = {12,13,14} ==
+  remove [12]           PPL    23.30  acc 1.000  gap +20.36  L15H5 attn 0.789
+  remove [13]           PPL    22.53  acc 0.995  gap +15.44  L15H5 attn 0.675
+  remove [14]           PPL    23.76  acc 0.870  gap +12.10  L15H5 attn 0.354
+  remove [12, 13]       PPL    23.70  acc 1.000  gap +14.91  L15H5 attn 0.633
+  remove [12, 14]       PPL    25.01  acc 0.945  gap +11.94  L15H5 attn 0.336
+  remove [13, 14]       PPL    24.07  acc 0.220  gap  +3.48  L15H5 attn 0.081
+  remove [12, 13, 14]   PPL    25.63  acc 0.150  gap  +3.45  L15H5 attn 0.056
+  keep only 12 of G3    acc 0.220  gap  +3.48
+  keep only 13 of G3    acc 0.945  gap +11.94
+  keep only 14 of G3    acc 1.000  gap +14.91
+
+  -> most retrieval-critical single layer in G3: 14
+
+== B. per-head ablation in layers [0, 14] ==
+  --- GDN layer 0 ---
+    zero head  0  PPL     22.45  dNLL +0.0042  acc 1.000  gap +20.90
+    zero head  1  PPL     22.68  dNLL +0.0145  acc 1.000  gap +21.45
+    zero head  2  PPL     23.59  dNLL +0.0538  acc 1.000  gap +20.83
+    zero head  3  PPL     34.42  dNLL +0.4315  acc 0.995  gap +18.26
+    zero head  4  PPL     29.41  dNLL +0.2743  acc 1.000  gap +21.97
+    zero head  5  PPL     22.70  dNLL +0.0154  acc 1.000  gap +20.38
+    zero head  6  PPL     22.72  dNLL +0.0160  acc 1.000  gap +20.07
+    zero head  7  PPL     22.62  dNLL +0.0117  acc 1.000  gap +22.18
+    zero head  8  PPL     65.96  dNLL +1.0820  acc 0.000  gap  +2.36
+    zero head  9  PPL     22.88  dNLL +0.0232  acc 1.000  gap +22.36
+    zero head 10  PPL     22.33  dNLL -0.0010  acc 1.000  gap +21.00
+    zero head 11  PPL     22.75  dNLL +0.0173  acc 1.000  gap +22.09
+    zero head 12  PPL     22.81  dNLL +0.0202  acc 1.000  gap +19.53
+    zero head 13  PPL     23.07  dNLL +0.0316  acc 1.000  gap +20.76
+    zero head 14  PPL     22.52  dNLL +0.0073  acc 1.000  gap +20.80
+    zero head 15  PPL     22.80  dNLL +0.0198  acc 1.000  gap +19.50
+  --- GDN layer 14 ---
+    zero head  0  PPL     22.38  dNLL +0.0013  acc 0.985  gap +14.37
+    zero head  1  PPL     22.32  dNLL -0.0015  acc 1.000  gap +20.84
+    zero head  2  PPL     22.49  dNLL +0.0060  acc 1.000  gap +20.76
+    zero head  3  PPL     22.38  dNLL +0.0012  acc 1.000  gap +18.55
+    zero head  4  PPL     22.39  dNLL +0.0014  acc 1.000  gap +20.33
+    zero head  5  PPL     22.48  dNLL +0.0056  acc 1.000  gap +21.26
+    zero head  6  PPL     22.60  dNLL +0.0109  acc 1.000  gap +21.33
+    zero head  7  PPL     22.32  dNLL -0.0017  acc 1.000  gap +20.46
+    zero head  8  PPL     22.36  dNLL +0.0002  acc 1.000  gap +20.85
+    zero head  9  PPL     22.59  dNLL +0.0102  acc 1.000  gap +20.96
+    zero head 10  PPL     22.49  dNLL +0.0060  acc 1.000  gap +20.46
+    zero head 11  PPL     22.48  dNLL +0.0056  acc 1.000  gap +20.65
+    zero head 12  PPL     22.24  dNLL -0.0053  acc 1.000  gap +19.27
+    zero head 13  PPL     22.59  dNLL +0.0105  acc 1.000  gap +20.79
+    zero head 14  PPL     22.84  dNLL +0.0214  acc 1.000  gap +19.91
+    zero head 15  PPL     22.68  dNLL +0.0145  acc 0.965  gap +19.66
+
+== C. keep only one head ==
+  layer 0: best single head for retrieval = head 0 (acc 0.000), PPL range 4119-36663
+  layer 14: best single head for retrieval = head 15 (acc 0.960), PPL range 23-24
+
+== D. head characterisation (write norm, memory half-life, token-identity R2) ==
+  --- GDN layer 0 ---
+   head     |o_h|   half-life  R2_token_id  dNLL(zero)  acc(zero)
+      0     0.129        0.17        0.570     +0.0042      1.000
+      1     0.708     2673.36        0.957     +0.0145      1.000
+      2     1.538      405.98        0.994     +0.0538      1.000
+      3     2.011        0.21        0.993     +0.4315      0.995
+      4     0.483        3.91        0.585     +0.2743      1.000
+      5     1.059     1564.96        0.994     +0.0154      1.000
+      6     2.023     1989.63        0.917     +0.0160      1.000
+      7     0.858       48.40        0.984     +0.0117      1.000
+      8     2.797  1000000.00        0.996     +1.0820      0.000
+      9     0.645      129.64        0.990     +0.0232      1.000
+     10     0.953      464.01        0.905     -0.0010      1.000
+     11     0.303        0.27        0.569     +0.0173      1.000
+     12     0.924      463.54        0.996     +0.0202      1.000
+     13     0.775        0.56        0.709     +0.0316      1.000
+     14     0.547     6891.32        0.928     +0.0073      1.000
+     15     0.753      163.61        0.988     +0.0198      1.000
+  --- GDN layer 14 ---
+   head     |o_h|   half-life  R2_token_id  dNLL(zero)  acc(zero)
+      0     0.236       14.14        0.098     +0.0013      0.985
+      1     0.935      117.49        0.325     -0.0015      1.000
+      2     0.398        3.17        0.211     +0.0060      1.000
+      3     1.036      148.44        0.257     +0.0012      1.000
+      4     0.317        3.77        0.153     +0.0014      1.000
+      5     0.513        9.41        0.342     +0.0056      1.000
+      6     0.907        8.33        0.152     +0.0109      1.000
+      7     0.712      817.04        0.427     -0.0017      1.000
+      8     0.291       99.14        0.213     +0.0002      1.000
+      9     1.145     1890.35        0.486     +0.0102      1.000
+     10     0.501        6.54        0.197     +0.0060      1.000
+     11     0.745       15.14        0.271     +0.0056      1.000
+     12     0.911      112.25        0.359     -0.0053      1.000
+     13     0.698        3.05        0.246     +0.0105      1.000
+     14     1.904        3.35        0.306     +0.0214      1.000
+     15     1.108        6.83        0.321     +0.0145      0.965
+
+wrote results/exp15_heads.json

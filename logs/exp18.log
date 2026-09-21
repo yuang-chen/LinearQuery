@@ -1,0 +1,51 @@
+capturing intact and G1-removed activations ...
+  intact                                       acc 1.000  gap +20.81  lens@L15 +14.55  attn tgt 0.794 oth 0.057 sink 0.063
+
+== A. layers of G1 ==
+  remove [4]                                   acc 1.000  gap +20.45  lens@L15 +14.34  attn tgt 0.782 oth 0.080 sink 0.042
+  remove [5]                                   acc 1.000  gap +17.61  lens@L15 +13.96  attn tgt 0.735 oth 0.101 sink 0.077
+  remove [6]                                   acc 1.000  gap +18.13  lens@L15 +16.35  attn tgt 0.897 oth 0.052 sink 0.000
+  remove [4, 5]                                acc 0.995  gap +13.57  lens@L15 +13.09  attn tgt 0.706 oth 0.141 sink 0.060
+  remove [4, 6]                                acc 0.995  gap +14.03  lens@L15 +14.84  attn tgt 0.843 oth 0.082 sink 0.000
+  remove [5, 6]                                acc 0.985  gap +11.72  lens@L15 +13.29  attn tgt 0.788 oth 0.151 sink 0.000
+  remove [4, 5, 6]                             acc 0.840  gap  +7.50  lens@L15  +9.32  attn tgt 0.649 oth 0.249 sink 0.000
+
+== B. where is G1's write needed? (zero G1 output only at these positions) ==
+  @ keys                                       acc 1.000  gap +18.68  lens@L15 +14.88  attn tgt 0.761 oth 0.071 sink 0.071
+  @ '=' tokens                                 acc 1.000  gap +20.02  lens@L15 +14.46  attn tgt 0.781 oth 0.073 sink 0.062
+  @ values                                     acc 1.000  gap +17.81  lens@L15 +14.75  attn tgt 0.761 oth 0.072 sink 0.068
+  @ ',' after values                           acc 0.990  gap +17.79  lens@L15 +13.33  attn tgt 0.794 oth 0.063 sink 0.056
+  @ whole dictionary                           acc 0.930  gap  +9.29  lens@L15 +10.06  attn tgt 0.650 oth 0.217 sink 0.037
+  @ query key (question)                       acc 1.000  gap +19.84  lens@L15 +14.62  attn tgt 0.778 oth 0.068 sink 0.070
+  @ everything after the dictionary            acc 1.000  gap +15.45  lens@L15 +12.70  attn tgt 0.701 oth 0.093 sink 0.110
+  @ final token                                acc 1.000  gap +20.86  lens@L15 +13.12  attn tgt 0.732 oth 0.061 sink 0.072
+  @ everything except the dictionary           acc 1.000  gap +17.35  lens@L15 +15.15  attn tgt 0.880 oth 0.046 sink 0.000
+
+== C. direct vs mediated (remove G1, restore downstream to intact) ==
+  restore G2 mixers                            acc 0.515  gap  +3.26  lens@L15  +4.56  attn tgt 0.436 oth 0.464 sink 0.000
+  restore G3 mixers                            acc 0.800  gap +11.23  lens@L15  +6.98  attn tgt 0.344 oth 0.175 sink 0.000
+  restore G2+G3 mixers                         acc 0.605  gap  +8.11  lens@L15  +5.03  attn tgt 0.231 oth 0.236 sink 0.000
+  restore softmax 7 + 11                       acc 0.990  gap +13.04  lens@L15 +13.97  attn tgt 0.663 oth 0.195 sink 0.000
+  restore all mixers 7-14                      acc 0.790  gap +11.00  lens@L15  +8.26  attn tgt 0.378 oth 0.228 sink 0.000
+  restore MLPs 4-14                            acc 0.000  gap  +0.38  lens@L15  +0.06  attn tgt 0.008 oth 0.042 sink 0.707
+  restore mixers 7-14 + MLPs 4-14 (direct only) acc 0.770  gap +10.95  lens@L15  +6.35  attn tgt 0.223 oth 0.060 sink 0.269
+
+  converse: keep G1's write, give downstream components their G1-less outputs
+  G2+G3 mixers from G1-less run                acc 0.790  gap  +8.09  lens@L15 +10.02  attn tgt 0.551 oth 0.226 sink 0.150
+  all mixers 7-14 from G1-less run             acc 0.725  gap  +8.65  lens@L15  +9.04  attn tgt 0.573 oth 0.235 sink 0.084
+  mixers 7-14 + MLPs 4-14 from G1-less run     acc 0.805  gap  +8.41  lens@L15  +8.51  attn tgt 0.542 oth 0.299 sink 0.001
+
+== D. general text: induction vs other tokens ==
+Generating test split:   0%|          | 0/4358 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 4358/4358 [00:00<00:00, 418901.73 examples/s]
+Generating train split:   0%|          | 0/36718 [00:00<?, ? examples/s]Generating train split: 100%|██████████| 36718/36718 [00:00<00:00, 1040619.31 examples/s]
+Generating validation split:   0%|          | 0/3760 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 3760/3760 [00:00<00:00, 1006033.62 examples/s]
+  28.7% of targets are induction tokens
+  intact: NLL induction 0.741  other 3.802
+  remove G0: dNLL induction +8.689  other +6.929  ratio   1.25
+  remove G1: dNLL induction +0.069  other +0.982  ratio   0.07
+  remove G2: dNLL induction +0.174  other +0.149  ratio   1.17
+  remove G3: dNLL induction +0.236  other +0.168  ratio   1.40
+  remove G4: dNLL induction +0.111  other +0.419  ratio   0.26
+  remove G5: dNLL induction +0.338  other +0.401  ratio   0.84
+
+wrote results/exp18_g1.json

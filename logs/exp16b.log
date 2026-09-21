@@ -1,0 +1,114 @@
+capturing Q/K/V donors ...
+intact: acc 1.000  gap +20.81  lens@L15 +14.55  L15H5 attn 0.782
+
+== A. rescue: ablate L8 [8], restore from intact run ==
+  (ablated, no patch)                acc 1.000  gap +18.68  lens@L15 +15.39  attn 0.752  rec +nan
+  Q@final (all heads)                acc 1.000  gap +18.24  lens@L15 +15.78  attn 0.758  rec -0.21
+  Q@final (H5 only)                  acc 1.000  gap +18.68  lens@L15 +15.60  attn 0.758  rec -0.00
+  Q+gate@final (all heads)           acc 1.000  gap +17.88  lens@L15 +14.78  attn 0.758  rec -0.38
+  K@all                              acc 1.000  gap +18.59  lens@L15 +15.17  attn 0.764  rec -0.05
+  K@all (H5's KV head)               acc 1.000  gap +18.72  lens@L15 +15.51  attn 0.764  rec +0.02
+  K@value tokens                     acc 1.000  gap +18.63  lens@L15 +15.07  attn 0.765  rec -0.02
+  K@key tokens                       acc 1.000  gap +18.68  lens@L15 +15.35  attn 0.751  rec -0.00
+  V@all                              acc 1.000  gap +18.61  lens@L15 +15.14  attn 0.752  rec -0.04
+  Q@final + K@all                    acc 1.000  gap +18.32  lens@L15 +15.81  attn 0.782  rec -0.17
+  Q+K+V@all (whole L15 input)        acc 1.000  gap +18.18  lens@L15 +15.57  attn 0.782  rec -0.24
+  Q+K+V@all at L15 and L19           acc 1.000  gap +18.73  lens@L15 +15.57  attn 0.782  rec +0.02
+
+== A. rescue: ablate L9 [9], restore from intact run ==
+  (ablated, no patch)                acc 1.000  gap +17.00  lens@L15 +15.38  attn 0.702  rec +nan
+  Q@final (all heads)                acc 1.000  gap +17.10  lens@L15 +15.78  attn 0.714  rec +0.03
+  Q@final (H5 only)                  acc 1.000  gap +17.04  lens@L15 +15.62  attn 0.714  rec +0.01
+  Q+gate@final (all heads)           acc 1.000  gap +16.96  lens@L15 +14.47  attn 0.714  rec -0.01
+  K@all                              acc 1.000  gap +17.23  lens@L15 +15.51  attn 0.751  rec +0.06
+  K@all (H5's KV head)               acc 1.000  gap +17.19  lens@L15 +15.85  attn 0.751  rec +0.05
+  K@value tokens                     acc 1.000  gap +17.25  lens@L15 +15.62  attn 0.751  rec +0.06
+  K@key tokens                       acc 1.000  gap +17.00  lens@L15 +15.32  attn 0.703  rec +0.00
+  V@all                              acc 1.000  gap +17.02  lens@L15 +15.00  attn 0.702  rec +0.01
+  Q@final + K@all                    acc 1.000  gap +17.44  lens@L15 +16.25  attn 0.782  rec +0.12
+  Q+K+V@all (whole L15 input)        acc 1.000  gap +17.24  lens@L15 +15.87  attn 0.782  rec +0.06
+  Q+K+V@all at L15 and L19           acc 1.000  gap +18.31  lens@L15 +15.87  attn 0.782  rec +0.34
+
+== A. rescue: ablate L10 [10], restore from intact run ==
+  (ablated, no patch)                acc 0.935  gap +10.87  lens@L15  +8.63  attn 0.533  rec +nan
+  Q@final (all heads)                acc 0.880  gap  +9.84  lens@L15  +9.08  attn 0.492  rec -0.10
+  Q@final (H5 only)                  acc 0.910  gap +10.79  lens@L15  +8.84  attn 0.492  rec -0.01
+  Q+gate@final (all heads)           acc 0.875  gap  +9.64  lens@L15  +9.52  attn 0.492  rec -0.12
+  K@all                              acc 0.980  gap +12.63  lens@L15 +12.52  attn 0.749  rec +0.18
+  K@all (H5's KV head)               acc 0.975  gap +12.11  lens@L15 +10.97  attn 0.749  rec +0.12
+  K@value tokens                     acc 0.985  gap +12.72  lens@L15 +13.00  attn 0.753  rec +0.19
+  K@key tokens                       acc 0.935  gap +10.88  lens@L15  +8.54  attn 0.535  rec +0.00
+  V@all                              acc 0.950  gap +11.52  lens@L15  +8.85  attn 0.533  rec +0.07
+  Q@final + K@all                    acc 0.985  gap +12.68  lens@L15 +13.66  attn 0.782  rec +0.18
+  Q+K+V@all (whole L15 input)        acc 0.985  gap +13.36  lens@L15 +13.97  attn 0.782  rec +0.25
+  Q+K+V@all at L15 and L19           acc 1.000  gap +16.23  lens@L15 +13.97  attn 0.782  rec +0.54
+
+== A. rescue: ablate G2 [8, 9, 10], restore from intact run ==
+  (ablated, no patch)                acc 0.600  gap  +5.93  lens@L15  +4.31  attn 0.284  rec +nan
+  Q@final (all heads)                acc 0.645  gap  +6.57  lens@L15  +7.14  attn 0.291  rec +0.04
+  Q@final (H5 only)                  acc 0.645  gap  +6.33  lens@L15  +5.13  attn 0.291  rec +0.03
+  Q+gate@final (all heads)           acc 0.630  gap  +6.10  lens@L15  +6.89  attn 0.291  rec +0.01
+  K@all                              acc 0.750  gap  +7.55  lens@L15  +8.33  attn 0.555  rec +0.11
+  K@all (H5's KV head)               acc 0.755  gap  +7.30  lens@L15  +7.57  attn 0.555  rec +0.09
+  K@value tokens                     acc 0.760  gap  +7.62  lens@L15  +8.59  attn 0.562  rec +0.11
+  K@key tokens                       acc 0.600  gap  +5.89  lens@L15  +4.21  attn 0.283  rec -0.00
+  V@all                              acc 0.635  gap  +6.14  lens@L15  +4.28  attn 0.284  rec +0.01
+  Q@final + K@all                    acc 0.825  gap  +8.77  lens@L15 +14.73  attn 0.782  rec +0.19
+  Q+K+V@all (whole L15 input)        acc 0.880  gap  +9.98  lens@L15 +14.73  attn 0.782  rec +0.27
+  Q+K+V@all at L15 and L19           acc 1.000  gap +14.64  lens@L15 +14.73  attn 0.782  rec +0.59
+
+== A. rescue: ablate G1 [4, 5, 6], restore from intact run ==
+  (ablated, no patch)                acc 0.840  gap  +7.50  lens@L15  +9.32  attn 0.640  rec +nan
+  Q@final (all heads)                acc 0.920  gap  +8.07  lens@L15 +11.71  attn 0.725  rec +0.04
+  Q@final (H5 only)                  acc 0.905  gap  +7.88  lens@L15 +10.58  attn 0.725  rec +0.03
+  Q+gate@final (all heads)           acc 0.925  gap  +8.66  lens@L15 +12.21  attn 0.725  rec +0.09
+  K@all                              acc 0.830  gap  +7.33  lens@L15  +9.01  attn 0.599  rec -0.01
+  K@all (H5's KV head)               acc 0.835  gap  +7.11  lens@L15  +8.98  attn 0.599  rec -0.03
+  K@value tokens                     acc 0.845  gap  +7.41  lens@L15  +8.70  attn 0.616  rec -0.01
+  K@key tokens                       acc 0.835  gap  +7.50  lens@L15  +9.30  attn 0.641  rec -0.00
+  V@all                              acc 0.825  gap  +7.52  lens@L15  +9.02  attn 0.640  rec +0.00
+  Q@final + K@all                    acc 0.940  gap  +8.43  lens@L15 +14.30  attn 0.782  rec +0.07
+  Q+K+V@all (whole L15 input)        acc 0.970  gap  +9.27  lens@L15 +13.98  attn 0.782  rec +0.13
+  Q+K+V@all at L15 and L19           acc 1.000  gap +12.49  lens@L15 +13.98  attn 0.782  rec +0.37
+
+== A. rescue: ablate G1+G2 [4, 5, 6, 8, 9, 10], restore from intact run ==
+  (ablated, no patch)                acc 0.035  gap  +1.86  lens@L15  +1.83  attn 0.187  rec +nan
+  Q@final (all heads)                acc 0.125  gap  +3.22  lens@L15  +6.46  attn 0.404  rec +0.07
+  Q@final (H5 only)                  acc 0.070  gap  +2.82  lens@L15  +4.90  attn 0.404  rec +0.05
+  Q+gate@final (all heads)           acc 0.150  gap  +3.79  lens@L15  +7.35  attn 0.404  rec +0.10
+  K@all                              acc 0.130  gap  +3.07  lens@L15  +4.51  attn 0.386  rec +0.06
+  K@all (H5's KV head)               acc 0.115  gap  +2.69  lens@L15  +4.31  attn 0.386  rec +0.04
+  K@value tokens                     acc 0.150  gap  +2.90  lens@L15  +5.08  attn 0.446  rec +0.05
+  K@key tokens                       acc 0.030  gap  +1.73  lens@L15  +1.62  attn 0.164  rec -0.01
+  V@all                              acc 0.080  gap  +2.04  lens@L15  +1.72  attn 0.187  rec +0.01
+  Q@final + K@all                    acc 0.460  gap  +4.68  lens@L15 +14.27  attn 0.782  rec +0.15
+  Q+K+V@all (whole L15 input)        acc 0.595  gap  +6.01  lens@L15 +13.20  attn 0.782  rec +0.22
+  Q+K+V@all at L15 and L19           acc 0.960  gap +10.46  lens@L15 +13.20  attn 0.782  rec +0.45
+
+== B. necessity: intact run, insert ablated Q or K ==
+  L8      Q@final              acc 1.000  gap +21.15  lens@L15 +13.94  attn 0.764
+  L8      K@all                acc 1.000  gap +20.72  lens@L15 +14.53  attn 0.758
+  L8      K@value tokens       acc 1.000  gap +20.56  lens@L15 +14.43  attn 0.745
+  L8      Q@final + K@all      acc 1.000  gap +21.21  lens@L15 +14.15  attn 0.752
+  L9      Q@final              acc 1.000  gap +20.60  lens@L15 +13.87  attn 0.751
+  L9      K@all                acc 1.000  gap +20.38  lens@L15 +14.12  attn 0.714
+  L9      K@value tokens       acc 1.000  gap +20.25  lens@L15 +14.09  attn 0.701
+  L9      Q@final + K@all      acc 1.000  gap +20.32  lens@L15 +13.78  attn 0.702
+  L10     Q@final              acc 1.000  gap +21.32  lens@L15 +13.65  attn 0.749
+  L10     K@all                acc 1.000  gap +16.28  lens@L15 +10.02  attn 0.492
+  L10     K@value tokens       acc 0.995  gap +16.37  lens@L15  +8.55  attn 0.436
+  L10     Q@final + K@all      acc 1.000  gap +18.65  lens@L15  +9.80  attn 0.533
+  G2      Q@final              acc 1.000  gap +19.60  lens@L15  +9.24  attn 0.555
+  G2      K@all                acc 0.985  gap +13.61  lens@L15  +7.23  attn 0.291
+  G2      K@value tokens       acc 0.975  gap +14.08  lens@L15  +5.74  attn 0.244
+  G2      Q@final + K@all      acc 0.995  gap +15.74  lens@L15  +5.10  attn 0.284
+  G1      Q@final              acc 1.000  gap +18.49  lens@L15  +9.60  attn 0.599
+  G1      K@all                acc 1.000  gap +22.36  lens@L15 +11.95  attn 0.725
+  G1      K@value tokens       acc 1.000  gap +16.59  lens@L15  +8.74  attn 0.473
+  G1      Q@final + K@all      acc 1.000  gap +20.61  lens@L15  +9.90  attn 0.640
+  G1+G2   Q@final              acc 1.000  gap +16.83  lens@L15  +5.94  attn 0.386
+  G1+G2   K@all                acc 0.965  gap +18.58  lens@L15  +7.37  attn 0.404
+  G1+G2   K@value tokens       acc 0.925  gap +11.67  lens@L15  +1.32  attn 0.080
+  G1+G2   Q@final + K@all      acc 0.980  gap +14.74  lens@L15  +2.85  attn 0.187
+
+wrote results/exp16b_qk_patch_g2.json

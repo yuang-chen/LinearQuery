@@ -1,0 +1,21 @@
+Loading weights:   0%|          | 0/320 [00:00<?, ?it/s]Loading weights:  37%|███▋      | 119/320 [00:00<00:00, 1182.98it/s]Loading weights:  74%|███████▍  | 238/320 [00:00<00:00, 1046.29it/s]Loading weights: 100%|██████████| 320/320 [00:00<00:00, 1079.94it/s]
+group t=15: D_clean=10.17 D_corr=-10.64
+group t=27: D_clean=10.65 D_corr=-10.42
+group t=11: D_clean=10.15 D_corr=-9.86
+group t=31: D_clean=10.71 D_corr=-10.62
+
+kind                        layer  mean_rec   sem
+resid_after_layer0@value       0  +1.067  0.007
+emb@value                     -2  +1.066  0.007
+out@value                      0  +1.043  0.008
+REV out@value                  0  +1.040  0.008
+out@final                     22  +0.101  0.003
+out@query+final               22  +0.101  0.003
+REV out@value                 14  +0.060  0.005
+out@value                     14  +0.057  0.005
+out@final                     16  -0.044  0.005
+out@query+final               16  -0.043  0.005
+out@value                     10  +0.025  0.003
+REV out@value                 10  +0.023  0.002
+out@query+final               21  +0.016  0.001
+out@final                     21  +0.016  0.001

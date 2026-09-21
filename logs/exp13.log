@@ -1,0 +1,73 @@
+Loading weights:   0%|          | 0/320 [00:00<?, ?it/s]Loading weights:   0%|          | 1/320 [00:00<00:40,  7.90it/s]Loading weights:  54%|█████▍    | 173/320 [00:00<00:00, 901.47it/s]Loading weights:  86%|████████▌ | 274/320 [00:00<00:00, 945.74it/s]Loading weights: 100%|██████████| 320/320 [00:00<00:00, 897.11it/s]
+GDN groups: [[0, 1, 2], [4, 5, 6], [8, 9, 10], [12, 13, 14], [16, 17, 18], [20, 21, 22]]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (308567 > 262144). Running this sequence through the model will result in indexing errors
+
+intact: PPL 21.86   retrieval acc 1.000  gap +20.81
+
+== A. ablate each group of 3 consecutive GDN layers ==
+  G0 [0, 1, 2] removed                           PPL     26019.22  dNLL  +7.082  acc 0.000  gap  +0.08
+  G1 [4, 5, 6] removed                           PPL        44.13  dNLL  +0.703  acc 0.840  gap  +7.50
+  G2 [8, 9, 10] removed                          PPL        24.84  dNLL  +0.128  acc 0.600  gap  +5.93
+  G3 [12, 13, 14] removed                        PPL        25.04  dNLL  +0.136  acc 0.150  gap  +3.45
+  G4 [16, 17, 18] removed                        PPL        30.38  dNLL  +0.329  acc 0.965  gap +16.18
+  G5 [20, 21, 22] removed                        PPL        32.50  dNLL  +0.397  acc 0.940  gap +14.16
+  -- matched random triples --
+  random triple [1, 16, 17]                      PPL        33.39  dNLL  +0.424
+  random triple [10, 20, 21]                     PPL        29.51  dNLL  +0.300
+  random triple [12, 16, 20]                     PPL        27.77  dNLL  +0.239
+  random triple [5, 8, 14]                       PPL        25.73  dNLL  +0.163
+  random triple [4, 5, 12]                       PPL        26.40  dNLL  +0.189
+  random triple [5, 10, 12]                      PPL        26.08  dNLL  +0.176
+  random triple mean dNLL +0.249 (sd 0.091)
+
+== B. keep only one group (zero the other 15 mixers) ==
+  keep only G0 [0, 1, 2]                         PPL       557.92  dNLL  +3.240  acc 0.000  gap  +0.04
+  keep only G1 [4, 5, 6]                         PPL     86753.72  dNLL  +8.286  acc 0.000  gap  -0.03
+  keep only G2 [8, 9, 10]                        PPL    215105.01  dNLL  +9.194  acc 0.000  gap  +0.00
+  keep only G3 [12, 13, 14]                      PPL    252493.77  dNLL  +9.355  acc 0.000  gap  -0.00
+  keep only G4 [16, 17, 18]                      PPL    346407.10  dNLL  +9.671  acc 0.000  gap  -0.15
+  keep only G5 [20, 21, 22]                      PPL    531801.69  dNLL +10.099  acc 0.000  gap  +0.01
+
+== C. keep only one GDN layer ==
+  keep only GDN layer 0                          PPL      3478.99  dNLL  +5.070  acc 0.030  gap  +0.09
+  keep only GDN layer 1                          PPL    270332.60  dNLL  +9.423  acc 0.000  gap  +0.16
+  keep only GDN layer 2                          PPL    271692.58  dNLL  +9.428  acc 0.000  gap  +0.32
+  keep only GDN layer 4                          PPL    199560.29  dNLL  +9.119  acc 0.000  gap  +0.14
+  keep only GDN layer 8                          PPL    173279.74  dNLL  +8.978  acc 0.000  gap  -0.09
+  keep only GDN layer 12                         PPL    181429.02  dNLL  +9.024  acc 0.000  gap  +0.02
+  keep only GDN layer 16                         PPL    221598.20  dNLL  +9.224  acc 0.000  gap  -0.12
+  keep only GDN layer 20                         PPL    155245.70  dNLL  +8.868  acc 0.000  gap  +0.06
+  keep only GDN layer 22                         PPL    228746.90  dNLL  +9.256  acc 0.000  gap  -0.01
+
+== D. keep the first k GDN layers ==
+  keep first 1 GDN layers [0]                    PPL      3478.99  dNLL  +5.070  acc 0.030  gap  +0.09
+  keep first 2 GDN layers [0, 1]                 PPL      1241.14  dNLL  +4.039  acc 0.000  gap  +0.05
+  keep first 3 GDN layers [0, 1, 2]              PPL       557.92  dNLL  +3.240  acc 0.000  gap  +0.04
+  keep first 4 GDN layers [0, 1, 2, 4]           PPL       359.72  dNLL  +2.801  acc 0.010  gap  +0.22
+  keep first 6 GDN layers [0, 1, 2, 4, 5, 6]     PPL       165.01  dNLL  +2.021  acc 0.070  gap  +1.01
+  keep first 9 GDN layers [0, 1, 2, 4, 5, 6, 8, 9, 10] PPL        98.94  dNLL  +1.510  acc 0.075  gap  +0.80
+  keep first 12 GDN layers [0, 1, 2, 4, 5, 6, 8, 9, 10, 12, 13, 14] PPL        59.62  dNLL  +1.003  acc 0.295  gap  +4.97
+  keep first 15 GDN layers [0, 1, 2, 4, 5, 6, 8, 9, 10, 12, 13, 14, 16, 17, 18] PPL        32.50  dNLL  +0.397  acc 0.940  gap +14.16
+  keep first 18 GDN layers [0, 1, 2, 4, 5, 6, 8, 9, 10, 12, 13, 14, 16, 17, 18, 20, 21, 22] PPL        21.86  dNLL  +0.000  acc 1.000  gap +20.81
+
+== E. cumulative removal ==
+  remove groups G0..G0 (3 layers)                PPL     26019.22  dNLL  +7.082  acc 0.000  gap  +0.08
+  remove groups G0..G1 (6 layers)                PPL    437947.92  dNLL  +9.905  acc 0.000  gap  +0.03
+  remove groups G0..G2 (9 layers)                PPL    689705.29  dNLL +10.359  acc 0.000  gap  -0.08
+  remove groups G0..G3 (12 layers)               PPL    775812.49  dNLL +10.477  acc 0.000  gap  +0.04
+  remove groups G0..G4 (15 layers)               PPL    531801.69  dNLL +10.099  acc 0.000  gap  +0.01
+  remove groups G0..G5 (18 layers)               PPL    174236.02  dNLL  +8.984  acc 0.000  gap  -0.03
+  remove groups G5..G5 (3 layers)                PPL        32.50  dNLL  +0.397  acc 0.940  gap +14.16
+  remove groups G4..G5 (6 layers)                PPL        59.62  dNLL  +1.003  acc 0.295  gap  +4.97
+  remove groups G3..G5 (9 layers)                PPL        98.94  dNLL  +1.510  acc 0.075  gap  +0.80
+  remove groups G2..G5 (12 layers)               PPL       165.01  dNLL  +2.021  acc 0.070  gap  +1.01
+  remove groups G1..G5 (15 layers)               PPL       557.92  dNLL  +3.240  acc 0.000  gap  +0.04
+  remove groups G0..G5 (18 layers)               PPL    174236.02  dNLL  +8.984  acc 0.000  gap  -0.03
+
+== F. references ==
+  all 18 GDN mixers zeroed                       PPL    174236.02  dNLL  +8.984  acc 0.000  gap  -0.03
+  keep only GDN layer 0 (whole-layer skip elsewhere) PPL     62744.26  dNLL  +7.962  acc 0.000  gap  -0.04
+  GDN layer 0 whole layer skipped                PPL     35425.88  dNLL  +7.391  acc 0.000  gap  +0.39
+
+wrote results/exp13_groups.json

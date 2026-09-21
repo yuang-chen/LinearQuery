@@ -1,0 +1,403 @@
+{
+  "meta": {
+    "n_stat": 200,
+    "n_eval": 16,
+    "seq_len": 512,
+    "layers": "0,1,2,4",
+    "topk": "1,2,4,8,16,32,64,128",
+    "out": "results/exp9_layer0.json"
+  },
+  "coverage": 0.9390869140625,
+  "rows": [
+    {
+      "name": "intact (rung 4)",
+      "nll": 2.8598749935626984,
+      "ppl": 17.45934295654297
+    },
+    {
+      "name": "L0 mixer <- rung 0 zeros",
+      "nll": 10.569237470626831,
+      "ppl": 38918.99609375,
+      "layer": 0,
+      "rung": "zero"
+    },
+    {
+      "name": "L0 mixer <- rung 1 global mean",
+      "nll": 9.597562372684479,
+      "ppl": 14728.8408203125,
+      "layer": 0,
+      "rung": "global_mean"
+    },
+    {
+      "name": "L0 mixer <- rung 2 norm-matched random",
+      "nll": 10.096905410289764,
+      "ppl": 24267.80078125,
+      "layer": 0,
+      "rung": "rand_dir"
+    },
+    {
+      "name": "L0 mixer <- rung 3 token-type mean",
+      "nll": 4.715877994894981,
+      "ppl": 111.70684814453125,
+      "layer": 0,
+      "rung": "token_mean"
+    },
+    {
+      "name": "L0 mixer <- rung 3b same token, other context",
+      "nll": 4.728207319974899,
+      "ppl": 113.09262084960938,
+      "layer": 0,
+      "rung": "token_sample"
+    },
+    {
+      "name": "L1 mixer <- rung 0 zeros",
+      "nll": 3.082444667816162,
+      "ppl": 21.81165885925293,
+      "layer": 1,
+      "rung": "zero"
+    },
+    {
+      "name": "L1 mixer <- rung 1 global mean",
+      "nll": 3.0980886965990067,
+      "ppl": 22.15556526184082,
+      "layer": 1,
+      "rung": "global_mean"
+    },
+    {
+      "name": "L1 mixer <- rung 2 norm-matched random",
+      "nll": 3.434316188097,
+      "ppl": 31.01019859313965,
+      "layer": 1,
+      "rung": "rand_dir"
+    },
+    {
+      "name": "L1 mixer <- rung 3 token-type mean",
+      "nll": 2.9879761785268784,
+      "ppl": 19.845476150512695,
+      "layer": 1,
+      "rung": "token_mean"
+    },
+    {
+      "name": "L1 mixer <- rung 3b same token, other context",
+      "nll": 3.0902438312768936,
+      "ppl": 21.982437133789062,
+      "layer": 1,
+      "rung": "token_sample"
+    },
+    {
+      "name": "L2 mixer <- rung 0 zeros",
+      "nll": 3.0917049795389175,
+      "ppl": 22.014583587646484,
+      "layer": 2,
+      "rung": "zero"
+    },
+    {
+      "name": "L2 mixer <- rung 1 global mean",
+      "nll": 2.925108462572098,
+      "ppl": 18.636247634887695,
+      "layer": 2,
+      "rung": "global_mean"
+    },
+    {
+      "name": "L2 mixer <- rung 2 norm-matched random",
+      "nll": 3.323680743575096,
+      "ppl": 27.762346267700195,
+      "layer": 2,
+      "rung": "rand_dir"
+    },
+    {
+      "name": "L2 mixer <- rung 3 token-type mean",
+      "nll": 2.900142654776573,
+      "ppl": 18.176738739013672,
+      "layer": 2,
+      "rung": "token_mean"
+    },
+    {
+      "name": "L2 mixer <- rung 3b same token, other context",
+      "nll": 2.964284509420395,
+      "ppl": 19.380828857421875,
+      "layer": 2,
+      "rung": "token_sample"
+    },
+    {
+      "name": "L4 mixer <- rung 0 zeros",
+      "nll": 2.9108859598636627,
+      "ppl": 18.373071670532227,
+      "layer": 4,
+      "rung": "zero"
+    },
+    {
+      "name": "L4 mixer <- rung 1 global mean",
+      "nll": 2.8931591659784317,
+      "ppl": 18.050243377685547,
+      "layer": 4,
+      "rung": "global_mean"
+    },
+    {
+      "name": "L4 mixer <- rung 2 norm-matched random",
+      "nll": 2.9548492282629013,
+      "ppl": 19.198827743530273,
+      "layer": 4,
+      "rung": "rand_dir"
+    },
+    {
+      "name": "L4 mixer <- rung 3 token-type mean",
+      "nll": 2.8464215099811554,
+      "ppl": 17.226028442382812,
+      "layer": 4,
+      "rung": "token_mean"
+    },
+    {
+      "name": "L4 mixer <- rung 3b same token, other context",
+      "nll": 2.850900486111641,
+      "ppl": 17.303354263305664,
+      "layer": 4,
+      "rung": "token_sample"
+    },
+    {
+      "name": "L0 conv window forced to 1 tap",
+      "nll": 3.34890079498291,
+      "ppl": 28.471420288085938,
+      "layer": 0,
+      "rung": "conv1tap"
+    },
+    {
+      "name": "L0 recurrent state reset every token",
+      "nll": 3.062413737177849,
+      "ppl": 21.37909698486328,
+      "layer": 0,
+      "rung": "norecur"
+    },
+    {
+      "name": "L0 recurrence reset every 8 tokens",
+      "nll": 2.930433824658394,
+      "ppl": 18.735755920410156,
+      "layer": 0,
+      "rung": "recur8"
+    },
+    {
+      "name": "L0 top-1 channels <- token-type mean",
+      "nll": 2.8576649725437164,
+      "ppl": 17.42080307006836,
+      "layer": 0,
+      "rung": "top1_tokmean",
+      "k": 1
+    },
+    {
+      "name": "L0 top-1 channels <- global mean",
+      "nll": 2.8463285118341446,
+      "ppl": 17.22442626953125,
+      "layer": 0,
+      "rung": "top1_globmean",
+      "k": 1
+    },
+    {
+      "name": "L0 top-2 channels <- token-type mean",
+      "nll": 2.8560994416475296,
+      "ppl": 17.3935489654541,
+      "layer": 0,
+      "rung": "top2_tokmean",
+      "k": 2
+    },
+    {
+      "name": "L0 top-2 channels <- global mean",
+      "nll": 2.8532263785600662,
+      "ppl": 17.34364891052246,
+      "layer": 0,
+      "rung": "top2_globmean",
+      "k": 2
+    },
+    {
+      "name": "L0 top-4 channels <- token-type mean",
+      "nll": 2.8604694306850433,
+      "ppl": 17.469724655151367,
+      "layer": 0,
+      "rung": "top4_tokmean",
+      "k": 4
+    },
+    {
+      "name": "L0 top-4 channels <- global mean",
+      "nll": 2.901896357536316,
+      "ppl": 18.20864486694336,
+      "layer": 0,
+      "rung": "top4_globmean",
+      "k": 4
+    },
+    {
+      "name": "L0 top-8 channels <- token-type mean",
+      "nll": 2.8551732152700424,
+      "ppl": 17.377445220947266,
+      "layer": 0,
+      "rung": "top8_tokmean",
+      "k": 8
+    },
+    {
+      "name": "L0 top-8 channels <- global mean",
+      "nll": 2.913236752152443,
+      "ppl": 18.41631317138672,
+      "layer": 0,
+      "rung": "top8_globmean",
+      "k": 8
+    },
+    {
+      "name": "L0 top-16 channels <- token-type mean",
+      "nll": 2.8580524176359177,
+      "ppl": 17.427553176879883,
+      "layer": 0,
+      "rung": "top16_tokmean",
+      "k": 16
+    },
+    {
+      "name": "L0 top-16 channels <- global mean",
+      "nll": 2.962247386574745,
+      "ppl": 19.34139060974121,
+      "layer": 0,
+      "rung": "top16_globmean",
+      "k": 16
+    },
+    {
+      "name": "L0 top-32 channels <- token-type mean",
+      "nll": 2.863068848848343,
+      "ppl": 17.515195846557617,
+      "layer": 0,
+      "rung": "top32_tokmean",
+      "k": 32
+    },
+    {
+      "name": "L0 top-32 channels <- global mean",
+      "nll": 3.075188249349594,
+      "ppl": 21.653955459594727,
+      "layer": 0,
+      "rung": "top32_globmean",
+      "k": 32
+    },
+    {
+      "name": "L0 top-64 channels <- token-type mean",
+      "nll": 2.8818695694208145,
+      "ppl": 17.84760856628418,
+      "layer": 0,
+      "rung": "top64_tokmean",
+      "k": 64
+    },
+    {
+      "name": "L0 top-64 channels <- global mean",
+      "nll": 3.3829370886087418,
+      "ppl": 29.457164764404297,
+      "layer": 0,
+      "rung": "top64_globmean",
+      "k": 64
+    },
+    {
+      "name": "L0 top-128 channels <- token-type mean",
+      "nll": 2.9518549889326096,
+      "ppl": 19.141427993774414,
+      "layer": 0,
+      "rung": "top128_tokmean",
+      "k": 128
+    },
+    {
+      "name": "L0 top-128 channels <- global mean",
+      "nll": 4.761240452528,
+      "ppl": 116.89083862304688,
+      "layer": 0,
+      "rung": "top128_globmean",
+      "k": 128
+    },
+    {
+      "name": "channel_profile",
+      "absmean_sorted": [
+        0.671732485294342,
+        0.17882509529590607,
+        0.14081062376499176,
+        0.10453042387962341,
+        0.0901399478316307,
+        0.07930998504161835,
+        0.07724186778068542,
+        0.0727662593126297,
+        0.06107138469815254,
+        0.058030661195516586,
+        0.05650283768773079,
+        0.05585217848420143,
+        0.055677760392427444,
+        0.05472660809755325,
+        0.053337324410676956,
+        0.052705977112054825,
+        0.052042875438928604,
+        0.05174783989787102,
+        0.05061187595129013,
+        0.05057865381240845,
+        0.04994399845600128,
+        0.049512021243572235,
+        0.04947567358613014,
+        0.04913930222392082,
+        0.04908028990030289,
+        0.04905349016189575,
+        0.04874888435006142,
+        0.04826771095395088,
+        0.04792359098792076,
+        0.04769105836749077,
+        0.047326281666755676,
+        0.04624618589878082,
+        0.04593406245112419,
+        0.045790184289216995,
+        0.04565899446606636,
+        0.04555944353342056,
+        0.04555517062544823,
+        0.045074012130498886,
+        0.045036304742097855,
+        0.0448337122797966,
+        0.0444667711853981,
+        0.04436502233147621,
+        0.044302329421043396,
+        0.04413121938705444,
+        0.04412851110100746,
+        0.044082675129175186,
+        0.04381353780627251,
+        0.043774161487817764,
+        0.04371747374534607,
+        0.043377816677093506,
+        0.04315450042486191,
+        0.04297500103712082,
+        0.04288537800312042,
+        0.04277309030294418,
+        0.042556751519441605,
+        0.04254266619682312,
+        0.042407482862472534,
+        0.042321909219026566,
+        0.04226814955472946,
+        0.04218638315796852,
+        0.04197269305586815,
+        0.04177553206682205,
+        0.04173363745212555,
+        0.04139556735754013
+      ],
+      "total": 25.486793518066406,
+      "top8_share": 0.055532943457365036,
+      "top32_share": 0.10400095582008362
+    },
+    {
+      "name": "retrieval_ladder",
+      "coverage": 1.0,
+      "intact": {
+        "acc": 1.0,
+        "gap": 20.807838077545167
+      },
+      "token_sample": {
+        "acc": 1.0,
+        "gap": 20.354858589172363
+      },
+      "token_mean": {
+        "acc": 1.0,
+        "gap": 21.14609983444214
+      },
+      "global_mean": {
+        "acc": 0.0,
+        "gap": 0.04868465065956116
+      },
+      "zero": {
+        "acc": 0.0,
+        "gap": 0.16466609477996827
+      }
+    }
+  ]
+}

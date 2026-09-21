@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "n_stat": 2000,
+    "n_eval": 16,
+    "seq_len": 512,
+    "ridge": 10.0,
+    "out": "results/exp10b_affine_ood.json"
+  },
+  "rows": [
+    {
+      "name": "WikiText eval, WikiText-fit A",
+      "rel_err_all": 0.2527194023132324,
+      "rel_err_ordinary": 0.2527194023132324,
+      "rel_err_special": null,
+      "frac_special": 0.0
+    },
+    {
+      "name": "task prompts, WikiText-fit A",
+      "rel_err_all": 0.5286087989807129,
+      "rel_err_ordinary": 0.46870142221450806,
+      "rel_err_special": 0.7544132471084595,
+      "frac_special": 0.20967741935483872
+    },
+    {
+      "name": "task prompts, combined-fit A",
+      "rel_err_all": 0.31660008430480957,
+      "rel_err_ordinary": 0.29648706316947937,
+      "rel_err_special": 0.39241066575050354,
+      "frac_special": 0.20967741935483872
+    },
+    {
+      "name": "sub intact",
+      "nll": 3.0846147686243057,
+      "ppl": 21.859045028686523,
+      "acc": 1.0,
+      "gap": 20.807838077545167
+    },
+    {
+      "name": "sub affine fitted on WikiText",
+      "nll": 4.508640736341476,
+      "ppl": 90.7983169555664,
+      "acc": 0.0,
+      "gap": 2.477203426361084
+    },
+    {
+      "name": "sub affine fitted on WikiText + task",
+      "nll": 4.5081882774829865,
+      "ppl": 90.75724029541016,
+      "acc": 1.0,
+      "gap": 21.90073091506958
+    }
+  ]
+}

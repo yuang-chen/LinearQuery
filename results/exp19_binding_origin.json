@@ -1,0 +1,303 @@
+{
+  "meta": {
+    "n_train": 600,
+    "n_test": 200,
+    "out": "results/exp19_binding_origin.json"
+  },
+  "rows": [
+    {
+      "section": "A",
+      "site": "emb",
+      "own_acc": 0.042500000447034836,
+      "own_ce": 3.1328606605529785,
+      "prev_acc": 0.05285714194178581,
+      "prev_ce": 3.143710136413574
+    },
+    {
+      "section": "A",
+      "site": "resid0",
+      "own_acc": 0.9831249713897705,
+      "own_ce": 0.5561144948005676,
+      "prev_acc": 0.26428571343421936,
+      "prev_ce": 2.419491767883301
+    },
+    {
+      "section": "A",
+      "site": "resid1",
+      "own_acc": 1.0,
+      "own_ce": 0.17730054259300232,
+      "prev_acc": 0.3442856967449188,
+      "prev_ce": 2.1892263889312744
+    },
+    {
+      "section": "A",
+      "site": "resid2",
+      "own_acc": 1.0,
+      "own_ce": 0.08480746299028397,
+      "prev_acc": 0.49000000953674316,
+      "prev_ce": 1.654175877571106
+    },
+    {
+      "section": "A",
+      "site": "resid3",
+      "own_acc": 0.9962499737739563,
+      "own_ce": 0.11146381497383118,
+      "prev_acc": 0.3814285695552826,
+      "prev_ce": 1.934706687927246
+    },
+    {
+      "section": "A",
+      "site": "mix0",
+      "own_acc": 0.9956249594688416,
+      "own_ce": 0.3843502402305603,
+      "prev_acc": 0.32928571105003357,
+      "prev_ce": 2.210750102996826
+    },
+    {
+      "section": "A",
+      "site": "mix1",
+      "own_acc": 1.0,
+      "own_ce": 0.026269350200891495,
+      "prev_acc": 0.4764285683631897,
+      "prev_ce": 1.6974602937698364
+    },
+    {
+      "section": "A",
+      "site": "mix2",
+      "own_acc": 1.0,
+      "own_ce": 0.009997819550335407,
+      "prev_acc": 0.741428554058075,
+      "prev_ce": 0.7723459005355835
+    },
+    {
+      "section": "A",
+      "site": "attn3",
+      "own_acc": 0.9881249666213989,
+      "own_ce": 0.09430640935897827,
+      "prev_acc": 0.34785714745521545,
+      "prev_ce": 1.9720333814620972
+    },
+    {
+      "section": "B",
+      "cond": "intact",
+      "retrain_acc": 0.9962499737739563,
+      "retrain_ce": 0.11146381497383118,
+      "fixed_acc": 0.9962499737739563,
+      "fixed_ce": 0.11146381497383118
+    },
+    {
+      "section": "B",
+      "cond": "layer 0 mixer zeroed @ value tokens",
+      "retrain_acc": 0.8787499666213989,
+      "retrain_ce": 0.6368740797042847,
+      "fixed_acc": 0.07750000059604645,
+      "fixed_ce": 10.8427095413208
+    },
+    {
+      "section": "B",
+      "cond": "layer 1 mixer zeroed @ value tokens",
+      "retrain_acc": 0.981249988079071,
+      "retrain_ce": 0.22653301060199738,
+      "fixed_acc": 0.6143749952316284,
+      "fixed_ce": 1.3949670791625977
+    },
+    {
+      "section": "B",
+      "cond": "layer 2 mixer zeroed @ value tokens",
+      "retrain_acc": 0.9431249499320984,
+      "retrain_ce": 0.33163902163505554,
+      "fixed_acc": 0.30812498927116394,
+      "fixed_ce": 3.5801215171813965
+    },
+    {
+      "section": "B",
+      "cond": "softmax 3 zeroed @ value tokens",
+      "retrain_acc": 0.9993749856948853,
+      "retrain_ce": 0.13240647315979004,
+      "fixed_acc": 0.3187499940395355,
+      "fixed_ce": 3.0073320865631104
+    },
+    {
+      "section": "B",
+      "cond": "layers 1+2 zeroed @ value tokens",
+      "retrain_acc": 0.7256249785423279,
+      "retrain_ce": 0.9787455797195435,
+      "fixed_acc": 0.13374999165534973,
+      "fixed_ce": 7.839001655578613
+    },
+    {
+      "section": "B",
+      "cond": "layer 0 conv 1 tap",
+      "retrain_acc": 1.0,
+      "retrain_ce": 0.05801787227392197,
+      "fixed_acc": 0.31187498569488525,
+      "fixed_ce": 3.48787260055542
+    },
+    {
+      "section": "B",
+      "cond": "layer 0 no recurrence",
+      "retrain_acc": 0.9943749904632568,
+      "retrain_ce": 0.11171533912420273,
+      "fixed_acc": 0.4231249988079071,
+      "fixed_ce": 2.169644832611084
+    },
+    {
+      "section": "B",
+      "cond": "layer 0 token-local (both)",
+      "retrain_acc": 1.0,
+      "retrain_ce": 0.048121128231287,
+      "fixed_acc": 0.2524999976158142,
+      "fixed_ce": 3.784543991088867
+    },
+    {
+      "section": "B",
+      "cond": "layer 1 conv 1 tap",
+      "retrain_acc": 0.9912499785423279,
+      "retrain_ce": 0.1469823122024536,
+      "fixed_acc": 0.5399999618530273,
+      "fixed_ce": 1.5482101440429688
+    },
+    {
+      "section": "B",
+      "cond": "layer 1 no recurrence",
+      "retrain_acc": 0.9906249642372131,
+      "retrain_ce": 0.14315712451934814,
+      "fixed_acc": 0.4556249976158142,
+      "fixed_ce": 2.0125153064727783
+    },
+    {
+      "section": "B",
+      "cond": "layer 1 token-local (both)",
+      "retrain_acc": 0.9881249666213989,
+      "retrain_ce": 0.16482678055763245,
+      "fixed_acc": 0.43062499165534973,
+      "fixed_ce": 2.1805617809295654
+    },
+    {
+      "section": "B",
+      "cond": "layer 2 conv 1 tap",
+      "retrain_acc": 0.96937495470047,
+      "retrain_ce": 0.3414169251918793,
+      "fixed_acc": 0.2643750011920929,
+      "fixed_ce": 2.850898504257202
+    },
+    {
+      "section": "B",
+      "cond": "layer 2 no recurrence",
+      "retrain_acc": 0.9749999642372131,
+      "retrain_ce": 0.22486793994903564,
+      "fixed_acc": 0.47062498331069946,
+      "fixed_ce": 2.301116704940796
+    },
+    {
+      "section": "B",
+      "cond": "layer 2 token-local (both)",
+      "retrain_acc": 0.9318749904632568,
+      "retrain_ce": 0.361268550157547,
+      "fixed_acc": 0.2775000035762787,
+      "fixed_ce": 4.160204887390137
+    },
+    {
+      "section": "B",
+      "cond": "layers 0-2 conv 1 tap",
+      "retrain_acc": 0.8881250023841858,
+      "retrain_ce": 0.9114981293678284,
+      "fixed_acc": 0.046875,
+      "fixed_ce": 16.90810203552246
+    },
+    {
+      "section": "B",
+      "cond": "layers 0-2 no recurrence",
+      "retrain_acc": 0.9799999594688416,
+      "retrain_ce": 0.18829041719436646,
+      "fixed_acc": 0.08312499523162842,
+      "fixed_ce": 8.756728172302246
+    },
+    {
+      "section": "B",
+      "cond": "layers 0-2 token-local",
+      "retrain_acc": 0.5762500166893005,
+      "retrain_ce": 1.8033963441848755,
+      "fixed_acc": 0.04937499761581421,
+      "fixed_ce": 13.648564338684082
+    },
+    {
+      "section": "C",
+      "cond": "intact",
+      "acc": 1.0,
+      "gap": 20.807838077545167
+    },
+    {
+      "section": "C",
+      "cond": "layer 0 conv 1 tap",
+      "acc": 0.855,
+      "gap": 11.709659795761109
+    },
+    {
+      "section": "C",
+      "cond": "layer 0 no recurrence",
+      "acc": 1.0,
+      "gap": 18.750986366271974
+    },
+    {
+      "section": "C",
+      "cond": "layer 0 token-local (both)",
+      "acc": 0.17,
+      "gap": 6.013153190612793
+    },
+    {
+      "section": "C",
+      "cond": "layer 1 conv 1 tap",
+      "acc": 1.0,
+      "gap": 21.54030532836914
+    },
+    {
+      "section": "C",
+      "cond": "layer 1 no recurrence",
+      "acc": 1.0,
+      "gap": 20.79334882736206
+    },
+    {
+      "section": "C",
+      "cond": "layer 1 token-local (both)",
+      "acc": 1.0,
+      "gap": 21.313117904663088
+    },
+    {
+      "section": "C",
+      "cond": "layer 2 conv 1 tap",
+      "acc": 1.0,
+      "gap": 21.554522247314452
+    },
+    {
+      "section": "C",
+      "cond": "layer 2 no recurrence",
+      "acc": 0.995,
+      "gap": 15.882634449005128
+    },
+    {
+      "section": "C",
+      "cond": "layer 2 token-local (both)",
+      "acc": 0.965,
+      "gap": 13.899333963394165
+    },
+    {
+      "section": "C",
+      "cond": "layers 0-2 conv 1 tap",
+      "acc": 0.0,
+      "gap": 0.20856038093566895
+    },
+    {
+      "section": "C",
+      "cond": "layers 0-2 no recurrence",
+      "acc": 0.15,
+      "gap": 3.377550287246704
+    },
+    {
+      "section": "C",
+      "cond": "layers 0-2 token-local",
+      "acc": 0.0,
+      "gap": 0.5760459041595459
+    }
+  ]
+}

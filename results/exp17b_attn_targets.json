@@ -1,0 +1,86 @@
+[
+  {
+    "cond": "intact",
+    "target value": 0.7938206642866135,
+    "prev entry value": 0.022610076586715877,
+    "next entry value": 0.011674395762383938,
+    "other values": 0.01795871090143919,
+    "first entry value": 0.005186462658457458,
+    "key words": 0.017049805028364062,
+    "query key (question)": 0.00017642124657868408,
+    "<|im_start|>": 0.06291862949728966,
+    "rest": 0.06860486138612032
+  },
+  {
+    "cond": "remove G1",
+    "target value": 0.6487061083316803,
+    "prev entry value": 0.05331315938383341,
+    "next entry value": 0.06768759712576866,
+    "other values": 0.11276436224579811,
+    "first entry value": 0.01520590204745531,
+    "key words": 0.01622545486316085,
+    "query key (question)": 0.005210763250943273,
+    "<|im_start|>": 0.00022220000391826034,
+    "rest": 0.0806644344702363
+  },
+  {
+    "cond": "remove G2",
+    "target value": 0.29811763390898705,
+    "prev entry value": 0.0734898392111063,
+    "next entry value": 0.06923086941242218,
+    "other values": 0.18453331105411053,
+    "first entry value": 0.0774448923766613,
+    "key words": 0.07315701246261597,
+    "query key (question)": 0.009645920828916132,
+    "<|im_start|>": 0.053785028867423534,
+    "rest": 0.16059549897909164
+  },
+  {
+    "cond": "remove L10",
+    "target value": 0.5528782233595848,
+    "prev entry value": 0.05435181315988302,
+    "next entry value": 0.04473663028329611,
+    "other values": 0.13275529630482197,
+    "first entry value": 0.07943033892661333,
+    "key words": 0.028410856146365404,
+    "query key (question)": 0.0009930970263667405,
+    "<|im_start|>": 0.0384805453941226,
+    "rest": 0.06796316616237164
+  },
+  {
+    "cond": "remove G3",
+    "target value": 0.04781093529891223,
+    "prev entry value": 0.10212427680380642,
+    "next entry value": 0.016798124182969332,
+    "other values": 0.07227267418056726,
+    "first entry value": 0.21999836713075638,
+    "key words": 0.0399487866088748,
+    "query key (question)": 0.003613279142882675,
+    "<|im_start|>": 0.2160591036081314,
+    "rest": 0.2813744619488716
+  },
+  {
+    "cond": "remove L14",
+    "target value": 0.3514842242002487,
+    "prev entry value": 0.023875310085713863,
+    "next entry value": 0.0009139879912254401,
+    "other values": 0.004431567445863038,
+    "first entry value": 0.004934606375172734,
+    "key words": 0.06839760951697826,
+    "query key (question)": 0.04061180492863059,
+    "<|im_start|>": 0.37605905532836914,
+    "rest": 0.12929181568324566
+  },
+  {
+    "cond": "remove G1+G2",
+    "target value": 0.2009943164885044,
+    "prev entry value": 0.0545440842397511,
+    "next entry value": 0.062076032161712646,
+    "other values": 0.1672302484512329,
+    "first entry value": 0.046805487014353275,
+    "key words": 0.10050498694181442,
+    "query key (question)": 0.1110401526093483,
+    "<|im_start|>": 0.0002968349072034471,
+    "rest": 0.25650784745812416
+  }
+]

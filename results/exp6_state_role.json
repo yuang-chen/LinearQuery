@@ -1,0 +1,3171 @@
+{
+  "meta": {
+    "n_per_config": 25,
+    "n_pairs": 8,
+    "configs": "2:5,5:2,1:6,6:1",
+    "seed": 11,
+    "out": "results/exp6_state_role.json"
+  },
+  "rows": [
+    {
+      "kind": "gate",
+      "layer": 0,
+      "mean_log_decay": -0.6609787940979004,
+      "half_life_median": 31.555889129638672,
+      "half_life_p90": 615.2899169921875,
+      "retention_to_dict_end": 0.667998194694519,
+      "retention_to_final": 0.36855214834213257,
+      "retention_to_final_max_head": 0.9999707341194153
+    },
+    {
+      "kind": "gate",
+      "layer": 1,
+      "mean_log_decay": -0.8562138080596924,
+      "half_life_median": 1.0250767469406128,
+      "half_life_p90": 116.63249206542969,
+      "retention_to_dict_end": 0.3472262918949127,
+      "retention_to_final": 0.16884170472621918,
+      "retention_to_final_max_head": 0.8532017469406128
+    },
+    {
+      "kind": "gate",
+      "layer": 2,
+      "mean_log_decay": -0.5156698822975159,
+      "half_life_median": 2.742583751678467,
+      "half_life_p90": 56.66098403930664,
+      "retention_to_dict_end": 0.4586164653301239,
+      "retention_to_final": 0.17935164272785187,
+      "retention_to_final_max_head": 0.8622728586196899
+    },
+    {
+      "kind": "gate",
+      "layer": 4,
+      "mean_log_decay": -0.42910024523735046,
+      "half_life_median": 19.735889434814453,
+      "half_life_p90": 199.6873016357422,
+      "retention_to_dict_end": 0.5645370483398438,
+      "retention_to_final": 0.33519840240478516,
+      "retention_to_final_max_head": 0.9809893369674683
+    },
+    {
+      "kind": "gate",
+      "layer": 5,
+      "mean_log_decay": -0.2363191545009613,
+      "half_life_median": 44.77751922607422,
+      "half_life_p90": 70.75151824951172,
+      "retention_to_dict_end": 0.5856136083602905,
+      "retention_to_final": 0.33842289447784424,
+      "retention_to_final_max_head": 0.7605711221694946
+    },
+    {
+      "kind": "gate",
+      "layer": 6,
+      "mean_log_decay": -0.30326148867607117,
+      "half_life_median": 4.10579252243042,
+      "half_life_p90": 98.07240295410156,
+      "retention_to_dict_end": 0.48218175768852234,
+      "retention_to_final": 0.2100224643945694,
+      "retention_to_final_max_head": 0.8656068444252014
+    },
+    {
+      "kind": "gate",
+      "layer": 8,
+      "mean_log_decay": -0.15415118634700775,
+      "half_life_median": 7.162646293640137,
+      "half_life_p90": 325.94683837890625,
+      "retention_to_dict_end": 0.49258676171302795,
+      "retention_to_final": 0.3189687728881836,
+      "retention_to_final_max_head": 0.9553452730178833
+    },
+    {
+      "kind": "gate",
+      "layer": 9,
+      "mean_log_decay": -0.12298738211393356,
+      "half_life_median": 11.421647071838379,
+      "half_life_p90": 119.6594467163086,
+      "retention_to_dict_end": 0.6104460954666138,
+      "retention_to_final": 0.32306087017059326,
+      "retention_to_final_max_head": 0.859826922416687
+    },
+    {
+      "kind": "gate",
+      "layer": 10,
+      "mean_log_decay": -0.17901064455509186,
+      "half_life_median": 7.287860870361328,
+      "half_life_p90": 40.349037170410156,
+      "retention_to_dict_end": 0.4874899685382843,
+      "retention_to_final": 0.157415971159935,
+      "retention_to_final_max_head": 0.5990105271339417
+    },
+    {
+      "kind": "gate",
+      "layer": 12,
+      "mean_log_decay": -0.08216727524995804,
+      "half_life_median": 40.38138198852539,
+      "half_life_p90": 109.376220703125,
+      "retention_to_dict_end": 0.7194512486457825,
+      "retention_to_final": 0.4027528166770935,
+      "retention_to_final_max_head": 0.8294088840484619
+    },
+    {
+      "kind": "gate",
+      "layer": 13,
+      "mean_log_decay": -0.1923716962337494,
+      "half_life_median": 5.431110382080078,
+      "half_life_p90": 31.54564666748047,
+      "retention_to_dict_end": 0.4731706976890564,
+      "retention_to_final": 0.14821825921535492,
+      "retention_to_final_max_head": 0.6297341585159302
+    },
+    {
+      "kind": "gate",
+      "layer": 14,
+      "mean_log_decay": -0.13287252187728882,
+      "half_life_median": 5.688612461090088,
+      "half_life_p90": 71.30440521240234,
+      "retention_to_dict_end": 0.40775999426841736,
+      "retention_to_final": 0.2058630734682083,
+      "retention_to_final_max_head": 0.8140732645988464
+    },
+    {
+      "kind": "gate",
+      "layer": 16,
+      "mean_log_decay": -0.286666601896286,
+      "half_life_median": 5.8990373611450195,
+      "half_life_p90": 147.2017059326172,
+      "retention_to_dict_end": 0.5244660973548889,
+      "retention_to_final": 0.39186394214630127,
+      "retention_to_final_max_head": 0.9363355040550232
+    },
+    {
+      "kind": "gate",
+      "layer": 17,
+      "mean_log_decay": -0.13602043688297272,
+      "half_life_median": 6.5280842781066895,
+      "half_life_p90": 80.61254119873047,
+      "retention_to_dict_end": 0.5620484948158264,
+      "retention_to_final": 0.29551997780799866,
+      "retention_to_final_max_head": 0.8826360702514648
+    },
+    {
+      "kind": "gate",
+      "layer": 18,
+      "mean_log_decay": -0.19198086857795715,
+      "half_life_median": 37.03205108642578,
+      "half_life_p90": 172.0341339111328,
+      "retention_to_dict_end": 0.5821558237075806,
+      "retention_to_final": 0.40728774666786194,
+      "retention_to_final_max_head": 0.9523059129714966
+    },
+    {
+      "kind": "gate",
+      "layer": 20,
+      "mean_log_decay": -0.32992514967918396,
+      "half_life_median": 26.047475814819336,
+      "half_life_p90": 169.45791625976562,
+      "retention_to_dict_end": 0.6413055062294006,
+      "retention_to_final": 0.4517667293548584,
+      "retention_to_final_max_head": 0.9599591493606567
+    },
+    {
+      "kind": "gate",
+      "layer": 21,
+      "mean_log_decay": -0.18499426543712616,
+      "half_life_median": 6.427493572235107,
+      "half_life_p90": 55.68916320800781,
+      "retention_to_dict_end": 0.49144378304481506,
+      "retention_to_final": 0.19996608793735504,
+      "retention_to_final_max_head": 0.7087125778198242
+    },
+    {
+      "kind": "gate",
+      "layer": 22,
+      "mean_log_decay": -0.5359307527542114,
+      "half_life_median": 10.350289344787598,
+      "half_life_p90": 49.30137252807617,
+      "retention_to_dict_end": 0.4881149232387543,
+      "retention_to_final": 0.22337836027145386,
+      "retention_to_final_max_head": 0.6936861872673035
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 0,
+      "dist": 46,
+      "delta": 0.0905127003788948
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 1,
+      "dist": 46,
+      "delta": 0.15657010674476624
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 2,
+      "dist": 46,
+      "delta": 0.06181567162275314
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 4,
+      "dist": 46,
+      "delta": 0.022624323144555092
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 5,
+      "dist": 46,
+      "delta": 0.03889578580856323
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 6,
+      "dist": 46,
+      "delta": 0.049810245633125305
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 8,
+      "dist": 46,
+      "delta": 0.027604157105088234
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 9,
+      "dist": 46,
+      "delta": 0.036284685134887695
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 10,
+      "dist": 46,
+      "delta": 0.04900287836790085
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 12,
+      "dist": 46,
+      "delta": 0.013643831014633179
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 13,
+      "dist": 46,
+      "delta": 0.025517109781503677
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 14,
+      "dist": 46,
+      "delta": 0.034556422382593155
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 16,
+      "dist": 46,
+      "delta": 0.059033993631601334
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 17,
+      "dist": 46,
+      "delta": 0.0821482390165329
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 18,
+      "dist": 46,
+      "delta": 0.12911364436149597
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 20,
+      "dist": 46,
+      "delta": 0.12113519757986069
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 21,
+      "dist": 46,
+      "delta": 0.0795193538069725
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 22,
+      "dist": 46,
+      "delta": 0.09536127746105194
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 0,
+      "dist": 25,
+      "delta": 0.021978771314024925
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 1,
+      "dist": 25,
+      "delta": 0.0398097038269043
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 2,
+      "dist": 25,
+      "delta": 0.033239804208278656
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 4,
+      "dist": 25,
+      "delta": 0.02839602902531624
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 5,
+      "dist": 25,
+      "delta": 0.01329088769853115
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 6,
+      "dist": 25,
+      "delta": 0.03404715657234192
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 8,
+      "dist": 25,
+      "delta": 0.038351647555828094
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 9,
+      "dist": 25,
+      "delta": 0.045215804129838943
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 10,
+      "dist": 25,
+      "delta": 0.06515634059906006
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 12,
+      "dist": 25,
+      "delta": 0.033512014895677567
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 13,
+      "dist": 25,
+      "delta": 0.03841616213321686
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 14,
+      "dist": 25,
+      "delta": 0.04445263370871544
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 16,
+      "dist": 25,
+      "delta": 0.032092854380607605
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 17,
+      "dist": 25,
+      "delta": 0.028843898326158524
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 18,
+      "dist": 25,
+      "delta": 0.02947671338915825
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 20,
+      "dist": 25,
+      "delta": 0.039026107639074326
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 21,
+      "dist": 25,
+      "delta": 0.02084183134138584
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 22,
+      "dist": 25,
+      "delta": 0.016915403306484222
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 0,
+      "dist": 0,
+      "delta": 0.011040305718779564
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 1,
+      "dist": 0,
+      "delta": 0.0231607835739851
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 2,
+      "dist": 0,
+      "delta": 0.01762407459318638
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 4,
+      "dist": 0,
+      "delta": 0.0251031294465065
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 5,
+      "dist": 0,
+      "delta": 0.009621202945709229
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 6,
+      "dist": 0,
+      "delta": 0.019050447270274162
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 8,
+      "dist": 0,
+      "delta": 0.027924327179789543
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 9,
+      "dist": 0,
+      "delta": 0.030991854146122932
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 10,
+      "dist": 0,
+      "delta": 0.026717372238636017
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 12,
+      "dist": 0,
+      "delta": 0.028500907123088837
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 13,
+      "dist": 0,
+      "delta": 0.038399357348680496
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 14,
+      "dist": 0,
+      "delta": 0.037197545170784
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 16,
+      "dist": 0,
+      "delta": 0.05783744528889656
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 17,
+      "dist": 0,
+      "delta": 0.07117495685815811
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 18,
+      "dist": 0,
+      "delta": 0.06298648566007614
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 20,
+      "dist": 0,
+      "delta": 0.08372508734464645
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 21,
+      "dist": 0,
+      "delta": 0.08761236071586609
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 22,
+      "dist": 0,
+      "delta": 0.1023092269897461
+    },
+    {
+      "kind": "route",
+      "name": "state route only",
+      "rec": [
+        0.022969698533415794,
+        0.042882226407527924,
+        0.04028907045722008,
+        0.024176830425858498,
+        0.06594454497098923,
+        0.03921687230467796,
+        0.03788036108016968,
+        0.027614211663603783,
+        0.03276422992348671,
+        0.024573441594839096,
+        0.03904802352190018,
+        0.03216259926557541,
+        0.025496788322925568,
+        0.03627076745033264,
+        0.020758632570505142,
+        0.012778815813362598,
+        0.05127296596765518,
+        0.021243104711174965,
+        0.03398039937019348,
+        0.020213590934872627,
+        0.04099913313984871,
+        0.03924553841352463,
+        0.08167754113674164,
+        0.01330062747001648,
+        0.0383102148771286
+      ],
+      "D": [
+        -9.012262344360352,
+        -3.0454559326171875,
+        -7.205606460571289,
+        -12.471540451049805,
+        -7.6886749267578125,
+        -14.503543853759766,
+        -12.269559860229492,
+        -11.576332092285156,
+        -10.587409973144531,
+        -10.712974548339844,
+        -10.773500442504883,
+        -8.794147491455078,
+        -10.354108810424805,
+        -9.591787338256836,
+        -17.270999908447266,
+        -8.994699478149414,
+        -12.619417190551758,
+        -9.830345153808594,
+        -6.330253601074219,
+        -10.219594955444336,
+        -7.760036468505859,
+        -13.244300842285156,
+        -6.987232208251953,
+        -10.451637268066406,
+        -6.449317932128906
+      ]
+    },
+    {
+      "kind": "route",
+      "name": "kv route only",
+      "rec": [
+        0.9758660197257996,
+        0.943779468536377,
+        0.9702679514884949,
+        0.9725516438484192,
+        0.9486379027366638,
+        0.9712956547737122,
+        0.9748297929763794,
+        0.964210569858551,
+        0.9806651473045349,
+        0.9657385349273682,
+        0.9809315204620361,
+        0.9600409269332886,
+        0.9705727100372314,
+        0.9519022107124329,
+        0.9662885665893555,
+        0.9681988954544067,
+        0.9566553235054016,
+        0.9508140683174133,
+        0.9531629085540771,
+        0.9797112941741943,
+        0.9544543623924255,
+        0.9822317361831665,
+        0.9589343070983887,
+        0.9719824194908142,
+        0.97345370054245
+      ],
+      "D": [
+        7.500431060791016,
+        9.908552169799805,
+        10.265192031860352,
+        13.055585861206055,
+        6.5095062255859375,
+        7.685541152954102,
+        13.19796371459961,
+        12.033882141113281,
+        9.742151260375977,
+        12.463969230651855,
+        8.630880355834961,
+        8.128572463989258,
+        10.929800033569336,
+        11.077503204345703,
+        8.910013198852539,
+        7.516357421875,
+        8.02700424194336,
+        9.384702682495117,
+        8.171049118041992,
+        5.710824966430664,
+        13.938661575317383,
+        9.29623031616211,
+        2.761537551879883,
+        10.435770034790039,
+        11.570980072021484
+      ]
+    },
+    {
+      "kind": "route",
+      "name": "identity ctrl (clean)",
+      "rec": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "D": [
+        7.918647766113281,
+        10.716947555541992,
+        10.823745727539062,
+        13.794404983520508,
+        7.335668563842773,
+        8.368877410888672,
+        13.882123947143555,
+        12.936080932617188,
+        10.156824111938477,
+        13.307684898376465,
+        9.023723602294922,
+        8.857349395751953,
+        11.592527389526367,
+        12.163254737854004,
+        9.84345817565918,
+        8.065927505493164,
+        9.015439987182617,
+        10.401418685913086,
+        8.909965515136719,
+        6.047676086425781,
+        15.020575523376465,
+        9.720951080322266,
+        3.2178916931152344,
+        11.046207427978516,
+        12.082529067993164
+      ]
+    },
+    {
+      "kind": "route",
+      "name": "identity ctrl (corrupted)",
+      "rec": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "D": [
+        -9.410303115844727,
+        -3.662059783935547,
+        -7.962486267089844,
+        -13.12230110168457,
+        -8.749397277832031,
+        -15.437141418457031,
+        -13.299198150634766,
+        -12.272445678710938,
+        -11.290102005004883,
+        -11.318115234375,
+        -11.57795524597168,
+        -9.380731582641602,
+        -10.92831802368164,
+        -10.41055679321289,
+        -17.84579086303711,
+        -9.215536117553711,
+        -13.788650512695312,
+        -10.269458770751953,
+        -6.866338729858398,
+        -10.555198669433594,
+        -8.733951568603516,
+        -14.182400703430176,
+        -7.8948974609375,
+        -10.741426467895508,
+        -7.187559127807617
+      ]
+    },
+    {
+      "kind": "gate",
+      "layer": 0,
+      "mean_log_decay": -0.6649683117866516,
+      "half_life_median": 31.615819931030273,
+      "half_life_p90": 616.2987060546875,
+      "retention_to_dict_end": 0.6948480010032654,
+      "retention_to_final": 0.3725789189338684,
+      "retention_to_final_max_head": 0.9999714493751526
+    },
+    {
+      "kind": "gate",
+      "layer": 1,
+      "mean_log_decay": -0.8653132915496826,
+      "half_life_median": 1.0345458984375,
+      "half_life_p90": 117.19970703125,
+      "retention_to_dict_end": 0.362487256526947,
+      "retention_to_final": 0.17005003988742828,
+      "retention_to_final_max_head": 0.853626549243927
+    },
+    {
+      "kind": "gate",
+      "layer": 2,
+      "mean_log_decay": -0.5241028666496277,
+      "half_life_median": 2.724616527557373,
+      "half_life_p90": 56.957420349121094,
+      "retention_to_dict_end": 0.501522421836853,
+      "retention_to_final": 0.18169459700584412,
+      "retention_to_final_max_head": 0.8679965138435364
+    },
+    {
+      "kind": "gate",
+      "layer": 4,
+      "mean_log_decay": -0.43480101227760315,
+      "half_life_median": 19.57234764099121,
+      "half_life_p90": 196.22640991210938,
+      "retention_to_dict_end": 0.6089348196983337,
+      "retention_to_final": 0.3389222323894501,
+      "retention_to_final_max_head": 0.981724202632904
+    },
+    {
+      "kind": "gate",
+      "layer": 5,
+      "mean_log_decay": -0.23778314888477325,
+      "half_life_median": 44.83430862426758,
+      "half_life_p90": 70.53868865966797,
+      "retention_to_dict_end": 0.6314581632614136,
+      "retention_to_final": 0.3448423743247986,
+      "retention_to_final_max_head": 0.7769356966018677
+    },
+    {
+      "kind": "gate",
+      "layer": 6,
+      "mean_log_decay": -0.3054719865322113,
+      "half_life_median": 4.141591548919678,
+      "half_life_p90": 98.05563354492188,
+      "retention_to_dict_end": 0.5811063051223755,
+      "retention_to_final": 0.2139352411031723,
+      "retention_to_final_max_head": 0.8777133226394653
+    },
+    {
+      "kind": "gate",
+      "layer": 8,
+      "mean_log_decay": -0.15520527958869934,
+      "half_life_median": 7.2148637771606445,
+      "half_life_p90": 320.65557861328125,
+      "retention_to_dict_end": 0.5986272096633911,
+      "retention_to_final": 0.3314440846443176,
+      "retention_to_final_max_head": 0.9588224291801453
+    },
+    {
+      "kind": "gate",
+      "layer": 9,
+      "mean_log_decay": -0.12327712774276733,
+      "half_life_median": 11.497574806213379,
+      "half_life_p90": 118.49810028076172,
+      "retention_to_dict_end": 0.687345027923584,
+      "retention_to_final": 0.3368041217327118,
+      "retention_to_final_max_head": 0.8743123412132263
+    },
+    {
+      "kind": "gate",
+      "layer": 10,
+      "mean_log_decay": -0.17940734326839447,
+      "half_life_median": 7.194443702697754,
+      "half_life_p90": 40.42943572998047,
+      "retention_to_dict_end": 0.6129176020622253,
+      "retention_to_final": 0.17305558919906616,
+      "retention_to_final_max_head": 0.6110219955444336
+    },
+    {
+      "kind": "gate",
+      "layer": 12,
+      "mean_log_decay": -0.08291903883218765,
+      "half_life_median": 39.919677734375,
+      "half_life_p90": 108.80181121826172,
+      "retention_to_dict_end": 0.7890328168869019,
+      "retention_to_final": 0.41595667600631714,
+      "retention_to_final_max_head": 0.85072922706604
+    },
+    {
+      "kind": "gate",
+      "layer": 13,
+      "mean_log_decay": -0.1933337152004242,
+      "half_life_median": 5.421350955963135,
+      "half_life_p90": 31.629154205322266,
+      "retention_to_dict_end": 0.5564538240432739,
+      "retention_to_final": 0.1583431363105774,
+      "retention_to_final_max_head": 0.6759180426597595
+    },
+    {
+      "kind": "gate",
+      "layer": 14,
+      "mean_log_decay": -0.13304319977760315,
+      "half_life_median": 5.588201522827148,
+      "half_life_p90": 72.65473937988281,
+      "retention_to_dict_end": 0.5150876641273499,
+      "retention_to_final": 0.21713846921920776,
+      "retention_to_final_max_head": 0.8147907853126526
+    },
+    {
+      "kind": "gate",
+      "layer": 16,
+      "mean_log_decay": -0.28731489181518555,
+      "half_life_median": 5.8465800285339355,
+      "half_life_p90": 147.68692016601562,
+      "retention_to_dict_end": 0.5482691526412964,
+      "retention_to_final": 0.39327147603034973,
+      "retention_to_final_max_head": 0.9370460510253906
+    },
+    {
+      "kind": "gate",
+      "layer": 17,
+      "mean_log_decay": -0.13652801513671875,
+      "half_life_median": 6.476804256439209,
+      "half_life_p90": 80.4186782836914,
+      "retention_to_dict_end": 0.6267578601837158,
+      "retention_to_final": 0.3005999028682709,
+      "retention_to_final_max_head": 0.8848641514778137
+    },
+    {
+      "kind": "gate",
+      "layer": 18,
+      "mean_log_decay": -0.19285514950752258,
+      "half_life_median": 37.23675537109375,
+      "half_life_p90": 169.84921264648438,
+      "retention_to_dict_end": 0.6190328598022461,
+      "retention_to_final": 0.4118877351284027,
+      "retention_to_final_max_head": 0.9540431499481201
+    },
+    {
+      "kind": "gate",
+      "layer": 20,
+      "mean_log_decay": -0.3301945924758911,
+      "half_life_median": 26.136396408081055,
+      "half_life_p90": 168.63717651367188,
+      "retention_to_dict_end": 0.6739972829818726,
+      "retention_to_final": 0.4561385214328766,
+      "retention_to_final_max_head": 0.9620294570922852
+    },
+    {
+      "kind": "gate",
+      "layer": 21,
+      "mean_log_decay": -0.1861315667629242,
+      "half_life_median": 6.393483638763428,
+      "half_life_p90": 56.08907699584961,
+      "retention_to_dict_end": 0.5492362976074219,
+      "retention_to_final": 0.20401965081691742,
+      "retention_to_final_max_head": 0.7271002531051636
+    },
+    {
+      "kind": "gate",
+      "layer": 22,
+      "mean_log_decay": -0.538487434387207,
+      "half_life_median": 10.17920970916748,
+      "half_life_p90": 49.45957946777344,
+      "retention_to_dict_end": 0.5355659127235413,
+      "retention_to_final": 0.23367762565612793,
+      "retention_to_final_max_head": 0.6988554000854492
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 0,
+      "dist": 34,
+      "delta": 0.07804809510707855
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 1,
+      "dist": 34,
+      "delta": 0.15417055785655975
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 2,
+      "dist": 34,
+      "delta": 0.06891120970249176
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 4,
+      "dist": 34,
+      "delta": 0.0464400090277195
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 5,
+      "dist": 34,
+      "delta": 0.041768718510866165
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 6,
+      "dist": 34,
+      "delta": 0.06820321828126907
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 8,
+      "dist": 34,
+      "delta": 0.048170946538448334
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 9,
+      "dist": 34,
+      "delta": 0.06243101879954338
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 10,
+      "dist": 34,
+      "delta": 0.08464259654283524
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 12,
+      "dist": 34,
+      "delta": 0.04297298938035965
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 13,
+      "dist": 34,
+      "delta": 0.05301831290125847
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 14,
+      "dist": 34,
+      "delta": 0.06471007317304611
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 16,
+      "dist": 34,
+      "delta": 0.06247873976826668
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 17,
+      "dist": 34,
+      "delta": 0.0773264691233635
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 18,
+      "dist": 34,
+      "delta": 0.12103618681430817
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 20,
+      "dist": 34,
+      "delta": 0.11106506735086441
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 21,
+      "dist": 34,
+      "delta": 0.07536342740058899
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 22,
+      "dist": 34,
+      "delta": 0.0900483950972557
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 0,
+      "dist": 25,
+      "delta": 0.022255875170230865
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 1,
+      "dist": 25,
+      "delta": 0.03869454190135002
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 2,
+      "dist": 25,
+      "delta": 0.03379007428884506
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 4,
+      "dist": 25,
+      "delta": 0.02970043197274208
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 5,
+      "dist": 25,
+      "delta": 0.013736599124968052
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 6,
+      "dist": 25,
+      "delta": 0.036188140511512756
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 8,
+      "dist": 25,
+      "delta": 0.03889147937297821
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 9,
+      "dist": 25,
+      "delta": 0.04327452555298805
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 10,
+      "dist": 25,
+      "delta": 0.06751073896884918
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 12,
+      "dist": 25,
+      "delta": 0.03462251275777817
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 13,
+      "dist": 25,
+      "delta": 0.03926990553736687
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 14,
+      "dist": 25,
+      "delta": 0.04705842211842537
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 16,
+      "dist": 25,
+      "delta": 0.03139393404126167
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 17,
+      "dist": 25,
+      "delta": 0.029374925419688225
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 18,
+      "dist": 25,
+      "delta": 0.031526122242212296
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 20,
+      "dist": 25,
+      "delta": 0.03733481839299202
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 21,
+      "dist": 25,
+      "delta": 0.018572960048913956
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 22,
+      "dist": 25,
+      "delta": 0.017234519124031067
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 0,
+      "dist": 0,
+      "delta": 0.011191646568477154
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 1,
+      "dist": 0,
+      "delta": 0.021787699311971664
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 2,
+      "dist": 0,
+      "delta": 0.018690265715122223
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 4,
+      "dist": 0,
+      "delta": 0.026019904762506485
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 5,
+      "dist": 0,
+      "delta": 0.009931623004376888
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 6,
+      "dist": 0,
+      "delta": 0.01980920508503914
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 8,
+      "dist": 0,
+      "delta": 0.029777752235531807
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 9,
+      "dist": 0,
+      "delta": 0.036610957235097885
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 10,
+      "dist": 0,
+      "delta": 0.03684065118432045
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 12,
+      "dist": 0,
+      "delta": 0.029542388394474983
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 13,
+      "dist": 0,
+      "delta": 0.03380551561713219
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 14,
+      "dist": 0,
+      "delta": 0.04157337173819542
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 16,
+      "dist": 0,
+      "delta": 0.05889201536774635
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 17,
+      "dist": 0,
+      "delta": 0.07045107334852219
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 18,
+      "dist": 0,
+      "delta": 0.06057298555970192
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 20,
+      "dist": 0,
+      "delta": 0.09042301028966904
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 21,
+      "dist": 0,
+      "delta": 0.09458911418914795
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 22,
+      "dist": 0,
+      "delta": 0.10728053003549576
+    },
+    {
+      "kind": "route",
+      "name": "state route only",
+      "rec": [
+        0.0184071846306324,
+        0.022023851051926613,
+        0.0002547109907027334,
+        -0.012444539926946163,
+        -0.013386636041104794,
+        0.01831604726612568,
+        0.01687975786626339,
+        -0.0026483533438295126,
+        0.039778776466846466,
+        0.022538013756275177,
+        -0.0027726280968636274,
+        0.0007255023228935897,
+        0.009649363346397877,
+        -0.0013983302051201463,
+        0.023094091564416885,
+        0.01658971980214119,
+        0.0050681657157838345,
+        0.0014966323506087065,
+        0.002240981673821807,
+        0.00042364426190033555,
+        0.014283496886491776,
+        0.014346648938953876,
+        0.009701640345156193,
+        0.0036443930584937334,
+        0.010726862587034702
+      ],
+      "D": [
+        -9.739830017089844,
+        -12.150750160217285,
+        -6.11920166015625,
+        -9.1776123046875,
+        -6.381113052368164,
+        -8.535640716552734,
+        -16.19671058654785,
+        -7.510618209838867,
+        -13.77289867401123,
+        -8.636289596557617,
+        -9.295951843261719,
+        -7.944782257080078,
+        -15.29288101196289,
+        -13.006948471069336,
+        -9.424556732177734,
+        -15.099923133850098,
+        -5.753499984741211,
+        -12.073936462402344,
+        -7.035984039306641,
+        -6.465635299682617,
+        -12.333450317382812,
+        -11.16026496887207,
+        -9.387784957885742,
+        -13.776728630065918,
+        -9.104948043823242
+      ]
+    },
+    {
+      "kind": "route",
+      "name": "kv route only",
+      "rec": [
+        0.9673424363136292,
+        0.9707015156745911,
+        0.9949657917022705,
+        0.994411826133728,
+        0.9819782376289368,
+        0.9994741678237915,
+        0.9869323968887329,
+        0.9969016313552856,
+        0.9889838099479675,
+        0.984744131565094,
+        0.9980330467224121,
+        0.9891632795333862,
+        0.9926158785820007,
+        0.9755919575691223,
+        0.9789479374885559,
+        0.9868864417076111,
+        0.991219162940979,
+        1.005157709121704,
+        0.9933363199234009,
+        0.9893428683280945,
+        0.9913961887359619,
+        1.0129107236862183,
+        0.9967787265777588,
+        0.9871402382850647,
+        0.9937779903411865
+      ],
+      "D": [
+        12.860970497131348,
+        12.834685325622559,
+        12.852588653564453,
+        8.216428756713867,
+        13.89746379852295,
+        11.007452011108398,
+        10.582990646362305,
+        8.418113708496094,
+        7.487861633300781,
+        9.59947395324707,
+        7.255678176879883,
+        8.436836242675781,
+        11.424468994140625,
+        16.570842742919922,
+        10.917411804199219,
+        14.20200252532959,
+        7.245969772338867,
+        8.816205978393555,
+        11.237688064575195,
+        8.396318435668945,
+        8.115198135375977,
+        5.723564147949219,
+        12.088251113891602,
+        10.022214889526367,
+        12.22637939453125
+      ]
+    },
+    {
+      "kind": "route",
+      "name": "identity ctrl (clean)",
+      "rec": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "D": [
+        13.638774871826172,
+        13.606322288513184,
+        12.948604583740234,
+        8.312967300415039,
+        14.26462173461914,
+        11.017925262451172,
+        10.943740844726562,
+        8.467489242553711,
+        7.734607696533203,
+        9.888603210449219,
+        7.2882080078125,
+        8.616436004638672,
+        11.62516975402832,
+        17.309782028198242,
+        11.36543083190918,
+        14.598016738891602,
+        7.361719131469727,
+        8.708854675292969,
+        11.360551834106445,
+        8.556478500366211,
+        8.295255661010742,
+        5.505268096923828,
+        12.158336639404297,
+        10.333396911621094,
+        12.361391067504883
+      ]
+    },
+    {
+      "kind": "route",
+      "name": "identity ctrl (corrupted)",
+      "rec": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "D": [
+        -10.178234100341797,
+        -12.730794906616211,
+        -6.124059677124023,
+        -8.962625503540039,
+        -6.108386993408203,
+        -8.900466918945312,
+        -16.662700653076172,
+        -7.468414306640625,
+        -14.663883209228516,
+        -9.063430786132812,
+        -9.250097274780273,
+        -7.956806182861328,
+        -15.555153846740723,
+        -12.964614868164062,
+        -9.916032791137695,
+        -15.60091495513916,
+        -5.820308685302734,
+        -12.105087280273438,
+        -7.077302932739258,
+        -6.472002029418945,
+        -12.632369995117188,
+        -11.402839660644531,
+        -9.598865509033203,
+        -13.864916801452637,
+        -9.337711334228516
+      ]
+    },
+    {
+      "kind": "gate",
+      "layer": 0,
+      "mean_log_decay": -0.6631903052330017,
+      "half_life_median": 31.28889274597168,
+      "half_life_p90": 614.8666381835938,
+      "retention_to_dict_end": 0.6598934531211853,
+      "retention_to_final": 0.3661665916442871,
+      "retention_to_final_max_head": 0.999970555305481
+    },
+    {
+      "kind": "gate",
+      "layer": 1,
+      "mean_log_decay": -0.8606900572776794,
+      "half_life_median": 1.026898980140686,
+      "half_life_p90": 116.13691711425781,
+      "retention_to_dict_end": 0.34241679310798645,
+      "retention_to_final": 0.16785280406475067,
+      "retention_to_final_max_head": 0.8541620969772339
+    },
+    {
+      "kind": "gate",
+      "layer": 2,
+      "mean_log_decay": -0.5213810801506042,
+      "half_life_median": 2.756716012954712,
+      "half_life_p90": 56.764923095703125,
+      "retention_to_dict_end": 0.446018785238266,
+      "retention_to_final": 0.17830753326416016,
+      "retention_to_final_max_head": 0.8609715104103088
+    },
+    {
+      "kind": "gate",
+      "layer": 4,
+      "mean_log_decay": -0.4335501790046692,
+      "half_life_median": 19.5863037109375,
+      "half_life_p90": 197.1087646484375,
+      "retention_to_dict_end": 0.5513870716094971,
+      "retention_to_final": 0.33037883043289185,
+      "retention_to_final_max_head": 0.9806211590766907
+    },
+    {
+      "kind": "gate",
+      "layer": 5,
+      "mean_log_decay": -0.23773762583732605,
+      "half_life_median": 44.462440490722656,
+      "half_life_p90": 69.87948608398438,
+      "retention_to_dict_end": 0.5715548396110535,
+      "retention_to_final": 0.33253076672554016,
+      "retention_to_final_max_head": 0.7405731081962585
+    },
+    {
+      "kind": "gate",
+      "layer": 6,
+      "mean_log_decay": -0.30467408895492554,
+      "half_life_median": 4.076306343078613,
+      "half_life_p90": 98.01612091064453,
+      "retention_to_dict_end": 0.45462566614151,
+      "retention_to_final": 0.2072041630744934,
+      "retention_to_final_max_head": 0.8581709861755371
+    },
+    {
+      "kind": "gate",
+      "layer": 8,
+      "mean_log_decay": -0.15361636877059937,
+      "half_life_median": 7.185535907745361,
+      "half_life_p90": 323.693359375,
+      "retention_to_dict_end": 0.4640154540538788,
+      "retention_to_final": 0.31252405047416687,
+      "retention_to_final_max_head": 0.9540918469429016
+    },
+    {
+      "kind": "gate",
+      "layer": 9,
+      "mean_log_decay": -0.12281500548124313,
+      "half_life_median": 11.423013687133789,
+      "half_life_p90": 116.7767333984375,
+      "retention_to_dict_end": 0.5872042775154114,
+      "retention_to_final": 0.3133479654788971,
+      "retention_to_final_max_head": 0.8457525372505188
+    },
+    {
+      "kind": "gate",
+      "layer": 10,
+      "mean_log_decay": -0.17882540822029114,
+      "half_life_median": 7.2933526039123535,
+      "half_life_p90": 39.93461990356445,
+      "retention_to_dict_end": 0.4461026191711426,
+      "retention_to_final": 0.14945468306541443,
+      "retention_to_final_max_head": 0.5739072561264038
+    },
+    {
+      "kind": "gate",
+      "layer": 12,
+      "mean_log_decay": -0.08233795315027237,
+      "half_life_median": 39.683597564697266,
+      "half_life_p90": 109.9534683227539,
+      "retention_to_dict_end": 0.6955612301826477,
+      "retention_to_final": 0.3969748616218567,
+      "retention_to_final_max_head": 0.8273451924324036
+    },
+    {
+      "kind": "gate",
+      "layer": 13,
+      "mean_log_decay": -0.1927618533372879,
+      "half_life_median": 5.419275760650635,
+      "half_life_p90": 31.230247497558594,
+      "retention_to_dict_end": 0.4463498592376709,
+      "retention_to_final": 0.14157485961914062,
+      "retention_to_final_max_head": 0.5967932939529419
+    },
+    {
+      "kind": "gate",
+      "layer": 14,
+      "mean_log_decay": -0.13310661911964417,
+      "half_life_median": 5.593043804168701,
+      "half_life_p90": 69.32967376708984,
+      "retention_to_dict_end": 0.38297536969184875,
+      "retention_to_final": 0.19921304285526276,
+      "retention_to_final_max_head": 0.8145476579666138
+    },
+    {
+      "kind": "gate",
+      "layer": 16,
+      "mean_log_decay": -0.28737175464630127,
+      "half_life_median": 5.864094257354736,
+      "half_life_p90": 147.88516235351562,
+      "retention_to_dict_end": 0.5186502933502197,
+      "retention_to_final": 0.39162352681159973,
+      "retention_to_final_max_head": 0.9355102181434631
+    },
+    {
+      "kind": "gate",
+      "layer": 17,
+      "mean_log_decay": -0.13637997210025787,
+      "half_life_median": 6.4481916427612305,
+      "half_life_p90": 80.94823455810547,
+      "retention_to_dict_end": 0.5481197834014893,
+      "retention_to_final": 0.29264000058174133,
+      "retention_to_final_max_head": 0.8829063177108765
+    },
+    {
+      "kind": "gate",
+      "layer": 18,
+      "mean_log_decay": -0.19304466247558594,
+      "half_life_median": 37.9016227722168,
+      "half_life_p90": 173.50164794921875,
+      "retention_to_dict_end": 0.5739456415176392,
+      "retention_to_final": 0.40638023614883423,
+      "retention_to_final_max_head": 0.9523969888687134
+    },
+    {
+      "kind": "gate",
+      "layer": 20,
+      "mean_log_decay": -0.3318942189216614,
+      "half_life_median": 26.29884147644043,
+      "half_life_p90": 169.4107666015625,
+      "retention_to_dict_end": 0.63303142786026,
+      "retention_to_final": 0.4520181119441986,
+      "retention_to_final_max_head": 0.9595460891723633
+    },
+    {
+      "kind": "gate",
+      "layer": 21,
+      "mean_log_decay": -0.18627457320690155,
+      "half_life_median": 6.397924423217773,
+      "half_life_p90": 58.19453811645508,
+      "retention_to_dict_end": 0.4737837016582489,
+      "retention_to_final": 0.2013670653104782,
+      "retention_to_final_max_head": 0.6998196840286255
+    },
+    {
+      "kind": "gate",
+      "layer": 22,
+      "mean_log_decay": -0.5330712795257568,
+      "half_life_median": 10.128131866455078,
+      "half_life_p90": 50.186195373535156,
+      "retention_to_dict_end": 0.47174888849258423,
+      "retention_to_final": 0.22213707864284515,
+      "retention_to_final_max_head": 0.6941960453987122
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 0,
+      "dist": 50,
+      "delta": 0.10065111517906189
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 1,
+      "dist": 50,
+      "delta": 0.15641842782497406
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 2,
+      "dist": 50,
+      "delta": 0.07038308680057526
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 4,
+      "dist": 50,
+      "delta": 0.025972671806812286
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 5,
+      "dist": 50,
+      "delta": 0.04087875410914421
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 6,
+      "dist": 50,
+      "delta": 0.05248357728123665
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 8,
+      "dist": 50,
+      "delta": 0.033890485763549805
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 9,
+      "dist": 50,
+      "delta": 0.043561361730098724
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 10,
+      "dist": 50,
+      "delta": 0.05776459723711014
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 12,
+      "dist": 50,
+      "delta": 0.017249779775738716
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 13,
+      "dist": 50,
+      "delta": 0.032987408339977264
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 14,
+      "dist": 50,
+      "delta": 0.0414528027176857
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 16,
+      "dist": 50,
+      "delta": 0.06667724251747131
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 17,
+      "dist": 50,
+      "delta": 0.09558793902397156
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 18,
+      "dist": 50,
+      "delta": 0.1416487693786621
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 20,
+      "dist": 50,
+      "delta": 0.13790982961654663
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 21,
+      "dist": 50,
+      "delta": 0.08926872164011002
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 22,
+      "dist": 50,
+      "delta": 0.10666986554861069
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 0,
+      "dist": 25,
+      "delta": 0.03900107368826866
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 1,
+      "dist": 25,
+      "delta": 0.05441990867257118
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 2,
+      "dist": 25,
+      "delta": 0.05161106958985329
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 4,
+      "dist": 25,
+      "delta": 0.03993085399270058
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 5,
+      "dist": 25,
+      "delta": 0.02347927913069725
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 6,
+      "dist": 25,
+      "delta": 0.0568094365298748
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 8,
+      "dist": 25,
+      "delta": 0.057863280177116394
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 9,
+      "dist": 25,
+      "delta": 0.06585662811994553
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 10,
+      "dist": 25,
+      "delta": 0.10798050463199615
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 12,
+      "dist": 25,
+      "delta": 0.05482722073793411
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 13,
+      "dist": 25,
+      "delta": 0.06419804692268372
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 14,
+      "dist": 25,
+      "delta": 0.07902789860963821
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 16,
+      "dist": 25,
+      "delta": 0.0527699738740921
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 17,
+      "dist": 25,
+      "delta": 0.04633120819926262
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 18,
+      "dist": 25,
+      "delta": 0.04482073709368706
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 20,
+      "dist": 25,
+      "delta": 0.047070398926734924
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 21,
+      "dist": 25,
+      "delta": 0.03202522546052933
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 22,
+      "dist": 25,
+      "delta": 0.028109397739171982
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 0,
+      "dist": 0,
+      "delta": 0.019621221348643303
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 1,
+      "dist": 0,
+      "delta": 0.02971947193145752
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 2,
+      "dist": 0,
+      "delta": 0.027348775416612625
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 4,
+      "dist": 0,
+      "delta": 0.03558705374598503
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 5,
+      "dist": 0,
+      "delta": 0.015024649910628796
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 6,
+      "dist": 0,
+      "delta": 0.028760813176631927
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 8,
+      "dist": 0,
+      "delta": 0.03998523950576782
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 9,
+      "dist": 0,
+      "delta": 0.03740060329437256
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 10,
+      "dist": 0,
+      "delta": 0.034823086112737656
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 12,
+      "dist": 0,
+      "delta": 0.040768809616565704
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 13,
+      "dist": 0,
+      "delta": 0.04790429025888443
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 14,
+      "dist": 0,
+      "delta": 0.05208238586783409
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 16,
+      "dist": 0,
+      "delta": 0.06328432261943817
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 17,
+      "dist": 0,
+      "delta": 0.07698851078748703
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 18,
+      "dist": 0,
+      "delta": 0.06635496765375137
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 20,
+      "dist": 0,
+      "delta": 0.0836128443479538
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 21,
+      "dist": 0,
+      "delta": 0.08333223313093185
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 22,
+      "dist": 0,
+      "delta": 0.10194308310747147
+    },
+    {
+      "kind": "route",
+      "name": "state route only",
+      "rec": [
+        0.04087913781404495,
+        0.04068789631128311,
+        0.07023158669471741,
+        0.043852951377630234,
+        0.036497052758932114,
+        0.039698276668787,
+        0.06594165414571762,
+        0.05311991646885872,
+        0.022940311580896378,
+        0.04882964864373207,
+        0.0391920767724514,
+        0.05269473046064377,
+        0.031715236604213715,
+        0.033159494400024414,
+        0.028801817446947098,
+        0.050716985017061234,
+        0.026739634573459625,
+        0.04658890515565872,
+        0.06212030351161957,
+        0.055378954857587814,
+        0.036528900265693665,
+        0.0340617410838604,
+        0.018760953098535538,
+        0.02409122884273529,
+        0.036415450274944305
+      ],
+      "D": [
+        -8.780378341674805,
+        -6.023784637451172,
+        -4.920909881591797,
+        -9.899869918823242,
+        -11.381654739379883,
+        -8.540151596069336,
+        -8.97728157043457,
+        -13.804520606994629,
+        -9.389902114868164,
+        -7.60682487487793,
+        -10.14244270324707,
+        -9.210433959960938,
+        -12.223271369934082,
+        -10.072078704833984,
+        -10.906845092773438,
+        -10.962630271911621,
+        -7.4305877685546875,
+        -10.085409164428711,
+        -8.513273239135742,
+        -12.60350227355957,
+        -6.675840377807617,
+        -8.927665710449219,
+        -7.210699081420898,
+        -7.035472869873047,
+        -4.413612365722656
+      ]
+    },
+    {
+      "kind": "route",
+      "name": "kv route only",
+      "rec": [
+        0.9651886224746704,
+        0.9519563317298889,
+        0.9739104509353638,
+        0.9271074533462524,
+        0.9673129320144653,
+        0.9608278870582581,
+        0.935653030872345,
+        0.9456430673599243,
+        0.9669809341430664,
+        0.9701023101806641,
+        0.9668008089065552,
+        0.9506826996803284,
+        0.9403131604194641,
+        0.9481527805328369,
+        0.9596830010414124,
+        0.9601060748100281,
+        0.9934356212615967,
+        0.9593436121940613,
+        0.9599026441574097,
+        0.9672887325286865,
+        0.9534247517585754,
+        0.9674010276794434,
+        0.956292986869812,
+        0.9651767015457153,
+        0.9632085561752319
+      ],
+      "D": [
+        11.385688781738281,
+        12.203996658325195,
+        9.112409591674805,
+        3.585145950317383,
+        9.11700439453125,
+        10.917003631591797,
+        6.610719680786133,
+        4.803905487060547,
+        8.104471206665039,
+        13.310952186584473,
+        10.822628021240234,
+        10.55262279510498,
+        10.346878051757812,
+        6.873937606811523,
+        11.708890914916992,
+        9.657674789428711,
+        6.384990692138672,
+        5.354515075683594,
+        9.701749801635742,
+        7.728368759155273,
+        10.703882217407227,
+        8.912187576293945,
+        11.721627235412598,
+        11.62568473815918,
+        11.974913597106934
+      ]
+    },
+    {
+      "kind": "route",
+      "name": "identity ctrl (clean)",
+      "rec": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "D": [
+        12.145182609558105,
+        13.164996147155762,
+        9.517557144165039,
+        4.698026657104492,
+        9.836847305297852,
+        11.744441986083984,
+        7.7640228271484375,
+        5.937204360961914,
+        8.716360092163086,
+        13.989790916442871,
+        11.572969436645508,
+        11.638006210327148,
+        11.829536437988281,
+        7.83416748046875,
+        12.688390731811523,
+        10.562265396118164,
+        6.4788055419921875,
+        6.042247772216797,
+        10.515281677246094,
+        8.457696914672852,
+        11.586713790893555,
+        9.535284042358398,
+        12.604235649108887,
+        12.31620979309082,
+        12.625499725341797
+      ]
+    },
+    {
+      "kind": "route",
+      "name": "identity ctrl (corrupted)",
+      "rec": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "D": [
+        -9.672256469726562,
+        -6.837650299072266,
+        -6.011543273925781,
+        -10.569391250610352,
+        -12.185401916503906,
+        -9.378704071044922,
+        -10.15916633605957,
+        -14.912030220031738,
+        -9.815017700195312,
+        -8.715517044067383,
+        -11.028230667114258,
+        -10.370147705078125,
+        -13.01109790802002,
+        -10.68620491027832,
+        -11.606584548950195,
+        -12.112632751464844,
+        -7.812738418579102,
+        -10.873495101928711,
+        -9.773626327514648,
+        -13.838227272033691,
+        -7.368244171142578,
+        -9.57872200012207,
+        -7.5895538330078125,
+        -7.513187408447266,
+        -5.057548522949219
+      ]
+    },
+    {
+      "kind": "gate",
+      "layer": 0,
+      "mean_log_decay": -0.664392352104187,
+      "half_life_median": 31.602880477905273,
+      "half_life_p90": 618.259765625,
+      "retention_to_dict_end": 0.7126576900482178,
+      "retention_to_final": 0.3743171691894531,
+      "retention_to_final_max_head": 0.9999716877937317
+    },
+    {
+      "kind": "gate",
+      "layer": 1,
+      "mean_log_decay": -0.859662652015686,
+      "half_life_median": 1.0191493034362793,
+      "half_life_p90": 117.03590393066406,
+      "retention_to_dict_end": 0.3815133273601532,
+      "retention_to_final": 0.17035426199436188,
+      "retention_to_final_max_head": 0.8538484573364258
+    },
+    {
+      "kind": "gate",
+      "layer": 2,
+      "mean_log_decay": -0.5178877115249634,
+      "half_life_median": 2.7328543663024902,
+      "half_life_p90": 56.54069137573242,
+      "retention_to_dict_end": 0.5268731713294983,
+      "retention_to_final": 0.1817464381456375,
+      "retention_to_final_max_head": 0.8705865144729614
+    },
+    {
+      "kind": "gate",
+      "layer": 4,
+      "mean_log_decay": -0.43218666315078735,
+      "half_life_median": 19.656539916992188,
+      "half_life_p90": 202.5462646484375,
+      "retention_to_dict_end": 0.6338347792625427,
+      "retention_to_final": 0.3417419493198395,
+      "retention_to_final_max_head": 0.9818271994590759
+    },
+    {
+      "kind": "gate",
+      "layer": 5,
+      "mean_log_decay": -0.23713742196559906,
+      "half_life_median": 44.866920471191406,
+      "half_life_p90": 70.94071960449219,
+      "retention_to_dict_end": 0.6672489047050476,
+      "retention_to_final": 0.3470815122127533,
+      "retention_to_final_max_head": 0.7834447026252747
+    },
+    {
+      "kind": "gate",
+      "layer": 6,
+      "mean_log_decay": -0.30420538783073425,
+      "half_life_median": 4.100193500518799,
+      "half_life_p90": 97.600830078125,
+      "retention_to_dict_end": 0.6399958729743958,
+      "retention_to_final": 0.21516010165214539,
+      "retention_to_final_max_head": 0.8826186656951904
+    },
+    {
+      "kind": "gate",
+      "layer": 8,
+      "mean_log_decay": -0.15416325628757477,
+      "half_life_median": 7.222434997558594,
+      "half_life_p90": 322.4460144042969,
+      "retention_to_dict_end": 0.6675018668174744,
+      "retention_to_final": 0.3368895947933197,
+      "retention_to_final_max_head": 0.9603564739227295
+    },
+    {
+      "kind": "gate",
+      "layer": 9,
+      "mean_log_decay": -0.12236382812261581,
+      "half_life_median": 11.512571334838867,
+      "half_life_p90": 119.55995178222656,
+      "retention_to_dict_end": 0.7417512536048889,
+      "retention_to_final": 0.34459930658340454,
+      "retention_to_final_max_head": 0.8809516429901123
+    },
+    {
+      "kind": "gate",
+      "layer": 10,
+      "mean_log_decay": -0.1784208118915558,
+      "half_life_median": 7.31231164932251,
+      "half_life_p90": 40.57167434692383,
+      "retention_to_dict_end": 0.6867105960845947,
+      "retention_to_final": 0.1805284023284912,
+      "retention_to_final_max_head": 0.6221122741699219
+    },
+    {
+      "kind": "gate",
+      "layer": 12,
+      "mean_log_decay": -0.08215368539094925,
+      "half_life_median": 39.83429718017578,
+      "half_life_p90": 108.96435546875,
+      "retention_to_dict_end": 0.8285221457481384,
+      "retention_to_final": 0.4225009083747864,
+      "retention_to_final_max_head": 0.8563157320022583
+    },
+    {
+      "kind": "gate",
+      "layer": 13,
+      "mean_log_decay": -0.1922357976436615,
+      "half_life_median": 5.384222984313965,
+      "half_life_p90": 31.230798721313477,
+      "retention_to_dict_end": 0.6156407594680786,
+      "retention_to_final": 0.1627296358346939,
+      "retention_to_final_max_head": 0.6919130086898804
+    },
+    {
+      "kind": "gate",
+      "layer": 14,
+      "mean_log_decay": -0.13199792802333832,
+      "half_life_median": 5.591762065887451,
+      "half_life_p90": 73.80055236816406,
+      "retention_to_dict_end": 0.6001906394958496,
+      "retention_to_final": 0.22316405177116394,
+      "retention_to_final_max_head": 0.816574215888977
+    },
+    {
+      "kind": "gate",
+      "layer": 16,
+      "mean_log_decay": -0.2849884629249573,
+      "half_life_median": 5.883946418762207,
+      "half_life_p90": 147.4934539794922,
+      "retention_to_dict_end": 0.5734962821006775,
+      "retention_to_final": 0.394794762134552,
+      "retention_to_final_max_head": 0.9385271072387695
+    },
+    {
+      "kind": "gate",
+      "layer": 17,
+      "mean_log_decay": -0.13605467975139618,
+      "half_life_median": 6.520003318786621,
+      "half_life_p90": 81.3512954711914,
+      "retention_to_dict_end": 0.6631734371185303,
+      "retention_to_final": 0.30353209376335144,
+      "retention_to_final_max_head": 0.8869349360466003
+    },
+    {
+      "kind": "gate",
+      "layer": 18,
+      "mean_log_decay": -0.19208961725234985,
+      "half_life_median": 37.45219039916992,
+      "half_life_p90": 173.7811737060547,
+      "retention_to_dict_end": 0.6491058468818665,
+      "retention_to_final": 0.41486456990242004,
+      "retention_to_final_max_head": 0.9555805921554565
+    },
+    {
+      "kind": "gate",
+      "layer": 20,
+      "mean_log_decay": -0.32917913794517517,
+      "half_life_median": 26.171249389648438,
+      "half_life_p90": 169.3975830078125,
+      "retention_to_dict_end": 0.6955201029777527,
+      "retention_to_final": 0.4574386477470398,
+      "retention_to_final_max_head": 0.9618621468544006
+    },
+    {
+      "kind": "gate",
+      "layer": 21,
+      "mean_log_decay": -0.1845337152481079,
+      "half_life_median": 6.416224479675293,
+      "half_life_p90": 54.46940994262695,
+      "retention_to_dict_end": 0.5948672890663147,
+      "retention_to_final": 0.2049342840909958,
+      "retention_to_final_max_head": 0.7314675450325012
+    },
+    {
+      "kind": "gate",
+      "layer": 22,
+      "mean_log_decay": -0.5347797274589539,
+      "half_life_median": 10.250875473022461,
+      "half_life_p90": 49.45197296142578,
+      "retention_to_dict_end": 0.5698397755622864,
+      "retention_to_final": 0.23702846467494965,
+      "retention_to_final_max_head": 0.6970887780189514
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 0,
+      "dist": 30,
+      "delta": 0.08782855421304703
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 1,
+      "dist": 30,
+      "delta": 0.14763066172599792
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 2,
+      "dist": 30,
+      "delta": 0.07038569450378418
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 4,
+      "dist": 30,
+      "delta": 0.05387599766254425
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 5,
+      "dist": 30,
+      "delta": 0.04112664982676506
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 6,
+      "dist": 30,
+      "delta": 0.06810850650072098
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 8,
+      "dist": 30,
+      "delta": 0.05104071646928787
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 9,
+      "dist": 30,
+      "delta": 0.06540737301111221
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 10,
+      "dist": 30,
+      "delta": 0.08221208304166794
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 12,
+      "dist": 30,
+      "delta": 0.04797762632369995
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 13,
+      "dist": 30,
+      "delta": 0.05327208340167999
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 14,
+      "dist": 30,
+      "delta": 0.06504528969526291
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 16,
+      "dist": 30,
+      "delta": 0.06433942914009094
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 17,
+      "dist": 30,
+      "delta": 0.07752149552106857
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 18,
+      "dist": 30,
+      "delta": 0.1185329407453537
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 20,
+      "dist": 30,
+      "delta": 0.10743163526058197
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 21,
+      "dist": 30,
+      "delta": 0.07727165520191193
+    },
+    {
+      "kind": "state_div",
+      "cut": "after target value",
+      "layer": 22,
+      "dist": 30,
+      "delta": 0.0888865664601326
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 0,
+      "dist": 25,
+      "delta": 0.03508678823709488
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 1,
+      "dist": 25,
+      "delta": 0.05449247732758522
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 2,
+      "dist": 25,
+      "delta": 0.04953740909695625
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 4,
+      "dist": 25,
+      "delta": 0.0406150296330452
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 5,
+      "dist": 25,
+      "delta": 0.0224703811109066
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 6,
+      "dist": 25,
+      "delta": 0.05317365378141403
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 8,
+      "dist": 25,
+      "delta": 0.053015902638435364
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 9,
+      "dist": 25,
+      "delta": 0.06273989379405975
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 10,
+      "dist": 25,
+      "delta": 0.09887780994176865
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 12,
+      "dist": 25,
+      "delta": 0.04951327294111252
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 13,
+      "dist": 25,
+      "delta": 0.05718468502163887
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 14,
+      "dist": 25,
+      "delta": 0.07288758456707001
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 16,
+      "dist": 25,
+      "delta": 0.044516317546367645
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 17,
+      "dist": 25,
+      "delta": 0.04120595008134842
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 18,
+      "dist": 25,
+      "delta": 0.04329126700758934
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 20,
+      "dist": 25,
+      "delta": 0.04379739984869957
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 21,
+      "dist": 25,
+      "delta": 0.028260214254260063
+    },
+    {
+      "kind": "state_div",
+      "cut": "end of dictionary",
+      "layer": 22,
+      "dist": 25,
+      "delta": 0.025354811921715736
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 0,
+      "dist": 0,
+      "delta": 0.01759212091565132
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 1,
+      "dist": 0,
+      "delta": 0.029189199209213257
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 2,
+      "dist": 0,
+      "delta": 0.026369573548436165
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 4,
+      "dist": 0,
+      "delta": 0.036248255521059036
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 5,
+      "dist": 0,
+      "delta": 0.014221069402992725
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 6,
+      "dist": 0,
+      "delta": 0.02633785642683506
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 8,
+      "dist": 0,
+      "delta": 0.036977119743824005
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 9,
+      "dist": 0,
+      "delta": 0.040885284543037415
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 10,
+      "dist": 0,
+      "delta": 0.037714507430791855
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 12,
+      "dist": 0,
+      "delta": 0.03563954681158066
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 13,
+      "dist": 0,
+      "delta": 0.03773175925016403
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 14,
+      "dist": 0,
+      "delta": 0.04329005256295204
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 16,
+      "dist": 0,
+      "delta": 0.06346167623996735
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 17,
+      "dist": 0,
+      "delta": 0.07480994611978531
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 18,
+      "dist": 0,
+      "delta": 0.06691800057888031
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 20,
+      "dist": 0,
+      "delta": 0.0915987566113472
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 21,
+      "dist": 0,
+      "delta": 0.09403645992279053
+    },
+    {
+      "kind": "state_div",
+      "cut": "final token",
+      "layer": 22,
+      "dist": 0,
+      "delta": 0.10644088685512543
+    },
+    {
+      "kind": "route",
+      "name": "state route only",
+      "rec": [
+        0.01218887697905302,
+        0.0021147970110177994,
+        0.01689654402434826,
+        -0.009435671381652355,
+        0.020369449630379677,
+        0.03461640700697899,
+        0.0009817611426115036,
+        -0.008439638651907444,
+        -0.002189931459724903,
+        0.008221491239964962,
+        -0.006603329908102751,
+        -0.004657461773604155,
+        0.007987317629158497,
+        -0.005843080580234528,
+        0.003042122581973672,
+        0.008198678493499756,
+        -0.00478039775043726,
+        0.008133509196341038,
+        0.011313139460980892,
+        0.012705354019999504,
+        0.002268571872264147,
+        -0.0005504293949343264,
+        0.00894078891724348,
+        0.003086599987000227,
+        -0.012140568345785141
+      ],
+      "D": [
+        -10.739837646484375,
+        -9.715555191040039,
+        -8.507255554199219,
+        -5.755786895751953,
+        -9.31313705444336,
+        -9.759368896484375,
+        -14.994343757629395,
+        -7.519048690795898,
+        -8.960836410522461,
+        -11.791305541992188,
+        -8.61758804321289,
+        -8.13360595703125,
+        -13.629027366638184,
+        -12.271337509155273,
+        -13.710098266601562,
+        -12.196670532226562,
+        -8.017576217651367,
+        -11.15997314453125,
+        -14.495217323303223,
+        -12.343303680419922,
+        -10.207832336425781,
+        -9.950153350830078,
+        -13.321122169494629,
+        -12.864501953125,
+        -5.031719207763672
+      ]
+    },
+    {
+      "kind": "route",
+      "name": "kv route only",
+      "rec": [
+        0.9922404289245605,
+        1.0125497579574585,
+        0.9886563420295715,
+        0.9669273495674133,
+        1.0191457271575928,
+        0.9908170700073242,
+        0.9939702153205872,
+        0.9957945942878723,
+        1.001393437385559,
+        0.9692328572273254,
+        0.9913790822029114,
+        1.0056724548339844,
+        0.9874361753463745,
+        1.0017374753952026,
+        0.9946035146713257,
+        0.9867934584617615,
+        0.9898218512535095,
+        0.9897592663764954,
+        0.9879439473152161,
+        1.0041428804397583,
+        0.9881389141082764,
+        1.0095824003219604,
+        1.0072016716003418,
+        0.9789283275604248,
+        0.9982536435127258
+      ],
+      "D": [
+        13.491986274719238,
+        9.434873580932617,
+        9.511312484741211,
+        12.352190017700195,
+        7.296195983886719,
+        9.362255096435547,
+        12.4209623336792,
+        11.520271301269531,
+        10.143136978149414,
+        10.715301513671875,
+        8.426868438720703,
+        7.870050430297852,
+        11.841197967529297,
+        9.634265899658203,
+        7.2886810302734375,
+        15.90788459777832,
+        9.980310440063477,
+        11.691253662109375,
+        8.372526168823242,
+        12.579472541809082,
+        10.274059295654297,
+        9.679605484008789,
+        13.931594848632812,
+        12.789020538330078,
+        7.865297317504883
+      ]
+    },
+    {
+      "kind": "route",
+      "name": "identity ctrl (clean)",
+      "rec": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "D": [
+        13.683842658996582,
+        9.197021484375,
+        9.721649169921875,
+        12.965567588806152,
+        6.977807998657227,
+        9.545890808105469,
+        12.587437629699707,
+        11.60000228881836,
+        10.11661148071289,
+        11.435859680175781,
+        8.574104309082031,
+        7.78019905090332,
+        12.167915344238281,
+        9.596492767333984,
+        7.402965545654297,
+        16.287166595458984,
+        10.16448974609375,
+        11.929646492004395,
+        8.654817581176758,
+        12.47532844543457,
+        10.520479202270508,
+        9.493391036987305,
+        13.734989166259766,
+        13.342966079711914,
+        7.8875885009765625
+      ]
+    },
+    {
+      "kind": "route",
+      "name": "identity ctrl (corrupted)",
+      "rec": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "D": [
+        -11.041208267211914,
+        -9.755636215209961,
+        -8.820554733276367,
+        -5.580789566040039,
+        -9.651874542236328,
+        -10.451610565185547,
+        -15.021449089050293,
+        -7.359041213989258,
+        -8.919149398803711,
+        -11.983850479125977,
+        -8.504810333251953,
+        -8.059831619262695,
+        -13.836734771728516,
+        -12.144304275512695,
+        -13.77452278137207,
+        -12.432130813598633,
+        -7.931072235107422,
+        -11.349312782287598,
+        -14.760113716125488,
+        -12.662691116333008,
+        -10.254962921142578,
+        -9.939456939697266,
+        -13.565207481384277,
+        -12.94564437866211,
+        -4.876752853393555
+      ]
+    }
+  ]
+}

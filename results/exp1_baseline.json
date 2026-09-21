@@ -1,0 +1,38 @@
+[
+  {
+    "n_pairs": 4,
+    "n": 100,
+    "template": "chat",
+    "verified": 100,
+    "acc_clean": 1.0,
+    "acc_corrupt": 1.0,
+    "acc_both": 1.0,
+    "D_clean": 8.078125,
+    "D_corrupt": -8.006875,
+    "n_tokens": 46
+  },
+  {
+    "n_pairs": 8,
+    "n": 100,
+    "template": "chat",
+    "verified": 100,
+    "acc_clean": 1.0,
+    "acc_corrupt": 1.0,
+    "acc_both": 1.0,
+    "D_clean": 10.070625,
+    "D_corrupt": -10.074375,
+    "n_tokens": 62
+  },
+  {
+    "n_pairs": 16,
+    "n": 100,
+    "template": "chat",
+    "verified": 100,
+    "acc_clean": 1.0,
+    "acc_corrupt": 1.0,
+    "acc_both": 1.0,
+    "D_clean": 11.5625,
+    "D_corrupt": -11.033125,
+    "n_tokens": 94
+  }
+]

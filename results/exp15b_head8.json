@@ -1,0 +1,161 @@
+{
+  "meta": {
+    "layer": 0,
+    "out": "results/exp15b_head8.json"
+  },
+  "whole": 1.0434383016824722,
+  "rows": [
+    {
+      "kind": "writer_head",
+      "head": 3,
+      "rec": 0.45313768804073334,
+      "sem": 0.012151487384538825
+    },
+    {
+      "kind": "writer_head",
+      "head": 8,
+      "rec": 0.19073810085654258,
+      "sem": 0.007814162184607256
+    },
+    {
+      "kind": "writer_head",
+      "head": 2,
+      "rec": 0.030168554644333198,
+      "sem": 0.003454546554023855
+    },
+    {
+      "kind": "writer_head",
+      "head": 15,
+      "rec": 0.023654413896147163,
+      "sem": 0.0022751583446077557
+    },
+    {
+      "kind": "writer_head",
+      "head": 7,
+      "rec": 0.020640750466263853,
+      "sem": 0.0024576857259340384
+    },
+    {
+      "kind": "writer_head",
+      "head": 5,
+      "rec": 0.019816635717288592,
+      "sem": 0.001946826054539277
+    },
+    {
+      "kind": "writer_head",
+      "head": 13,
+      "rec": 0.018587134232438983,
+      "sem": 0.0017064792505194673
+    },
+    {
+      "kind": "writer_head",
+      "head": 1,
+      "rec": 0.01578279142777319,
+      "sem": 0.0013012699911604925
+    },
+    {
+      "kind": "writer_head",
+      "head": 12,
+      "rec": 0.009210511437213426,
+      "sem": 0.0011357772765391793
+    },
+    {
+      "kind": "writer_head",
+      "head": 9,
+      "rec": 0.008437495853868313,
+      "sem": 0.001156766902840252
+    },
+    {
+      "kind": "writer_head",
+      "head": 6,
+      "rec": 0.0024643288061815837,
+      "sem": 0.0007193421280456245
+    },
+    {
+      "kind": "writer_head",
+      "head": 14,
+      "rec": 0.001010248850870994,
+      "sem": 0.00043872666531765195
+    },
+    {
+      "kind": "writer_head",
+      "head": 10,
+      "rec": 0.0009468329191372505,
+      "sem": 0.0007295546020129422
+    },
+    {
+      "kind": "writer_head",
+      "head": 4,
+      "rec": 0.0008758617428611615,
+      "sem": 0.0002723764111435628
+    },
+    {
+      "kind": "writer_head",
+      "head": 0,
+      "rec": -0.0006543870476889424,
+      "sem": 0.0002823713547150649
+    },
+    {
+      "kind": "writer_head",
+      "head": 11,
+      "rec": 3.851082519759075e-06,
+      "sem": 0.00023368086825438592
+    },
+    {
+      "kind": "site",
+      "name": "intact",
+      "acc": 1.0,
+      "gap": 20.807838077545167,
+      "attn": 0.7816608268022537
+    },
+    {
+      "kind": "site",
+      "name": "head 8 zeroed everywhere",
+      "acc": 0.0,
+      "gap": 2.364435815811157,
+      "attn": 0.09553566503338516
+    },
+    {
+      "kind": "site",
+      "name": "head 8 zeroed @ source value only",
+      "acc": 1.0,
+      "gap": 19.25369010925293,
+      "attn": 0.765649043917656
+    },
+    {
+      "kind": "site",
+      "name": "head 8 zeroed @ all value tokens",
+      "acc": 1.0,
+      "gap": 19.39789665222168,
+      "attn": 0.7911424595117569
+    },
+    {
+      "kind": "site",
+      "name": "head 8 zeroed @ query key only",
+      "acc": 1.0,
+      "gap": 17.807355098724365,
+      "attn": 0.7616595888137817
+    },
+    {
+      "kind": "site",
+      "name": "head 8 zeroed @ final token only",
+      "acc": 1.0,
+      "gap": 20.679307956695556,
+      "attn": 0.7822833913564682
+    },
+    {
+      "kind": "site",
+      "name": "head 8 zeroed except at value tokens",
+      "acc": 0.05,
+      "gap": 3.9142227745056153,
+      "attn": 0.1489323344640434
+    },
+    {
+      "kind": "site",
+      "name": "heads 3+4 zeroed everywhere (PPL-heavy control)",
+      "acc": 0.52,
+      "gap": 9.70547028541565,
+      "attn": 0.3635848326329142
+    }
+  ]
+}

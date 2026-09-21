@@ -1,0 +1,80 @@
+Loading weights:   0%|          | 0/320 [00:00<?, ?it/s]Loading weights:   0%|          | 1/320 [00:00<00:32,  9.91it/s]Loading weights:  52%|█████▏    | 167/320 [00:00<00:00, 968.32it/s]Loading weights:  87%|████████▋ | 277/320 [00:00<00:00, 1026.04it/s]Loading weights: 100%|██████████| 320/320 [00:00<00:00, 929.06it/s] 
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (2539978 > 262144). Running this sequence through the model will result in indexing errors
+fit corpus: 2000 train seqs; eval: 16 test seqs
+  stats 50/2000
+  stats 100/2000
+  stats 150/2000
+  stats 200/2000
+  stats 250/2000
+  stats 300/2000
+  stats 350/2000
+  stats 400/2000
+  stats 450/2000
+  stats 500/2000
+  stats 550/2000
+  stats 600/2000
+  stats 650/2000
+  stats 700/2000
+  stats 750/2000
+  stats 800/2000
+  stats 850/2000
+  stats 900/2000
+  stats 950/2000
+  stats 1000/2000
+  stats 1050/2000
+  stats 1100/2000
+  stats 1150/2000
+  stats 1200/2000
+  stats 1250/2000
+  stats 1300/2000
+  stats 1350/2000
+  stats 1400/2000
+  stats 1450/2000
+  stats 1500/2000
+  stats 1550/2000
+  stats 1600/2000
+  stats 1650/2000
+  stats 1700/2000
+  stats 1750/2000
+  stats 1800/2000
+  stats 1850/2000
+  stats 1900/2000
+  stats 1950/2000
+  stats 2000/2000
+
+23947 token types, 1024000 tokens
+R2_identity (between-type / total variance) = 0.9212
+  ridge     1e-02  held-out-type R2 +0.8234
+  ridge     1e+00  held-out-type R2 +0.8282
+  ridge     1e+01  held-out-type R2 +0.8445
+  ridge     1e+02  held-out-type R2 +0.7393
+  ridge     1e+03  held-out-type R2 +0.3840
+  ridge     1e+04  held-out-type R2 +0.1637
+  ridge     1e+05  held-out-type R2 +0.0482
+  ridge     1e+06  held-out-type R2 -0.1629
+selected ridge 1e+01 (held-out-type R2 0.8445)
+R2_affine   (A.embed + b vs total variance)  = 0.8629
+R2_affine|identity (of the token-wise part)  = 0.9367
+A spectrum: s1=8.750  s64/s1=0.3491  s256/s1=0.2031
+
+== perplexity ==
+intact                                     NLL  3.0846   PPL       21.86
+  token-type table covers 0.9963 of eval tokens
+token-type mean (rung 3 ceiling)           NLL  4.5307   PPL       92.82
+token-type mean + affine fallback          NLL  4.5060   PPL       90.56
+global mean (no token info)                NLL  9.6119   PPL    14941.55
+affine  A.embed + b  (full rank)           NLL  4.5086   PPL       90.80
+affine, rank 8                             NLL  9.4536   PPL    12754.48
+affine, rank 16                            NLL  9.0571   PPL     8579.20
+affine, rank 32                            NLL  8.2452   PPL     3809.22
+affine, rank 64                            NLL  7.4692   PPL     1753.23
+affine, rank 128                           NLL  6.4547   PPL      635.69
+affine, rank 256                           NLL  5.4889   PPL      241.98
+affine, rank 512                           NLL  4.7821   PPL      119.36
+
+== retrieval task ==
+  L0 <- intact               accuracy 1.000   D_clean-D_corr +20.81
+  L0 <- affine (full rank)   accuracy 0.000   D_clean-D_corr +2.48
+  L0 <- affine, rank 64      accuracy 0.000   D_clean-D_corr +0.13
+  L0 <- global mean          accuracy 0.000   D_clean-D_corr +0.29

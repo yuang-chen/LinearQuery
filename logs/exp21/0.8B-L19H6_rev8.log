@@ -1,0 +1,13 @@
+[0.8B-L19H6 rev8] groups [[0, 1, 2], [4, 5, 6], [8, 9, 10], [12, 13, 14], [16, 17, 18], [20, 21, 22]]
+  100 items in 4 batches, ~86 tokens
+B1 baseline acc 1.000 gap +18.74
+B2 groups   G0:0.00/+0.0  G1:0.04/+1.1  G2:0.01/+2.3  G3:0.01/+0.5  G4:0.99/+17.8  G5:0.91/+13.7
+B3 layers   L0:0.00  L1:1.00  L2:0.77  L4:0.99  L5:0.93  L6:0.97  L8:0.99  L9:0.99  L10:0.70  L12:1.00  L13:0.99  L14:0.79  L16:0.99  L17:1.00  L18:1.00  L20:1.00  L21:1.00  L22:1.00
+B4 readers  L19H6:0.80(zero gap +19.8)  L19H7:0.71(zero gap +18.1)  L19H5:0.60(zero gap +17.9)  L15H5:0.57(zero gap +17.8)  L23H3:0.56(zero gap +20.0)  L15H0:0.53(zero gap +14.3)  L15H2:0.43(zero gap +13.8)  L19H0:0.42(zero gap +18.9)  -> reader L19H6
+B5 L0 heads worst h8:0.01/+0.6  h4:0.99/+16.9  h3:0.96/+17.0  h6:0.99/+17.8
+B6 G4 [16, 17, 18] sel: QinKin=4.80(top1 1.00)  QinKG4=5.49(top1 0.99)  QG4Kin=5.80(top1 1.00)  QG4KG4=6.68(top1 1.00)
+B6 G3 [12, 13, 14] sel: QinKin=4.80(top1 1.00)  QinKG3=5.10(top1 1.00)  QG3Kin=-0.57(top1 0.00)  QG3KG3=-0.53(top1 0.00)
+B6 G2 [8, 9, 10] sel: QinKin=4.80(top1 1.00)  QinKG2=3.79(top1 1.00)  QG2Kin=1.41(top1 0.72)  QG2KG2=1.25(top1 0.83)
+B6 G1 [4, 5, 6] sel: QinKin=4.80(top1 1.00)  QinKG1=4.43(top1 0.99)  QG1Kin=0.16(top1 0.08)  QG1KG1=0.19(top1 0.07)
+B7 split    intact: t0.80 o0.10 f0.01  G4: t0.91 o0.03 f0.00  G3: t0.02 o0.82 f0.02  G2: t0.20 o0.43 f0.01  G1: t0.08 o0.65 f0.00
+wrote results/exp21/0.8B-L19H6_rev8.json  (1.7 min)

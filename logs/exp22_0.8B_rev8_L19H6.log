@@ -1,0 +1,29 @@
+[0.8B rev8] groups [[0, 1, 2], [4, 5, 6], [8, 9, 10], [12, 13, 14], [16, 17, 18], [20, 21, 22]]  reader L19H6
+  100 prompt pairs in 4 batches, 86 tokens
+A1 run A (asks A): ansA 1.00  attA 0.80
+A1 run B (asks B): ansA 0.00  ansB 0.99  attA 0.01  attB 0.78
+A2 G0 final     ansA 0.00  ansB 0.99  D(A-B)  -9.31  attA 0.01  attB 0.78
+A2 G0 question  ansA 0.99  ansB 0.00  D(A-B)  +9.52  attA 0.80  attB 0.01
+A2 G0 dict      ansA 0.00  ansB 0.99  D(A-B)  -9.31  attA 0.01  attB 0.78
+A2 G0 all       ansA 0.99  ansB 0.00  D(A-B)  +9.52  attA 0.80  attB 0.01
+A2 G1 final     ansA 0.00  ansB 0.99  D(A-B)  -9.32  attA 0.01  attB 0.78
+A2 G1 question  ansA 0.00  ansB 0.99  D(A-B)  -9.11  attA 0.01  attB 0.78
+A2 G1 dict      ansA 0.00  ansB 0.99  D(A-B)  -9.31  attA 0.01  attB 0.78
+A2 G1 all       ansA 0.00  ansB 0.99  D(A-B)  -9.11  attA 0.01  attB 0.78
+A2 G2 final     ansA 0.00  ansB 0.99  D(A-B)  -9.32  attA 0.01  attB 0.78
+A2 G2 question  ansA 0.00  ansB 0.99  D(A-B)  -8.77  attA 0.01  attB 0.79
+A2 G2 dict      ansA 0.00  ansB 0.99  D(A-B)  -9.31  attA 0.01  attB 0.78
+A2 G2 all       ansA 0.00  ansB 0.99  D(A-B)  -8.77  attA 0.01  attB 0.79
+A2 G3 final     ansA 0.97  ansB 0.02  D(A-B)  +4.67  attA 0.77  attB 0.01
+A2 G3 question  ansA 1.00  ansB 0.00  D(A-B)  +9.31  attA 0.80  attB 0.01
+A2 G3 dict      ansA 0.00  ansB 0.99  D(A-B)  -9.31  attA 0.01  attB 0.78
+A2 G3 all       ansA 1.00  ansB 0.00  D(A-B)  +9.31  attA 0.80  attB 0.01
+A2 G4 final     ansA 0.00  ansB 0.99  D(A-B)  -9.60  attA 0.01  attB 0.79
+A2 G4 question  ansA 0.00  ansB 0.99  D(A-B)  -9.30  attA 0.01  attB 0.79
+A2 G4 dict      ansA 0.00  ansB 0.99  D(A-B)  -9.31  attA 0.01  attB 0.78
+A2 G4 all       ansA 0.00  ansB 0.99  D(A-B)  -9.30  attA 0.01  attB 0.79
+A2 G5 final     ansA 0.00  ansB 0.99  D(A-B)  -7.07  attA 0.01  attB 0.78
+A2 G5 question  ansA 0.00  ansB 0.99  D(A-B)  -7.08  attA 0.01  attB 0.78
+A2 G5 dict      ansA 0.00  ansB 0.99  D(A-B)  -9.31  attA 0.01  attB 0.78
+A2 G5 all       ansA 0.00  ansB 0.99  D(A-B)  -7.08  attA 0.01  attB 0.78
+wrote results/exp22_transplant_0.8B_rev8.json  (1.1 min)

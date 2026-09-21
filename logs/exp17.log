@@ -1,0 +1,45 @@
+4800 train / 1600 test value tokens; chance 1/22 = 0.045 for keys
+
+== decode own key at the value token ==
+  condition      mode       resid3   resid7   resid9  resid10  resid11  resid14      K15
+  intact         retrain     0.996    0.997    0.998    1.000    0.999    0.999    1.000
+  remove G1      fixed       0.996    0.072    0.134    0.700    0.338    0.987    0.991
+  remove G1      retrain     0.996    0.941    0.994    0.999    0.996    1.000    1.000
+  remove G2      fixed       0.996    0.997    0.436    0.315    0.319    0.995    0.990
+  remove G2      retrain     0.996    0.997    0.996    0.994    0.991    1.000    1.000
+  remove L10     fixed       0.996    0.997    0.998    0.499    0.589    0.999    1.000
+  remove L10     retrain     0.996    0.997    0.998    0.998    0.994    0.999    1.000
+  remove G3      fixed       0.996    0.997    0.998    1.000    0.999    0.615    0.552
+  remove G3      retrain     0.996    0.997    0.998    1.000    0.999    0.993    0.982
+  remove G1+G2   fixed       0.996    0.072    0.061    0.061    0.057    0.869    0.764
+  remove G1+G2   retrain     0.996    0.941    0.909    0.894    0.835    1.000    1.000
+
+== decode prev key at the value token ==
+  condition      mode       resid3   resid7   resid9  resid10  resid11  resid14      K15
+  intact         retrain     0.381    0.661    0.716    0.807    0.715    0.940    0.926
+  remove G1      fixed       0.381    0.073    0.071    0.064    0.076    0.179    0.131
+  remove G1      retrain     0.381    0.309    0.416    0.577    0.486    0.815    0.740
+  remove G2      fixed       0.381    0.661    0.146    0.143    0.096    0.294    0.204
+  remove G2      retrain     0.381    0.661    0.560    0.552    0.515    0.898    0.849
+  remove L10     fixed       0.381    0.661    0.716    0.234    0.139    0.564    0.314
+  remove L10     retrain     0.381    0.661    0.716    0.671    0.593    0.888    0.834
+  remove G3      fixed       0.381    0.661    0.716    0.807    0.715    0.099    0.069
+  remove G3      retrain     0.381    0.661    0.716    0.807    0.715    0.601    0.457
+  remove G1+G2   fixed       0.381    0.073    0.054    0.055    0.054    0.051    0.063
+  remove G1+G2   retrain     0.381    0.309    0.271    0.254    0.254    0.528    0.464
+
+== decode own value at the value token ==
+  condition      mode       resid3   resid7   resid9  resid10  resid11  resid14      K15
+  intact         retrain     1.000    1.000    1.000    1.000    1.000    1.000    1.000
+  remove G1      fixed       1.000    1.000    1.000    1.000    1.000    1.000    0.995
+  remove G1      retrain     1.000    1.000    1.000    1.000    1.000    1.000    1.000
+  remove G2      fixed       1.000    1.000    1.000    1.000    1.000    1.000    0.959
+  remove G2      retrain     1.000    1.000    1.000    1.000    1.000    1.000    1.000
+  remove L10     fixed       1.000    1.000    1.000    1.000    1.000    1.000    1.000
+  remove L10     retrain     1.000    1.000    1.000    1.000    1.000    1.000    1.000
+  remove G3      fixed       1.000    1.000    1.000    1.000    1.000    1.000    0.976
+  remove G3      retrain     1.000    1.000    1.000    1.000    1.000    1.000    1.000
+  remove G1+G2   fixed       1.000    1.000    1.000    1.000    1.000    1.000    0.731
+  remove G1+G2   retrain     1.000    1.000    1.000    1.000    1.000    1.000    1.000
+
+wrote results/exp17_binding_probe.json
