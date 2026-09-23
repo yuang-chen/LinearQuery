@@ -1,4 +1,0 @@
-              cos(dMLP, G1 write)  |dMLP|/|w|  |w+dMLP|/|w|
-MLPs 4-6                   -0.511        0.79          0.90   (medians)
-MLPs 7-14                  -0.138        1.44          1.65   (medians)
-MLPs 4-14                  -0.382        1.58          1.52   (medians)
