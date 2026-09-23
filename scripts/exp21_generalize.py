@@ -30,6 +30,8 @@ ap.add_argument("--tag", default="0.8B")
 ap.add_argument("--variant", default="chat8")
 ap.add_argument("--n", type=int, default=200)
 ap.add_argument("--max_bs", type=int, default=25)
+ap.add_argument("--group_size", type=int, default=3,
+                help="linear layers per group before each softmax layer; 0 = all since the previous one")
 ap.add_argument("--mmlu_shots", type=int, default=5,
                 help="few-shot examples in the standard MMLU prompt (0 = bare question)")
 ap.add_argument("--reader", default="", help="force the B6/B7 reader head, e.g. 19,6")
@@ -42,11 +44,12 @@ t0 = time.time()
 R = Runner(model_path=a.model, dtype=torch.float32)
 R.model.config.get_text_config()._attn_implementation = "eager"
 tok = R.tok
-NH_GDN = R.cfg.linear_num_value_heads
-VHD = R.cfg.linear_value_head_dim
-HD = R.cfg.head_dim
+NH_GDN = R.n_linear_heads
+VHD = R.linear_head_dim
+HD = R.head_dim
 NQ, NKV = R.cfg.num_attention_heads, R.cfg.num_key_value_heads
-GROUPS = [[L for L in range(s - 3, s) if L in R.gdn_layers] for s in R.attn_layers]
+QGATE = R.q_gated
+GROUPS = R.groups(a.group_size)
 print(f"[{a.tag} {a.variant}] groups {GROUPS}", flush=True)
 
 
@@ -211,8 +214,8 @@ def selectivity(qsrc, ksrc, DON):
     sel, mar, top = [], [], []
     for bi, b in enumerate(B):
         n = b.pos["n"]; aw = AttnWeights(ATTN)
-        hooks = [aw, ProjPatch(ATTN, "q", [n - 1], DON[(bi, qsrc)][0], HD),
-                 ProjPatch(ATTN, "k", list(range(n)), DON[(bi, ksrc)][1], HD)]
+        hooks = [aw, ProjPatch(ATTN, "q", [n - 1], DON[(bi, qsrc)][0], HD, gated=QGATE),
+                 ProjPatch(ATTN, "k", list(range(n)), DON[(bi, ksrc)][1], HD, gated=False)]
         with hook_ctx(hooks):
             R.model(b.clean_ids, use_cache=False)
         at = aw.value[:, RH, b.pos["final"]].float()

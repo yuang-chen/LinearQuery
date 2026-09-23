@@ -12,10 +12,13 @@ class ProjPatch:
     """
 
     def __init__(self, attn, which, positions, donor, head_dim, heads=None,
-                 offset=0, include_gate=False):
+                 offset=0, include_gate=False, gated=None):
         self.attn, self.which, self.positions = attn, which, positions
         self.donor, self.head_dim, self.heads = donor, head_dim, heads
         self.offset, self.include_gate = offset, include_gate
+        # Qwen3.5 q_proj emits [query; gate] per head (2*head_dim); Granite 4.0 H and plain
+        # attention emit the query only. Inferred from q_proj's width unless given.
+        self.gated = gated
 
     def _proj(self):
         return {"q": self.attn.q_proj, "k": self.attn.k_proj, "v": self.attn.v_proj}[self.which]
@@ -23,11 +26,12 @@ class ProjPatch:
     def register(self):
         hd, gate = self.head_dim, self.include_gate
         which, heads = self.which, self.heads
+        gated = True if self.gated is None else self.gated   # Qwen3.5 default (query+gate)
 
         def fn(mod, args, output):
             t = output.clone()
             B, T, D = t.shape
-            per = hd * 2 if which == "q" else hd
+            per = hd * 2 if (which == "q" and gated) else hd
             nh = D // per
             hs = range(nh) if heads is None else heads
             for h in hs:

@@ -26,6 +26,21 @@ from .task import KEY_WORDS, VALUE_WORDS
 
 CHAT_PRE = "<|im_start|>user\n"
 CHAT_POST = "<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n"
+
+
+def chat_wrap(tok):
+    """(prefix, suffix) that put a user turn and open the assistant turn, for any model.
+
+    Qwen3.5 keeps the hand-written strings above (empty think block, so the answer is the next
+    token) so earlier results stay comparable; other families are derived from the tokenizer's
+    own chat template."""
+    tpl = getattr(tok, "chat_template", None) or ""
+    if "<|im_start|>" in tpl:
+        return CHAT_PRE, CHAT_POST
+    s = tok.apply_chat_template([{"role": "user", "content": "\x00"}], tokenize=False,
+                                add_generation_prompt=True)
+    pre, post = s.split("\x00", 1)
+    return pre, post
 LETTERS = "ABCD"
 
 
@@ -51,10 +66,10 @@ class Builder:
         return a, len(self.s)
 
 
-def _dict_item(pairs, pairs_c, ti, di, style, filler=""):
+def _dict_item(pairs, pairs_c, ti, di, style, filler="", wrap=(CHAT_PRE, CHAT_POST)):
     def render(ps):
         b = Builder(); vs, es = [], []
-        b.add(CHAT_PRE)
+        b.add(wrap[0])
         q = ps[ti][0]
         if style == "list":
             b.add("Lookup table:\n")
@@ -62,7 +77,7 @@ def _dict_item(pairs, pairs_c, ti, di, style, filler=""):
                 e0, _ = b.add(f"* {k}="); v0, v1 = b.add(v); _, e1 = b.add("\n")
                 vs.append((v0, v1)); es.append((e0, e1))
             b.add(filler)
-            b.add(f"Which value does {q} map to?" + CHAT_POST + f"The entry {q} maps to **")
+            b.add(f"Which value does {q} map to?" + wrap[1] + f"The entry {q} maps to **")
         elif style == "rev":
             b.add("Dictionary:")
             for i, (k, v) in enumerate(ps):
@@ -70,14 +85,14 @@ def _dict_item(pairs, pairs_c, ti, di, style, filler=""):
                 b.add("," if i < len(ps) - 1 else ".")
                 vs.append((v0, v1)); es.append((e0, e1))
             b.add(filler)
-            b.add(f"\nQuestion: What is the value of {q}?" + CHAT_POST + f"The value of {q} is **")
+            b.add(f"\nQuestion: What is the value of {q}?" + wrap[1] + f"The value of {q} is **")
         else:
             b.add("Dictionary:")
             for i, (k, v) in enumerate(ps):
                 e0, _ = b.add(f" {k}="); v0, v1 = b.add(v); _, e1 = b.add("," if i < len(ps) - 1 else ".")
                 vs.append((v0, v1)); es.append((e0, e1))
             b.add(filler)
-            b.add(f"\nQuestion: What is the value of {q}?" + CHAT_POST + f"The value of {q} is **")
+            b.add(f"\nQuestion: What is the value of {q}?" + wrap[1] + f"The value of {q} is **")
         return b.s, vs, es
     c, vs, es = render(pairs)
     x, _, _ = render(pairs_c)
@@ -125,6 +140,7 @@ def filler_text(tok, n_tokens):
 
 
 def make_items(variant, tok, n_per_cfg=25, seed=0, mmlu_shots=5):
+    wrap = chat_wrap(tok)
     rng = random.Random(seed)
     if variant.startswith("mmlu"):
         from datasets import load_dataset
@@ -174,7 +190,7 @@ def make_items(variant, tok, n_per_cfg=25, seed=0, mmlu_shots=5):
             pairs = list(zip(keys, vs))
             pc = list(pairs)
             pc[ti] = (keys[ti], vs[di]); pc[di] = (keys[di], vs[ti])
-            out.append(_dict_item(pairs, pc, ti, di, style, filler))
+            out.append(_dict_item(pairs, pc, ti, di, style, filler, wrap))
     return out
 
 

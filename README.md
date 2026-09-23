@@ -2047,3 +2047,129 @@ independent of the dictionary; substitution is exact-copy (not resample), so the
 write is on-distribution for run A but not necessarily for run B; the reader for each variant is
 the head with the most attention on the target (Part XVI B4), and for 0.8B `rev8` that is L19H6,
 not the causally-picked L15H2.
+
+---
+
+# Part XVIII: a second family — IBM Granite 4.0 H (Mamba-2 hybrid)
+
+Models (downloaded to `models/`): **`granite-4.0-h-1b`** (tag `G1b`, 1B dense, 40 layers,
+hidden 1536, 12 query / 4 KV heads, `head_dim` 128, Mamba-2 with 48 heads × 64) and
+**`granite-4.0-h-tiny`** (tag `Gtiny`, 6.9B total / ~1B active, 64 experts, 6 per token, same
+layer geometry). Softmax attention sits at layers **5, 15, 25, 35**; every other layer is
+Mamba-2. Groups are therefore *all* linear layers since the previous softmax layer
+(`--group_size 0`): **G0 [0–4], G1 [6–14], G2 [16–24], G3 [26–34]**.
+
+Launchers `scripts/run_exp21_granite.sh` (battery, 18 runs) and `scripts/exp22_query_transplant.py`
+(transplant, 6 runs); results `results/exp21/{G1b,Gtiny}_*.json`,
+`results/exp22_transplant_{G1b,Gtiny}_*.json`; logs in `logs/exp21/` and `logs/exp22_*`.
+
+**Porting.** The experiment scripts are now family-agnostic rather than forked:
+`src/runner.py` treats `mamba` like `linear_attention`, resolves the mixer by layer type
+(Granite's attention layers carry a `mamba` attribute set to `None`), and exposes `head_dim`,
+`n_linear_heads`, `linear_head_dim`, `q_gated` and `groups(size)`; `src/gen.py` gains
+`chat_wrap(tok)`, which keeps Qwen's hand-written wrapper (so Parts I–XVII stay comparable) and
+derives the wrapper from the tokenizer otherwise; `src/qkv.py`'s `ProjPatch` takes `gated`,
+because Qwen's `q_proj` emits `[query; gate]` per head while Granite's emits the query only.
+*That last one was a silent failure: until it was fixed the Q patch was a no-op and B6 reported
+exactly zero query-side effect.* Regression check: Qwen3.5-0.8B `chat8` reproduces Part XVI
+exactly (baseline +21.04; groups 0.00 / 0.86 / 0.66 / 0.13 / 0.98 / 0.95; selectivity 5.20).
+
+## 1. Group ablations (acc / gap)
+
+| variant | model | baseline | G0 [0–4] | G1 [6–14] | G2 [16–24] | G3 [26–34] |
+|---|---|---|---|---|---|---|
+| chat8 | G1b | 0.99 / +28.4 | **0.00** / +0.2 | 0.43 / +6.6 | **0.00** / +1.8 | 0.57 / +25.4 |
+| chat8 | Gtiny | 0.99 / +24.5 | **0.00** / −0.1 | 0.53 / +10.3 | 0.49 / +8.3 | 0.70 / +19.4 |
+| chat4 | G1b / Gtiny | 0.99 | 0.00 / 0.00 | 0.44 / 0.54 | **0.00** / 0.64 | 0.58 / 0.66 |
+| chat16 | G1b / Gtiny | 0.98 / 0.99 | 0.00 / 0.00 | 0.49 / 0.56 | **0.00** / 0.40 | 0.67 / 0.60 |
+| list8 | G1b / Gtiny | 1.00 | 0.00 / 0.00 | **0.06** / 0.26 | **0.01** / 0.55 | 0.62 / 0.81 |
+| rev8 | G1b / Gtiny | 0.96 / 0.90 | 0.00 / 0.00 | **0.01** / **0.02** | **0.00** / 0.21 | 0.44 / 0.65 |
+| perm8 | G1b / Gtiny | 1.00 | 0.00 / 0.00 | 0.47 / 0.53 | **0.00** / 0.57 | 0.61 / 0.71 |
+| long512 | G1b / Gtiny | 1.00 / 0.99 | 0.00 / 0.00 | 0.25 / 0.35 | **0.00** / 0.43 | 0.22 / 0.60 |
+| mmlu | G1b / Gtiny | 1.00 | 0.03 / 0.00 | 0.07 / 0.36 | 0.24 / 0.27 | 0.85 / 0.92 |
+| mmlu_hint | G1b / Gtiny | 1.00 | 0.02 / 0.00 | 0.07 / 0.44 | 0.26 / 0.31 | 0.94 / 0.97 |
+
+MMLU here is the standard 5-shot format of Part XVI's fix (≈410 tokens, 201–206 items kept).
+
+## 2. Critical layers, layer-0 heads, readers
+
+| variant | model | critical single layers (gap < 60 % of baseline) | worst L0 head | reader (causal) | attn | most attention |
+|---|---|---|---|---|---|---|
+| chat8 | G1b | L0 (0.00), L13, L23, L24 (0.73–0.86) | h25 (0.97) | L25H1 | 0.81 | L25H1 0.81 |
+| chat8 | Gtiny | **L0 only** (0.00) | h33 (1.00) | L25H2 | 0.76 | L25H2 0.76 |
+| list8 | G1b / Gtiny | L0, L23, L24 / **L0 only** | h25 (0.92) / h33 (1.00) | L25H1 / L25H2 | 0.82 / 0.74 | L25H1 / L25H8 0.81 |
+| rev8 | G1b / Gtiny | L0, L13, **L14 (0.03)**, L23 / **L0 only** | h25 (0.93) / h8 (0.90) | L25H8 / L25H2 | 0.39 / 0.42 | **L35H6 0.66 / L35H1 0.71** |
+| long512 | G1b / Gtiny | L0, L13, L14, L24 / L0, L24 | h25 (0.96) / h8 (0.99) | L25H1 / L25H2 | 0.89 / 0.77 | same |
+| mmlu_hint | G1b / Gtiny | L0, L14, L24 / **L0 only** | h25 (0.88) / h8 (0.96) | L25H8 / L25H2 | 0.40 / **0.68** | same |
+
+Layer 25 is 0.63 of depth — the same relative position as the readers in Qwen3.5-0.8B (L15/24 =
+0.63) and 9B (L19/32 = 0.59).
+
+## 3. q·k selectivity at the reader (`Gr-1` = G2 [16–24], `Gr-2` = G1 [6–14])
+
+| variant | model | group | intact | ablated K only | ablated Q only | both |
+|---|---|---|---|---|---|---|
+| chat8 | G1b | G2 | 6.09 (1.00) | 2.75 (0.97) | **−0.13 (0.01)** | 0.02 (0.13) |
+| chat8 | G1b | G1 | 6.09 (1.00) | 4.07 (0.96) | 2.32 (0.79) | 2.51 (0.71) |
+| chat8 | Gtiny | G2 | 5.29 (1.00) | 2.72 (0.93) | **−0.20 (0.00)** | −0.04 (0.06) |
+| chat8 | Gtiny | G1 | 5.29 (1.00) | 3.29 (0.89) | 2.16 (0.66) | 2.27 (0.65) |
+| list8 | G1b / Gtiny | G2 | 5.50 / 6.18 | 2.77 / 3.43 | **−0.01 (0.14) / −0.06 (0.01)** | 0.01 / 0.02 |
+| rev8 | G1b / Gtiny | G2 | 6.08 / 4.95 | 3.21 / 3.04 | **0.01 (0.03) / −0.10 (0.00)** | 0.09 / −0.04 |
+| long512 | G1b / Gtiny | G2 | 5.78 / 4.36 | 2.49 / 2.61 | **−0.04 (0.02) / −0.27 (0.00)** | 0.05 / −0.21 |
+| mmlu_hint | G1b / Gtiny | G2 | 2.92 / 3.67 | 1.30 / 3.00 | 1.37 / 1.22 | 0.37 / 1.29 |
+
+Chance top-1 among 8 entries is 0.125. **G2 is query-side** (top-1 → 0.00–0.14 with a G2-built
+query) **but also carries the keys**: ablated keys alone cost 2.3–3.3 selectivity, where the
+matching Qwen groups cost ≤ 0.8 (Part XVI B3/B4).
+
+## 4. Query transplant (donor = the other question; Part XVII method)
+
+| model | variant | reader | group | at `final` only | over `question` |
+|---|---|---|---|---|---|
+| G1b | chat8 | L25H1 | **G2** | ansA **1.00**, attn A 0.83 | ansA 1.00, D +13.45 |
+| G1b | list8 | L25H1 | **G2** | ansA **0.98**, attn A 0.84 | ansA 1.00, D +12.57 |
+| G1b | rev8 | L35H6 | **G2** | ansA **0.92**, attn A 0.39 | ansA 0.96, attn A 0.66 |
+| Gtiny | chat8 | L25H2 | G2 | **ansA 0.03**, attn A **0.80** | ansA 0.63, attn A 0.79 |
+| Gtiny | list8 | L25H2 | G2 | **ansA 0.06**, attn A **0.76** | ansA 0.57, attn A 0.75 |
+| Gtiny | rev8 | L35H1 | G2 | ansA 0.05, attn A 0.08 | ansA 0.39, attn A 0.31 |
+
+G0, G1 and G3 do nothing at `final` in either model; the `dict` control is null throughout.
+
+## Reading
+
+1. **Three findings replicate across families.** (i) The first linear block is necessary and
+   **layer 0 alone** accounts for it (0.00 in every variant, both models). (ii) The reader sits
+   at ≈ 0.6 of depth — now in four models and two families. (iii) The block immediately before
+   the reader supplies the reader's **query**: a query built without it leaves the reader at or
+   below chance (top-1 0.00–0.14).
+2. **The transplant replicates in G1b**: one block's write at a **single position** makes the
+   model answer the other question (0.92–1.00 across three templates), and no other block does.
+   So "the linear layers hand the softmax reader its query" is not a Qwen artefact.
+3. **But the clean query/key split is.** Granite's query block also shapes the keys (K-side loss
+   2.3–3.3 vs ≤ 0.8 in Qwen 9B). Whether one block owns *only* the query is architecture-specific;
+   that it owns the query is not.
+4. **No layer-0 head is a single point of failure** in either Granite model (worst 0.90–1.00),
+   as in Qwen 9B but unlike Qwen 0.8B (head 8 → 0.00). The Part IX single-head result does not
+   generalise.
+5. **Gtiny dissociates attention from behaviour — the most interesting result here.** The G2
+   transplant moves the reader's attention onto the donor's entry exactly as designed
+   (0.01 → 0.80) while the model still answers the *host's* value (ansA 0.03, D −7.67). Steering
+   the tracked reader is necessary but not sufficient; some other path keeps the answer on B.
+   Transplanting over the whole question span gets ansA to 0.57–0.63, i.e. partway. The same
+   direction appeared in Qwen 9B (smaller logit swing than 0.8B, later readers rebuilding the
+   query); the MoE model makes it a clean dissociation. Which heads hold the answer when the
+   reader has been steered is **not yet measured**.
+6. **`rev8` moves the reading deeper in both Granite models** (most attention at L35, not L25),
+   as it did in Qwen3.5-0.8B; and in G1b, **L14 alone** drops `rev8` to 0.03, the only
+   single-layer catastrophe outside layer 0 anywhere in Parts XVI–XVIII.
+7. **Granite shows the circuit on MMLU where Qwen did not.** With the hint, the reader attends to
+   the correct option at 0.40 (G1b) and 0.68 (Gtiny) with selectivity 2.9–3.7, against ≤ 0.25 and
+   ≤ 1.25 for Qwen. The mechanism is not confined to the synthetic task in this family.
+
+**Caveats.** `Gtiny` is an MoE model, so its differences from `G1b` confound scale, sparsity and
+routing (no dense 7B Granite H exists). Groups here span 5 or 9 layers against Qwen's 3, so
+"group" ablations remove more of the network — the G2/G1 comparisons are within-model, not
+across families. One seed, n = 100–206, no confidence intervals, zero-ablation throughout.
+Granite's chat template inserts a default system prompt (from its tokenizer), which Qwen's does
+not; prompt lengths therefore differ by ~17 tokens for the same dictionary. The `rev8`
+transplants use the top-attention head (L35) rather than the causally chosen one.

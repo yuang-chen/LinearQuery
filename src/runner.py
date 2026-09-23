@@ -15,9 +15,43 @@ class Runner:
         cfg = self.model.config.get_text_config()
         self.cfg = cfg
         self.layer_types = list(cfg.layer_types)
-        self.gdn_layers = [i for i, t in enumerate(self.layer_types) if t == "linear_attention"]
-        self.attn_layers = [i for i, t in enumerate(self.layer_types) if t == "full_attention"]
+        # "linear_attention" (Qwen3.5 GDN) / "mamba" (Granite 4.0 H) vs the softmax layers
+        self.gdn_layers = [i for i, t in enumerate(self.layer_types)
+                           if t in ("linear_attention", "mamba")]
+        self.attn_layers = [i for i, t in enumerate(self.layer_types)
+                            if t in ("full_attention", "attention")]
         self.n_layers = cfg.num_hidden_layers
+
+    # ---------- architecture-independent sizes ----------
+    @property
+    def head_dim(self):
+        return getattr(self.cfg, "head_dim", None) or (
+            self.cfg.hidden_size // self.cfg.num_attention_heads)
+
+    @property
+    def q_gated(self):
+        """True when q_proj emits [query; gate] per head (Qwen3.5) rather than the query only."""
+        q = self.mixer(self.attn_layers[0]).q_proj
+        return q.out_features == 2 * self.cfg.num_attention_heads * self.head_dim
+
+    @property
+    def n_linear_heads(self):
+        """value heads of the linear mixer (GDN value heads / Mamba-2 heads)."""
+        return getattr(self.cfg, "linear_num_value_heads", None) or self.cfg.mamba_n_heads
+
+    @property
+    def linear_head_dim(self):
+        return getattr(self.cfg, "linear_value_head_dim", None) or self.cfg.mamba_d_head
+
+    def groups(self, size=3):
+        """The linear layers feeding each softmax layer: the `size` immediately before it,
+        or all of them since the previous softmax layer when size <= 0."""
+        out, prev = [], -1
+        for s in self.attn_layers:
+            lo = prev + 1 if size <= 0 else s - size
+            out.append([L for L in range(max(lo, 0), s) if L in self.gdn_layers])
+            prev = s
+        return out
 
     # ---------- module accessors ----------
     @property
@@ -25,8 +59,17 @@ class Runner:
         return self.model.model.layers if hasattr(self.model.model, "layers") else self.model.model.language_model.layers
 
     def mixer(self, i):
+        """The layer's token-mixing module, whatever the family calls it."""
         L = self.layers[i]
-        return L.linear_attn if self.layer_types[i] == "linear_attention" else L.self_attn
+        # attention layers of some families keep a `mamba` attribute set to None, so the
+        # layer's own type decides which names are eligible
+        names = (("linear_attn", "mamba") if self.layer_types[i] in ("linear_attention", "mamba")
+                 else ("self_attn",))
+        for name in names:
+            m = getattr(L, name, None)
+            if m is not None:
+                return m
+        raise AttributeError(f"no {names} mixer on layer {i}: {[n for n, _ in L.named_children()]}")
 
     def mlp(self, i):
         return self.layers[i].mlp

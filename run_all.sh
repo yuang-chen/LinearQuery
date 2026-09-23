@@ -108,3 +108,15 @@ $PY scripts/exp22_query_transplant.py --tag 0.8B --variant rev8 --reader 19,6 2>
 $PY scripts/exp22_query_transplant.py --model /public/jyh/models/Qwen3.5-9B --tag 9B --variant chat8 2>&1 | tee logs/exp22_9B_chat8.log
 $PY scripts/exp22_query_transplant.py --model /public/jyh/models/Qwen3.5-9B --tag 9B --variant list8 --reader 19,15 2>&1 | tee logs/exp22_9B_list8.log
 $PY scripts/exp22_query_transplant.py --model /public/jyh/models/Qwen3.5-9B --tag 9B --variant rev8  --reader 27,1  2>&1 | tee logs/exp22_9B_rev8.log
+
+# 23. second family: IBM Granite 4.0 H battery + transplant (Part XVIII)
+hf download ibm-granite/granite-4.0-h-1b   --local-dir models/granite-4.0-h-1b
+hf download ibm-granite/granite-4.0-h-tiny --local-dir models/granite-4.0-h-tiny
+bash scripts/run_exp21_granite.sh
+for t in "G1b models/granite-4.0-h-1b" "Gtiny models/granite-4.0-h-tiny"; do
+  set -- $t
+  $PY scripts/exp22_query_transplant.py --model $2 --tag $1 --variant chat8 --group_size 0 2>&1 | tee logs/exp22_$1_chat8.log
+  $PY scripts/exp22_query_transplant.py --model $2 --tag $1 --variant list8 --group_size 0 2>&1 | tee logs/exp22_$1_list8.log
+done
+$PY scripts/exp22_query_transplant.py --model models/granite-4.0-h-1b   --tag G1b   --variant rev8 --group_size 0 --reader 35,6 2>&1 | tee logs/exp22_G1b_rev8.log
+$PY scripts/exp22_query_transplant.py --model models/granite-4.0-h-tiny --tag Gtiny --variant rev8 --group_size 0 --reader 35,1 2>&1 | tee logs/exp22_Gtiny_rev8.log

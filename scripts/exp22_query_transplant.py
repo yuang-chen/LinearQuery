@@ -23,7 +23,7 @@ import numpy as np
 sys.path.insert(0, "/user/yac/LinearAblation")
 from src.runner import Runner, hook_ctx
 from src.qkv import AttnWeights
-from src.gen import CHAT_PRE, CHAT_POST, Builder
+from src.gen import Builder, chat_wrap
 from src.task import KEY_WORDS, VALUE_WORDS
 
 ap = argparse.ArgumentParser()
@@ -31,17 +31,23 @@ ap.add_argument("--model", default="/user/yac/LinearSwap/models/Qwen3.5-0.8B")
 ap.add_argument("--tag", default="0.8B")
 ap.add_argument("--variant", default="chat8", help="chat8 | list8 | rev8")
 ap.add_argument("--reader", default="", help="reader head 'L,H' (default: from the exp21 run)")
+ap.add_argument("--group_size", type=int, default=3)
+ap.add_argument("--layers", default="", help="layer-resolved transplant: treat each listed "
+                                             "layer as its own group, e.g. 12,13,14")
+ap.add_argument("--out", default="")
 ap.add_argument("--n_pairs", type=int, default=8)
 ap.add_argument("--per_cfg", type=int, default=25)
 ap.add_argument("--seed", type=int, default=0)
 a = ap.parse_args()
-OUT = f"results/exp22_transplant_{a.tag}_{a.variant}.json"
+OUT = a.out or f"results/exp22_transplant_{a.tag}_{a.variant}.json"
 
 t0 = time.time()
 R = Runner(model_path=a.model, dtype=torch.float32)
 R.model.config.get_text_config()._attn_implementation = "eager"
 tok = R.tok
-GROUPS = [[L for L in range(s - 3, s) if L in R.gdn_layers] for s in R.attn_layers]
+GROUPS = ([[L] for L in map(int, a.layers.split(","))] if a.layers
+          else R.groups(a.group_size))
+WRAP = chat_wrap(tok)
 NQ = R.cfg.num_attention_heads
 
 if a.reader:
@@ -49,6 +55,7 @@ if a.reader:
 else:                                   # reuse the reader exp21 found for this model
     d = json.load(open(f"results/exp21/{a.tag}_{a.variant}.json"))
     RL, RH = d["meta"]["reader"]
+NAMES = [f"L{G[0]}" if a.layers else f"G{i}" for i, G in enumerate(GROUPS)]
 print(f"[{a.tag} {a.variant}] groups {GROUPS}  reader L{RL}H{RH}", flush=True)
 
 
@@ -56,14 +63,14 @@ print(f"[{a.tag} {a.variant}] groups {GROUPS}  reader L{RL}H{RH}", flush=True)
 def render(pairs, q, style="chat"):
     """Prompt asking for key `q` in the chat8 / list8 / rev8 template (src/gen.py wording)."""
     b = Builder(); vs, es = [], []
-    b.add(CHAT_PRE)
+    b.add(WRAP[0])
     if style == "list":
         b.add("Lookup table:\n")
         for k, v in pairs:
             e0, _ = b.add(f"* {k}="); v0, v1 = b.add(v); _, e1 = b.add("\n")
             vs.append((v0, v1)); es.append((e0, e1))
         qs0, _ = b.add(f"Which value does {q} map to?")
-        b.add(CHAT_POST + f"The entry {q} maps to **")
+        b.add(WRAP[1] + f"The entry {q} maps to **")
     elif style == "rev":
         b.add("Dictionary:")
         for i, (k, v) in enumerate(pairs):
@@ -71,7 +78,7 @@ def render(pairs, q, style="chat"):
             b.add("," if i < len(pairs) - 1 else ".")
             vs.append((v0, v1)); es.append((e0, e1))
         qs0, _ = b.add(f"\nQuestion: What is the value of {q}?")
-        b.add(CHAT_POST + f"The value of {q} is **")
+        b.add(WRAP[1] + f"The value of {q} is **")
     else:
         b.add("Dictionary:")
         for i, (k, v) in enumerate(pairs):
@@ -79,7 +86,7 @@ def render(pairs, q, style="chat"):
             _, e1 = b.add("," if i < len(pairs) - 1 else ".")
             vs.append((v0, v1)); es.append((e0, e1))
         qs0, _ = b.add(f"\nQuestion: What is the value of {q}?")
-        b.add(CHAT_POST + f"The value of {q} is **")
+        b.add(WRAP[1] + f"The value of {q} is **")
     return b.s, vs, es, qs0
 
 
@@ -211,7 +218,7 @@ for gi, G in enumerate(GROUPS):
             rows.append(score(lg, ent, b))
         r = agg(rows); r.update(group=gi, layers=G, positions=which)
         res["transplant"].append(r)
-        print(f"A2 G{gi} {which:9s} ansA {r['ansA']:.2f}  ansB {r['ansB']:.2f}  "
+        print(f"A2 {NAMES[gi]:>4s} {which:9s} ansA {r['ansA']:.2f}  ansB {r['ansB']:.2f}  "
               f"D(A-B) {r['dAB']:+6.2f}  attA {r['attA']:.2f}  attB {r['attB']:.2f}", flush=True)
 
 res["meta"]["seconds"] = time.time() - t0
