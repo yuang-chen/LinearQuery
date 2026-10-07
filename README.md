@@ -4,25 +4,25 @@ An exploratory activation-patching study asking whether a Gated DeltaNet (GDN) c
 supplies information that a later softmax attention head uses for key–value retrieval.
 Weights are frozen; all inputs are text.
 
-Model: `/user/yac/LinearSwap/models/Qwen3.5-0.8B` — 24 layers, `hidden=1024`,
+Model: `/mnt/yuang/gdn2-in-place/models/Qwen3.5-0.8B` — 24 layers, `hidden=1024`,
 GDN ("linear_attention") everywhere except layers **3, 7, 11, 15, 19, 23**, which are
 softmax attention (8 query heads, 2 KV heads, `head_dim=256`, GQA group 4).
 
 ## Reproduce
 
 ```bash
-bash /user/yac/LinearAblation/run_all.sh
+bash /mnt/yuang/LinearQuery/run_all.sh
 ```
 
-Environment (reused, nothing installed into it): `/user/yac/LinearSwap/.venv`
+Environment (reused, nothing installed into it): `/mnt/yuang/gdn2-in-place/.venv`
 (torch 2.9.1+cu128, transformers 5.17.0, flash-linear-attention 0.6.0). Figures are drawn
-with `/user/miniconda3/envs/nha/bin/python` because that venv has no matplotlib.
+with `/mnt/yuang/LinearQuery/.venv-plot/bin/python` because that venv has no matplotlib.
 All model runs are **float32** (see "Validation"). The full pipeline takes ≈45 min on one L20X.
 
 Individual steps:
 
 ```bash
-PY=/user/yac/LinearSwap/.venv/bin/python
+PY=/mnt/yuang/gdn2-in-place/.venv/bin/python
 $PY scripts/exp1_baseline.py --template chat          # task + baseline accuracy
 $PY scripts/exp2_validate.py --dtype fp32             # intervention sanity checks
 $PY scripts/exp3_writers.py                           # GDN writer scan
@@ -1745,7 +1745,7 @@ Scripts: `scripts/exp21_generalize.py` (one model × one variant), launchers
 `scripts/run_exp21_08b.sh` and `scripts/run_exp21_9b.sh`, tables `scripts/summarize_exp21.py`
 → `results/exp21/summary.md`. Logs `logs/exp21/*.log`, results `results/exp21/*.json`.
 Models: **Qwen3.5-0.8B** (24 layers, softmax at 3/7/11/15/19/23, 6 GDN groups G0–G5, 16 GDN
-value heads) and **Qwen3.5-9B** (`/public/jyh/models/Qwen3.5-9B`, 32 layers, softmax at
+value heads) and **Qwen3.5-9B** (`/mnt/yuang/models/Qwen3.5-9B`, 32 layers, softmax at
 3/7/…/31, 8 groups G0–G7, 32 value heads, 16 query heads). Both float32, eager attention
 (same as Parts I–XV).
 
@@ -2173,3 +2173,656 @@ across families. One seed, n = 100–206, no confidence intervals, zero-ablation
 Granite's chat template inserts a default system prompt (from its tokenizer), which Qwen's does
 not; prompt lengths therefore differ by ~17 tokens for the same dictionary. The `rev8`
 transplants use the top-attention head (L35) rather than the causally chosen one.
+
+---
+
+# Part XIX: a minimal hybrid designed from the circuit (paper exp 2)
+
+Scripts: `scripts/exp25_minimal.py` (phases P1–P5), `scripts/exp25b_lmeval_matched.py`
+(lm-eval at matched size), `scripts/exp25c_shard.py` (parallel finish of 9B); shared code
+`src/minimal.py`. Results: `results/exp25_minimal_<tag>.json`, `results/exp25b_lmeval_<tag>.json`.
+Tables: `scripts/summarize_exp25_27.py` → `results/exp25_27_summary.md`.
+
+**Recipe: GnA's training-free "minimal model"** (arXiv:2504.18574 §3.2–3.4), applied to the
+*linear* layers. GnA prune a network to its smallest sub-network that still retrieves, then
+show that retrieval (MMLU, KV-retrieval) survives while knowledge-heavy benchmarks fall. Here:
+
+- **Removing a linear layer's mixer.** Only the token mixer goes; softmax layers and every MLP stay.
+  Two forms:
+  - **mean**: the mixer's output is replaced by its WikiText-2 mean, a constant bias per layer.
+    This removes the layer's token mixing and its recurrent state.
+  - **zero**: the output is zeroed (Parts VII–XVIII).
+- **Truncation.** Keep layers `0..c` and send the residual straight to the final norm and LM head.
+  `c*` is the smallest softmax layer whose dev *candidate* accuracy reaches 95 % of full depth.
+- **Metrics:**
+  - `acc`: full-vocabulary argmax on the dictionary suite (`chat8/16`, `list8`, `rev8`, `long512`).
+  - `cacc`: GnA-style choice scoring among the dictionary's 8 values.
+  - `kv20`: GnA's KV-retrieval, 20 pairs, trailing space restored.
+  - WikiText-2 PPL.
+  - lm-eval: ARC-e/c, PIQA, HellaSwag, WinoGrande (0-shot, 500 each); MMLU 5-shot (10 per
+    subject); FDA and SWDE (real-document recall, 200 each).
+- **Selection vs report.** Every choice (cut, greedy set) is made on a dev dictionary sample
+  (seed 1), and every number below is on the seed-0 test sample.
+
+**Which linear layers to keep.**
+- **Circuit rule, fixed in advance:** keep the linear layers upstream of the first reader,
+  i.e. Bind, the feeders, and Query (`pre-reader`). Everything after the reader, which
+  Part VIII identified as "transport", is replaced by its mean.
+- **Circuit-refined:** greedy backward elimination from the full stack (mean removal), dropping the
+  layer whose loss hurts dev retrieval least, until dev accuracy falls below 90 % of intact.
+- **Baselines at the same size:**
+  - PPL-ranked: keep the layers whose single removal costs most perplexity (Borobia et al.'s
+    importance).
+  - First-k, last-k.
+  - Random, 5 seeds (3 in lm-eval).
+
+## 1. Truncation reproduces GnA's minimal model (P1)
+
+Candidate accuracy on the dictionary suite, keeping layers 0..cut:
+
+| model | cut after softmax layer | mean cacc | full-vocab acc | kv20 | note |
+|---|---|---|---|---|---|
+| 0.8B | 11 / **15** (first reader) / **19** (= c*) / full | 0.12 / 0.89 / **1.00** / 1.00 | 0.00 / 0.00 / 0.39 / 1.00 | 0.08 / 0.17 / 0.64 / 0.83 | |
+| G1b | 15 / **25** (first reader) / **35** (= c*) / full | 0.11 / 0.62 / **0.99** / 0.99 | 0.00 / 0.00 / 0.01 / 0.99 | 0.08 / 0.84 / 0.99 / 1.00 | |
+| Gtiny | 15 / 25 / **35** (= c*) / full | 0.11 / 0.28 / **0.98** / 0.98 | 0.00 / 0.00 / 0.00 / 0.98 | 0.04 / 0.62 / 0.99 / 1.00 | |
+| 9B | 15 / **19** (first reader) / **23** (= c*) / 27 / full | 0.12 / 0.71 / **0.95** / 1.00 / 1.00 | 0.00 / 0.00 / 0.00 / 0.00 / 1.00 | 0.06 / 0.22 / 0.80 / 0.82 / 0.83 | |
+
+Choosing among the dictionary's values already works right after the reader, and is complete one
+softmax layer later. Full-vocabulary argmax needs the rest of the network: the answer is *in*
+the residual stream but not yet *top-1 over the vocabulary*. That is the gap between GnA's
+answer scoring and generation. On lm-eval the truncated models show GnA's signature:
+
+| model (truncated at c*) | knowledge avg (intact) | MMLU-5 (intact) | FDA (intact) |
+|---|---|---|---|
+| 0.8B, layers 0–19 | 0.44 (0.55) | **0.49 (0.51)** | 0.10 (0.83) |
+| G1b, layers 0–35 | 0.52 (0.63) | **0.61 (0.61)** | 0.13 (0.73) |
+| Gtiny, layers 0–35 | 0.62 (0.73) | **0.72 (0.72)** | 0.14 (0.77) |
+| 9B, layers 0–23 | 0.52 (0.72) | **0.75 (0.69)** | 0.07 (0.76) |
+
+Knowledge falls 11 points (9B: 20) while MMLU is unchanged (9B: +6). FDA/SWDE are scored by generating text, so
+they need full-vocabulary answers and fall with it.
+
+## 2. Which single linear layers matter (P2, mean removal, full depth)
+
+Layers whose removal costs > 5 points of dev accuracy:
+
+| model | layers |
+|---|---|
+| 0.8B | **L0** (0.00), L14 (0.84), L10 (0.90) |
+| G1b | L13 (0.37), L23 (0.48), L14 (0.62), **L0** (0.81), L24 (0.83) |
+| Gtiny | **L0** (0.00) |
+| 9B | **L0** (0.33); no other single layer |
+
+With mean instead of zero removal, only the Bind layer (L0) and the query-side layers of
+Parts XVI–XVIII (0.8B L10/L14; G1b L13/L14/L23/L24) matter individually.
+
+## 3. The minimal sets lie on the Bind → Query path (P3)
+
+Greedy elimination on dev retrieval, full depth (reader in brackets):
+
+| model | kept / linear total | minimal set | before the reader |
+|---|---|---|---|
+| 0.8B [L15] | **8 / 18** | 0, 1 · 4, 5, 6, 9, 10 · 14 | 8 of 8 |
+| 9B [L19] | **9 / 24** | 0 · 5, 9, 10, 12, 13, 14 · 17, 18 | 9 of 9 |
+| G1b [L25] | **15 / 36** | 0, 4 · 6, 8, 9, 10, 11, 13, 14 · 19, 20, 22, 23, 24 · 34 | 14 of 15 |
+| Gtiny [L25] | **14 / 36** | 0, 2, 4 · 7, 8, 10, 14 · 19, 21, 22, 23, 24 · 34, 39 | 12 of 14 |
+
+(· separates Bind block / feeder blocks / Query block / after the reader.) The data-driven sets are
+not arbitrary. Every one contains layer 0 and the query block's key layers: 0.8B L14,
+9B L17/L18, and Granite L23/L24, which Parts XVI–XVIII found by ablation and transplant. Apart
+from Granite's L34/L39, every kept layer sits upstream of the first reader. Granite's truncated
+search (layers 0–35) returns nearly the same sets (G1b 15 layers, Gtiny 13).
+
+## 4. At matched size, the circuit sets retrieve and the baselines do not (P4)
+
+Dictionary suite, full-vocabulary accuracy (mean over the five variants), full depth, mean
+removal. Random = mean ± sd over 5 seeds.
+
+| model | set | k | dict acc | kv20 | PPL |
+|---|---|---|---|---|---|
+| 0.8B | intact | 18 | 1.00 | 0.83 | 21.9 |
+| | **pre-reader (rule)** | 12 | **1.00** | **0.83** | 38.9 |
+| | **greedy** | 8 | **0.96** | **0.83** | 51.4 |
+| | PPL-ranked | 8 | 0.11 | 0.27 | 42.8 |
+| | random | 8 | 0.06 ± 0.10 | 0.12 ± 0.05 | 4669 ± 6515 |
+| | bind + query blocks only | 6 | 0.04 | 0.13 | 77.1 |
+| | PPL-ranked / first-6 / last-6 / random-6 | 6 | 0.07 / 0.01 / 0.00 / 0.00 | ≤ 0.16 | |
+| G1b | intact | 36 | 0.99 | 1.00 | 15.1 |
+| | **pre-reader (rule)** | 23 | **0.87** | **1.00** | 86.4 |
+| | **greedy** | 15 | **0.84** | **0.97** | 62.9 |
+| | PPL-ranked | 15 | 0.01 | 0.10 | 67.4 |
+| | random | 15 | 0.09 ± 0.16 | 0.26 ± 0.35 | 682 ± 607 |
+| | bind + query blocks only | 14 | 0.02 | 0.37 | 394 |
+| Gtiny | intact | 36 | 0.98 | 1.00 | 11.7 |
+| | pre-reader (rule) | 23 | 0.08 (cacc 0.70) | 0.90 | 77.3 |
+| | **greedy** | 14 | **0.83** | **0.98** | 30.2 |
+| | PPL-ranked | 14 | 0.04 | 0.03 | 33.9 |
+| | random | 14 | 0.03 ± 0.05 | 0.07 ± 0.05 | 3844 ± 2930 |
+| 9B | intact | 24 | 1.00 | 0.82 | 11.3 |
+| | **pre-reader (rule)** | 15 | **1.00** | **0.82** | 21.0 |
+| | **greedy** | 9 | **0.97** | **0.77** | 36.1 |
+| | PPL-ranked | 9 | 0.67 | 0.72 | 28.4 |
+| | random | 9 | 0.00 ± 0.00 | 0.09 ± 0.04 | 261 ± 128 |
+| | bind + query blocks only | 6 | 0.01 | 0.18 | 62.6 |
+
+- **9B** repeats it: 15 of 24 GDN layers (the rule) keep every dictionary variant at 1.00 and
+  KV-retrieval at the intact level; 9 (greedy) keep 0.97.
+  - The same-size PPL-ranked set does better here than in the smaller models (0.67), because it
+    happens to contain L0, the query layer L18 and three feeders ([0, 1, 6, 8, 10, 13, 18, 20, 24]).
+  - It still fails the harder variants: `rev8` 0.36 and `long512` 0.34, against greedy 0.94 / 0.92.
+  - Random 9-sets are at 0.00.
+- **At 8 of 18 GDN layers in 0.8B**, the circuit set keeps dictionary retrieval (0.96) and GnA
+  KV-retrieval at the intact level (0.83). A PPL-ranked set of the same size keeps better
+  perplexity (42.8 vs 51.4) and loses retrieval (0.11 / 0.27). Perplexity-guided compression keeps
+  the wrong linear layers for retrieval, as Part VII predicted from G3 alone.
+- **Mean removal is essential for the small sets.** The same sets with *zeroed* mixers retrieve at
+  0.19–0.44 (greedy: 0.8B 0.21, 9B 0.19, G1b 0.44; 0.8B pre-reader 0.31). Only 9B's 15-layer
+  pre-reader set survives zeroing (1.00). A removed linear layer must leave its average
+  contribution behind; only its token mixing is dispensable.
+- **Bind + Query alone is not enough** without training (0.02–0.04). The feeder blocks upstream
+  of the query block (0.8B G1/G2, Granite G1) are needed, in line with Part VIII
+  (G1+G2 feed the address) and Part XVII (they feed the query block, which carries it).
+- **Gtiny is the exception to the fixed rule.** Keeping everything before the reader is not
+  enough there (0.08), and its greedy set keeps two post-reader layers (L34, L39). This fits
+  Part XVIII, where Gtiny's first reader can be steered without moving the answer: in this model
+  the answer is also held after L25.
+
+## 5. lm-eval at matched size (exp25b; full depth, mean removal)
+
+| model | set | k | knowledge avg | MMLU-5 | FDA | SWDE |
+|---|---|---|---|---|---|---|
+| 0.8B | intact | 18 | 0.55 | 0.51 | 0.83 | 0.86 |
+| | **greedy** | 8 | 0.44 | **0.35** | **0.64** | **0.67** |
+| | PPL-ranked | 8 | 0.43 | 0.22 | 0.39 | 0.58 |
+| | random ×3 | 8 | 0.35–0.43 | 0.21–0.26 | 0.00–0.20 | 0.00–0.43 |
+| | **pre-reader** | 12 | 0.47 | **0.54** | 0.73 | **0.83** |
+| | PPL-ranked | 12 | 0.47 | 0.26 | 0.77 | 0.73 |
+| | random ×3 | 12 | 0.43–0.47 | 0.22–0.45 | 0.29–0.74 | 0.65–0.84 |
+| G1b | intact | 36 | 0.63 | 0.61 | 0.73 | 0.91 |
+| | **greedy** | 15 | 0.44 | **0.30** | **0.38** | **0.65** |
+| | PPL-ranked | 15 | 0.41 | 0.24 | 0.03 | 0.29 |
+| | random ×3 | 15 | 0.38–0.41 | 0.22–0.24 | 0.00–0.15 | 0.01–0.39 |
+| | **pre-reader** | 23 | 0.48 | **0.59** | **0.20** | **0.62** |
+| | PPL-ranked | 23 | 0.47 | 0.27 | 0.14 | 0.50 |
+| | random ×3 | 23 | 0.41–0.46 | 0.23–0.25 | 0.02–0.17 | 0.24–0.38 |
+| Gtiny | intact | 36 | 0.73 | 0.72 | 0.77 | 0.91 |
+| | **greedy** | 14 | 0.55 | **0.45** | **0.25** | **0.70** |
+| | PPL-ranked | 14 | 0.49 | 0.27 | 0.08 | 0.34 |
+| | random ×3 | 14 | 0.36–0.49 | 0.24–0.26 | 0.00–0.01 | 0.00–0.09 |
+| | pre-reader | 23 | 0.58 | **0.71** | 0.08 | 0.26 |
+| | PPL-ranked | 23 | 0.64 | 0.49 | 0.71 | 0.86 |
+| | random ×3 | 23 | 0.38–0.58 | 0.21–0.54 | 0.00–0.23 | 0.16–0.45 |
+| 9B | intact | 24 | 0.72 | 0.69 | 0.76 | 0.91 |
+| | greedy | 9 | 0.52 | 0.25 | 0.26 | 0.75 |
+| | PPL-ranked | 9 | 0.56 | 0.32 | 0.31 | 0.71 |
+| | random ×3 | 9 | 0.40–0.54 | 0.27–0.30 | 0.01–0.29 | 0.15–0.84 |
+| | **pre-reader** | 15 | 0.66 | **0.73** | 0.43 | 0.65 |
+| | PPL-ranked | 15 | 0.67 | 0.57 | 0.59 | 0.87 |
+| | random ×3 | 15 | 0.37–0.64 | 0.21–0.63 | 0.01–0.51 | 0.03–0.79 |
+
+1. **MMLU is carried by the pre-reader linear layers.** Keeping only the linear layers upstream of
+   the first reader leaves MMLU at the intact level in all four models:
+   - 0.8B / G1b / Gtiny / 9B: 0.54 / 0.59 / 0.71 / 0.73, against intact 0.51 / 0.61 / 0.72 / 0.69.
+   - Same-size PPL-ranked sets: 0.26 / 0.27 / 0.49 / 0.57.
+   - Random sets: 0.21–0.63. Knowledge declines to about the same level either way. This is GnA's MMLU result
+   restated for the linear layers of a hybrid: the linear layers the retrieval circuit uses are
+   the ones MMLU needs, and all linear layers downstream of the reader can become constants.
+2. **Real-document recall follows the greedy circuit set at small k**, in the three models up to
+   1B active parameters (not 9B, below). FDA/SWDE:
+   - 0.8B: 0.64 / 0.67 vs 0.39 / 0.58
+   - G1b: 0.38 / 0.65 vs 0.03 / 0.29
+   - Gtiny: 0.25 / 0.70 vs 0.08 / 0.34
+
+   Knowledge is equal or better than the PPL-ranked set in every case.
+3. **Limits.**
+   - At k = 12 in 0.8B, FDA does not separate the sets (pre-reader 0.73, PPL-ranked 0.77, one
+     random set 0.74).
+   - In Gtiny the fixed rule loses FDA/SWDE, where the PPL-ranked set of 23 keeps them. The
+     generation tasks use the post-reader layers that Gtiny's greedy set also keeps.
+   - Minimal sets selected on the dictionary task do not keep MMLU at small k (0.25–0.45).
+   - **9B does not separate on lm-eval.** Its 9-layer greedy set wins on the dictionary suite
+     (0.97 vs 0.67 PPL-ranked, 0.00 random). On MMLU, FDA and SWDE it is level with or below
+     same-size baselines (0.25 / 0.26 / 0.75 vs PPL-ranked 0.32 / 0.31 / 0.71). At k = 15 the
+     rule wins on MMLU but trails on FDA/SWDE. This is the scale redundancy of Part XVI: at 9B
+     later readers rebuild the query, so which pre-reader layers survive matters less for
+     natural recall.
+
+**Efficiency.** A GDN mixer in 0.8B is 10.5 M parameters (all 18: 190 M, 25 % of the model), and its
+state is 16 × 128 × 128 floats. The 8-layer hybrid drops 105 M parameters (14 %) and 56 % of the
+recurrent state. The 12-layer rule drops 63 M (8 %) and 33 %. In Granite-1B a Mamba-2 mixer is
+14.6 M (all 36: 527 M, 36 %). The 15-layer set drops 307 M (21 %) and 58 % of the state; the
+23-layer rule drops 190 M (13 %) and 36 %. Each removed mixer leaves one constant vector.
+
+## Reading
+
+1. **The circuit tells you which linear layers a hybrid can do without.** Every linear layer
+   downstream of the first reader can be replaced by a constant, with no training, while
+   dictionary retrieval and KV-retrieval stay at the intact level (0.8B, 9B; G1b 0.87), and so
+   does MMLU (all four models). A greedy search that knows nothing about the circuit lands on
+   the Bind → feeders → Query path, and in 0.8B keeps 8 of 18 linear layers (9B: 9 of 24).
+2. **Perplexity is the wrong guide.** The layers that matter most for perplexity are not the ones
+   retrieval needs. Same-size PPL-ranked hybrids have similar or better perplexity and knowledge,
+   but lose the dictionary task in all four models. In the three ≤ 1B-active models they also
+   lose MMLU and FDA/SWDE. In 9B they hold natural recall (see Limits in §5).
+3. **Training-free has limits:**
+   - The two circuit blocks alone (Bind + Query) are not enough without their feeders.
+   - Knowledge-heavy scores fall, as in GnA.
+   - Gtiny needs two post-reader layers.
+
+**Caveats.**
+- One seed per configuration (random baselines: 5 / 3 seeds).
+- lm-eval limits: 500 per knowledge task, 10 per MMLU subject, 200 for FDA/SWDE, so differences
+  below about 0.05 are not resolved.
+- The greedy selection uses the dictionary dev set, so its dictionary numbers are optimistic. Its
+  KV/lm-eval numbers are not.
+- Mean removal needs one pass over WikiText to set the constants.
+- No recovery training was done. A distilled version of these hybrids is the natural next step.
+
+---
+
+# Part XX: transferring the circuit between families (paper exp 3)
+
+Scripts: `scripts/exp26_xfamily_query.py` (A, query vector), `scripts/exp27_xfamily_block.py`
+(B, query block), shared prompt material `src/xfam.py`; launchers `scripts/run_exp26.sh`,
+`scripts/run_exp27.sh`; results `results/exp26_xquery_*.json`, `results/exp27_xblock_*.json`;
+tables `scripts/summarize_exp25_27.py` → `results/exp25_27_summary.md`.
+
+Parts XVII–XVIII showed the same Bind–Query layout in Qwen3.5 (Gated DeltaNet) and Granite-4.0-H
+(Mamba-2). Here the circuit is moved *between* the families. The two residual streams have
+different widths (1024 / 4096 / 1536), tokenizers and bases, so everything that crosses is passed
+through linear maps fitted in closed form (ridge) on intact runs of both models. There is **no
+gradient training anywhere**. The inspiration is GnA's hybrid replacement (arXiv:2504.18574
+§5.4): swap one layer from another model in without fine-tuning, and see whether the capability
+that layer carries comes back.
+
+**Shared prompts.** 167 keys and 30 values that are single tokens, with and without a leading space,
+in all three tokenizers (`src/xfam.py`). Every model reads the same dictionary text, each wrapped in
+its own chat template. Keys are split in half with a fixed seed: **maps are fitted only on `K_fit`
+dictionaries and tested only on `K_test` dictionaries**, so no test key (queried or distractor)
+was ever seen by a map. Test n = 200. Query blocks and readers are those of Parts XVI–XVIII
+(0.8B G3 [12–14] → L15H5; 9B G4 [16–18] → L19H11; Granite G2 [16–24] → L25H1/H2).
+
+## A. The query vector (`exp26`)
+
+Two runs share one dictionary: the donor asks key A, the receiver (other family) asks key B.
+A ridge map f takes the donor's query-block write at the final token to the receiver's query-block
+write, fitted on 6,000 paired prompts. f(donor asks A) replaces the receiver's query-block write,
+at the final token only. `ansA` is the rate at which the receiver answers **A**, i.e. the donor's
+question.
+
+| donor → receiver | variant | in-family (Part XVII) | **cross-family** | reader attn on A | self-map keeps B | shuffled map | mean query |
+|---|---|---|---|---|---|---|---|
+| 0.8B → G1b | chat8 | 1.00 | **0.98** | 0.72 | 0.99 | 0.03 | 0.03 |
+| 0.8B → G1b | list8 | 0.97 | **0.97** | 0.76 | 0.99 | 0.04 | 0.04 |
+| 0.8B → G1b | rev8 | 0.92 | **0.87** | 0.36 | 0.98 | 0.01 | 0.01 |
+| 9B → G1b | chat8 | 1.00 | **0.98** | 0.74 | 0.99 | 0.02 | 0.03 |
+| 9B → G1b | list8 | 0.97 | **0.94** | 0.78 | 0.99 | 0.04 | 0.04 |
+| G1b → 0.8B | chat8 | 0.97 | **0.91** | 0.68 | 0.98 | 0.00 | 0.00 |
+| G1b → 0.8B | list8 | 1.00 | **0.96** | 0.67 | 0.99 | 0.04 | 0.04 |
+| G1b → 0.8B | rev8 | 0.98 | **0.93** | 0.46 | 0.92 | 0.04 | 0.04 |
+| Gtiny → 0.8B | chat8 | 0.97 | **0.91** | 0.69 | 0.96 | 0.00 | 0.00 |
+| Gtiny → G1b | chat8 | 1.00 | **1.00** | 0.74 | 0.99 | 0.02 | 0.03 |
+| G1b → 9B | chat8 | 0.92 | **0.73** | 0.41 | 0.99 | 0.00 | 0.00 |
+| G1b → 9B | list8 | 0.97 | **0.77** | 0.52 | 1.00 | 0.00 | 0.00 |
+| Gtiny → 9B | chat8 | 0.92 | **0.78** | 0.41 | 1.00 | 0.00 | 0.00 |
+| 0.8B → 9B (same family, other scale) | chat8 | 0.92 | **0.79** | 0.43 | 1.00 | 0.00 | 0.00 |
+| 9B → 0.8B (same family, other scale) | chat8 | 0.97 | **0.94** | 0.73 | 0.97 | 0.00 | 0.00 |
+
+A query built by one family, linearly re-expressed, is used by the other family's reader as its own
+query. The receiver answers the donor's question on keys the map never saw, at 0.73–1.00 against
+0.92–1.00 for the in-family transplant, and the reader's attention moves with it. The controls
+hold: mapping the donor's *own-question* run leaves the receiver on B (0.92–1.00), and a map
+fitted on shuffled pairs or the mean write does nothing (≤ 0.04). The weakest receiver is 9B
+(0.73–0.79), the model whose later readers rebuild the host's own query (Part XVI).
+
+**Is it the query block, or anything that knows the key?** With 6,000 fit prompts, maps from
+most donor blocks eventually steer the receiver as well: by the final token, blocks after the
+query block also carry the queried key. The donor's static input embedding of the key never does
+(≤ 0.40), so context matters. The discriminating measure is **how little data a block needs**,
+i.e. how close its geometry already is to the receiver's query. Rate at 25 paired prompts, and the
+fit size at which each source first reaches 0.8 (— = never):
+
+| donor → receiver | variant | query block @25 | best other block @25 | fit prompts to reach 0.8: query block / other blocks |
+|---|---|---|---|---|
+| 0.8B → G1b | chat8 | **0.83** | 0.62 (G2) | **25** / G2 100, G4 200, G5 400, G0/G1/emb — |
+| 0.8B → G1b | list8 | **0.81** | 0.47 | **25** / G2 100, G4 200, G5 400 |
+| 0.8B → G1b | rev8 | **0.54** | 0.34 | **100** / G4 800, G5 800, G2 3200 |
+| 9B → G1b | chat8 | **0.82** | 0.75 (G3) | **25** / G3 50, G5 100, G6 200, G2/G7 400 |
+| 9B → G1b | list8 | **0.79** | 0.64 | **50** / G3 100, G5 100, G2 200, G6/G7 800 |
+| 9B → 0.8B | chat8 | **0.52** | 0.45 | **50** / G3 100, G5 200, G6 400, G2/G7 800 |
+| G1b → 0.8B | chat8 | **0.59** | 0.11 (G3) | **100** / G3 400 |
+| G1b → 0.8B | list8 | **0.74** | 0.30 | **50** / G3 200 |
+| G1b → 0.8B | rev8 | **0.65** | 0.46 | **100** / G3 100 |
+| Gtiny → 0.8B | chat8 | **0.49** | 0.20 | **200** / G3 400 |
+| Gtiny → G1b | chat8 | **0.86** | 0.56 | **25** / G3 50, G1 800 |
+| G1b → 9B, Gtiny → 9B, 0.8B → 9B | chat8 (G1b also list8) | **0.22–0.32** | 0.03–0.06 | (9B receiver: only the query block approaches 0.8) |
+
+In **all 15 runs** the donor's query block is the best source at 25 prompts. It is also the first
+to reach 0.8, once tied (G1b → 0.8B `rev8`, with G3). Twenty-five dictionaries suffice to align
+the 0.8B query (G3) with Granite-1B's (0.83 on unseen keys). The block after the reader needs 8–16×
+more, and early blocks (G0, G1) never get there. Of everything a model computes about the queried
+key, the query block's write is the most linearly aligned with the other family's query.
+
+## B. The query block (`exp27`)
+
+GnA §5.4 across families. The receiver's query block is removed. In its place the donor's block
+runs on the receiver's own residual stream, mapped in and out:
+
+`h_out = h_in + M_out( B_donor(M_in(h_in)) − M_in(h_in) )`
+
+- `M_in` maps the receiver residual to the donor residual at the block input. It is fitted on tokens
+  that cover identical characters in both tokenisations (1,500 `K_fit` dictionaries + 200 WikiText
+  chunks).
+- `B_donor` is the donor's decoder layers run unchanged, over the whole sequence.
+- `M_out` maps the donor block's write to the intact receiver's block write (h_out − h_in), at every
+  position. It is fitted with `B_donor` running on `M_in(h_in)`, as at test.
+
+Controls:
+- **bypass:** the best position-wise linear stand-in, `h_out = h_in + M(h_in)`, with no token mixing.
+- **every other donor block,** stitched in the same way.
+- **the donor's query block with its linear mixers zeroed** (MLPs only).
+
+Accuracy is full-vocabulary argmax on 200 `K_test` prompts; "attn" is the receiver reader's
+attention on the target.
+
+| donor → receiver | variant | intact | block removed | bypass | **donor query block** (attn) | same, mixers zeroed | best other donor block |
+|---|---|---|---|---|---|---|---|
+| 0.8B G3 → G1b | chat8 | 1.00 | 0.01 | 0.24 | **0.92** (0.34) | 0.28 | 0.39 (G2) |
+| 0.8B G3 → G1b | list8 | 1.00 | 0.00 | 0.28 | **0.94** (0.55) | 0.26 | 0.34 |
+| 0.8B G3 → G1b | rev8 | 0.97 | 0.00 | 0.14 | **0.83** (0.24) | 0.14 | 0.26 |
+| 9B G4 → G1b | chat8 | 1.00 | 0.01 | 0.24 | **0.96** (0.50) | 0.38 | 0.79 (G3) |
+| G1b G2 → 0.8B | chat8 | 0.99 | 0.30 | 0.28 | **0.95** (0.46) | 0.28 | 0.32 |
+| G1b G2 → 0.8B | list8 | 1.00 | 0.18 | 0.31 | **0.93** (0.39) | 0.29 | 0.34 |
+| G1b G2 → 0.8B | rev8 | 1.00 | 0.15 | 0.10 | **0.77** (0.37) | 0.11 | 0.12 |
+| 9B G4 → 0.8B (same family) | chat8 | 0.99 | 0.30 | 0.28 | **0.99** (0.67) | 0.38 | 0.69 |
+| Gtiny G2 → 0.8B | chat8 | 0.99 | 0.30 | 0.28 | 0.54 (0.18) | 0.32 | 0.64 |
+| 0.8B G3 → 9B | chat8 | 1.00 | **1.00** | 0.98 | 1.00 | 0.96 | 0.98 |
+| G1b G2 → 9B | chat8 | 1.00 | **1.00** | 0.98 | 1.00 | 0.97 | 0.97 |
+| 0.8B G3 → Gtiny | chat8 | 1.00 | 0.07 | **0.95** | 0.97 | 0.95 | 0.98 |
+
+**Where the receiver needs its query block** (Qwen-0.8B and Granite-1B), the other family's query
+block restores retrieval: 0.92–0.96 on `chat8`/`list8`, 0.77–0.83 on `rev8`, from 0.00–0.30.
+Every control stays at the floor:
+- **Another block of the donor:** ≤ 0.39, except the query feeder next to it in 9B (G3, 0.79).
+- **The query block without its linear mixers:** 0.11–0.38.
+- **The bypass:** 0.10–0.31. That is despite fitting the missing write with R² 0.93: a linear
+  function of each position's own residual cannot make the query.
+
+The transplanted layers must *mix tokens*. What transfers is the linear-attention computation of
+the query block, and it works across Gated DeltaNet ↔ Mamba-2 in both directions.
+
+**Two receivers cannot test it**, for reasons exp 1 already exposed:
+- 9B does not need its G4 at all when accuracy is the measure (removed: 1.00; Part XVI redundancy).
+- In Granite-Tiny removal drops accuracy to 0.07, but the linear bypass alone already restores 0.95.
+  Its query-block contribution is position-local enough to be linear.
+
+**One donor fails:** Granite-Tiny's block into 0.8B (0.54, below its G3's 0.64), although Tiny's
+query *vector* transfers fine in A (0.91). Tiny's block contains the mixture-of-experts MLPs, whose
+routing sees mapped, off-distribution inputs. This is untested, and it is the one place where A
+and B disagree.
+
+## Seed replicates
+
+Seeds 1 and 2 redraw the key split (`K_fit` / `K_test`), the fit dictionaries and the test
+dictionaries (`scripts/run_exp26_27_seeds.sh`; `results/exp2{6,7}_*_seed{1,2}.json`):
+
+| experiment | seed 0 | seed 1 | seed 2 | mean ± sd |
+|---|---|---|---|---|
+| A: query vector, 0.8B → G1b (ansA) | 0.98 | 0.98 | 0.97 | 0.980 ± 0.004 |
+| A: query vector, G1b → 0.8B (ansA) | 0.91 | 0.86 | 0.94 | 0.903 ± 0.029 |
+| B: query block, 0.8B G3 → G1b (acc) | 0.92 | 0.94 | 0.95 | 0.938 ± 0.014 |
+| B: query block, G1b G2 → 0.8B (acc) | 0.95 | 0.93 | 0.90 | 0.925 ± 0.020 |
+
+Across the three seeds the B controls stay at the floor:
+
+| direction | block removed | best other donor block | query block, mixers zeroed | bypass |
+|---|---|---|---|---|
+| 0.8B → G1b | 0.01–0.02 | 0.28–0.39 | 0.18–0.28 | 0.20–0.24 |
+| G1b → 0.8B | 0.22–0.30 | 0.27–0.32 | 0.23–0.28 | 0.21–0.28 |
+
+## Reading
+
+1. **The query is shared across families up to a linear map.** A query formed by Gated DeltaNet
+   layers drives a Mamba-2 model's reader, and the reverse, on keys never used to fit the map.
+   The query block is the donor representation closest to the other family's query: 25–100
+   paired prompts, against 4–30× more for any other block.
+2. **The query block's computation transplants, GnA-style, across families.** Granite-1B without
+   its query block retrieves at 0.01. With Qwen-0.8B's three GDN layers in its place, linearly
+   stitched and never trained, it retrieves at 0.92–0.94 (`rev8` 0.83); the reverse gives
+   0.30 → 0.95. Other blocks, the same block without token mixing, and the best linear stand-in do
+   not.
+3. **What does not transfer is predictable from exp 1:** redundancy (9B), a query block that is
+   effectively position-local (Tiny as receiver), and the MoE model as a block donor.
+
+**Caveats.**
+- Three seeds for the headline pair (0.8B ↔ G1b, `chat8`); one seed elsewhere.
+- The ridge λ is chosen on held-out fit data.
+- `M_in` fits only the tokens whose character spans match (61–84 % of a prompt: 48–72 of
+  62–103). The wrapper tokens (Granite's system prompt) are extrapolated.
+- Attention is recorded at the `chat8` reader, even for `rev8`, where reading moves later.
+- The cross-family maps use a single dictionary template per run. Transfer across templates (fit
+  on `chat8`, test on `list8`) was not tested.
+
+---
+
+# Part XXI: the Bind side — sufficiency and transfer (completes paper exp 2 and exp 3)
+
+Scripts: `scripts/exp28_xfamily_circuit.py` (Bind-block and whole-circuit transplant),
+`scripts/exp29_bind_transplant.py` (token-level Bind swaps, in-family and cross-family); shared
+stitching code `src/stitch.py`; launcher `scripts/run_exp28_29.sh`. Results
+`results/exp28_xcircuit_*.json`, `results/exp29_bind_*.json`. `chat8`, test keys (and, in exp29,
+values) never seen when fitting any map; n = 200 test prompts.
+
+Parts XVII and XX tested sufficiency and transfer for the **Query** stage only. Here the same two
+tests are run on the **Bind** stage, and on the two stages together.
+
+## A. Is the Bind block's write sufficient to re-bind an entry? (exp29, in-family)
+
+Two token-level swaps, host and donor prompts of identical length:
+- **value swap:** the host has entry t's value exchanged with entry d's. Write the donor's
+  (unswapped) Bind-block output at t's *value* token. Success = the host answers t's original value.
+- **key swap:** the donor has the keys of t and d exchanged. Write its Bind output at both *key*
+  tokens. Success = the host, asked about key t, answers d's value.
+
+Two controls: patch only the token **embedding** at those positions (Bind then recomputed), and
+patch another block's write instead of Bind's.
+
+| host | swap | Bind write | embedding only | any other block | no patch |
+|---|---|---|---|---|---|
+| Qwen3.5-0.8B | value / key | **1.00 / 1.00** | 1.00 / 1.00 | ≤ 0.00 | 0.00 |
+| Qwen3.5-9B | value / key | **0.98 / 0.98** | 1.00 / 1.00 | ≤ 0.00 | 0.00 |
+| Granite-1B | value / key | **0.00 / 0.00** | 1.00 / 1.00 | ≤ 0.00 | 0.00 |
+| Granite-Tiny | value / key | **0.10 / 0.01** | 0.99 / 1.00 | ≤ 0.01 | 0.00 |
+
+The information the Bind stage handles, which value sits at an entry and which key it is filed
+under, is **token identity**, and the token embedding alone carries all of it in every model.
+- **In Qwen,** the Bind write carries it too: layer 0's write dominates the residual stream (Part VI).
+- **In Granite,** the Bind write carries none of it. The identity reaches later layers through the
+  embedding left in the residual stream, and rewriting the Bind block's output does not override it.
+
+So Bind is "sufficient" only in the sense that an embedding patch is. It re-encodes identity; it
+does not compute a binding that exists nowhere else.
+
+## B. Does the Bind block transfer across families? (exp28 stage 1, exp29 cross-family)
+
+**Block transplant.** The receiver's Bind block is removed and a donor block is stitched in, as in
+Part XX-B.
+
+| donor → receiver | seeds | intact | Bind removed | **donor Bind block** | any other donor block | donor Bind, mixers zeroed | linear bypass |
+|---|---|---|---|---|---|---|---|
+| 0.8B → G1b | 3 | 1.00 | 0.00 | 0.99–1.00 | 0.98–1.00 | 0.97–0.99 | 0.98–0.99 |
+| 9B → G1b | 1 | 1.00 | 0.00 | 0.99 | 0.99–1.00 | 0.99 | 0.98 |
+| G1b → 0.8B | 3 | 0.98–0.99 | 0.00 | 0.98–1.00 | 0.98–0.99 | 0.96–0.99 | 0.99–1.00 |
+| G1b → 9B | 1 | 1.00 | 0.00 | 1.00 | 0.98–0.99 | 0.99 | 1.00 |
+
+Removing the Bind block destroys retrieval in every receiver (0.00, 9B included). But **anything**
+put in its place restores it: the donor's Bind block, any other donor block, the donor's Bind block
+without its token mixing, or a per-position linear map. For retrieval, the Bind slot needs a
+position-local re-encoding of each token and nothing more. This is the opposite of the Query slot
+(Part XX-B: only the donor's query block, with its mixing, restores it).
+
+The Bind block's linear attention does matter for **language modelling**. WikiText perplexity of
+the same receivers (intact G1b 14, 0.8B 21, 9B 11):
+
+| donor → receiver | donor Bind block | other donor blocks | donor Bind, mixers zeroed | linear bypass |
+|---|---|---|---|---|
+| 0.8B → G1b | **32–33** | 37–77 | 229–251 | 46–48 |
+| 9B → G1b | 25 | 23–27 | 66 | 48 |
+| G1b → 0.8B | **28** | 37–44 | 116–119 | 71–73 |
+| G1b → 9B | **19** | 24–29 | 87 | 45 |
+
+The donor's own Bind block is the best stand-in for general text (except 9B → G1b, a tie), and
+without its token mixing it is by far the worst. Bind's linear attention is local context for
+prediction, not information retrieval needs.
+
+**Token-level transfer (exp29).** Map the donor's Bind write at a value/key token into the
+receiver's Bind write at the same token, fitted on aligned tokens of fit dictionaries and WikiText,
+with test keys and values unseen. Compare with the same map from the donor's *static embedding*.
+
+| donor → host | swap | Bind write, mapped | static embedding, mapped | shuffled map / mean |
+|---|---|---|---|---|
+| G1b → 0.8B | value / key | 0.81 / 0.74 | **1.00 / 0.95** | 0.04–0.05 |
+| G1b → 9B | value / key | 0.55 / 0.34 | 0.51 / 0.42 | 0.00 |
+| 0.8B, 9B → G1b; 0.8B → Gtiny | both | 0.00–0.13 | 0.00–0.10 | ≤ 0.02 |
+
+Into Qwen, the Bind write transfers, but a map from the donor's context-free embedding does as well
+or better. Into Granite nothing transfers at the Bind block, since not even the host's own Bind
+write is sufficient there (A). What crosses families at the Bind stage is lexical identity, not a
+computation.
+
+## C. The whole circuit (exp28 stage 2)
+
+The receiver's Bind **and** Query blocks are both replaced. Bind is stitched from the donor's Bind
+block (or the linear bypass). The Query-stage maps are fitted with that Bind replacement already in
+place.
+
+| donor → receiver | seeds | **donor Bind + donor Query** (reader attn) | donor Bind + Query mixers zeroed | donor Bind + bypass Query | donor Bind + Query removed | bypass Bind + donor Query |
+|---|---|---|---|---|---|---|
+| 0.8B → G1b | 3 | **0.90 ± 0.02** (0.32–0.35) | 0.19–0.23 | 0.17–0.23 | 0.01 | 0.85–0.92 |
+| 9B → G1b | 1 | **0.92** (0.44) | 0.28 | 0.26 | 0.03 | 0.91 |
+| G1b → 0.8B | 3 | **0.95 ± 0.02** (0.51) | 0.24–0.32 | 0.23–0.31 | 0.23–0.28 | 0.93–0.97 |
+| G1b → 9B | 1 | 1.00 | 0.97 | 0.99 | 0.99 | 0.99 (9B needs neither: redundancy) |
+
+Replacing both stages of the circuit with the other family's layers, stitched and untrained, keeps
+retrieval at 0.90–0.95 (9B → G1b 0.92). Whatever is in the Bind slot, success is decided by the
+Query slot: donor Query 0.85–0.97, anything else 0.01–0.46.
+
+## Reading
+
+1. **The circuit is asymmetric.**
+   - **Bind:** necessary everywhere (removal → 0.00), but what it provides is token identity,
+     re-encoded per position. The embedding alone re-binds an entry. Any block, or a linear map,
+     can fill its slot for retrieval. Across families it transfers no better than the static
+     embedding.
+   - **Query:** the only stage where linear attention performs a specific, transferable computation
+     (Parts XVII, XX). Only the donor's query layers, with their token mixing, can fill that slot.
+2. **Bind's linear attention serves language modelling, not retrieval.** Its token mixing is
+   dispensable for retrieval, but zeroing it multiplies the stitched receiver's perplexity 2.6–7.5×,
+   and the donor's own Bind block is the best stand-in.
+3. **The whole circuit transfers.** Both stages from the other family, with no training, retrieve at
+   0.90–0.95, and the result is carried entirely by the Query stage.
+
+**Caveats.**
+- Three seeds for 0.8B ↔ G1b, one for the 9B pairs.
+- `chat8` only.
+- The key swap patches two positions and the value swap one.
+- In Granite the Bind write is defined as the mixer outputs of layers 0–4 (its MLPs recompute).
+
+---
+
+# Part XXII: the rank of the linear-attention memory, by circuit role
+
+Scripts: `scripts/state_rank.py` (dumps the singular values of every head's state) and
+`scripts/state_rank_report.py` (ranks, per-head CSV, heatmaps, markdown tables; effective rank and
+σ₁ share), adapted from LinearSwap `tools/state_rank.py` / `tools/state_rank_report.py`; circuit roles
+from `src/circuit.py`. Launcher `scripts/run_state_rank.sh`. Results `results/state_rank/<name>.json`,
+reports `results/state_rank/report_{dclm,longbench,dict,dict_end}.md`, per-head CSVs alongside,
+figures `figures/state_rank{,_longbench,_dict,_dict_end}.png`.
+
+**What is measured.** Each head's recurrent state is a matrix: Gated DeltaNet key × value = 128 × 128
+(Qwen3.5); Mamba-2 head × state = 64 × 128 (Granite-4.0-H, so full rank is 64). It is read from the HF
+cache and summarised by its median over the batch:
+- **numerical rank:** singular values above n·eps_fp32·σ_max;
+- **significant rank:** singular values above 1 % of σ_max;
+- **effective rank:** exp of the entropy of σ/Σσ;
+- **σ₁ share:** σ₁²/Σσ².
+
+Following the LinearSwap blog, the numerical rank is close to uninformative (almost every state
+eventually counts as full rank). The effective rank is the measure to read.
+
+**Sources** (fp32, all four models):
+- **DCLM:** 8 packed sequences, documents separated by each model's own EOS. This is LinearSwap's setting
+  and reads states at 64 / 128 / 256 / 1K / 4K / 16K tokens. Each 16K window holds 11–19 documents.
+- **LongBench:** 8 single long documents (LongBench-v2, Single-Document QA, English) at the same marks.
+- **dict:** the 100 `chat16` dictionary prompts (≈94 tokens), read at the end of the dictionary and at
+  the final token.
+
+## 1. Effective rank by circuit role
+
+Median effective rank / median σ₁ share:
+
+| model | source (mark) | **Bind** | feeder | **Query** | after the reader |
+|---|---|---|---|---|---|
+| 0.8B | DCLM (16K) | **5.1 / 0.96** | 10.5 / 0.88 | 7.7 / 0.87 | 8.1 / 0.87 |
+| | LongBench (16K) | **5.7 / 0.94** | 12.2 / 0.85 | 9.8 / 0.85 | 10.9 / 0.82 |
+| | dict (final) | **3.3 / 0.97** | 6.1 / 0.92 | 5.9 / 0.87 | 6.1 / 0.89 |
+| 9B | DCLM (16K) | **2.3 / 0.98** | 14.0 / 0.82 | 17.9 / 0.78 | 11.9 / 0.84 |
+| | LongBench (16K) | **2.4 / 0.98** | 17.8 / 0.78 | 21.8 / 0.72 | 19.1 / 0.77 |
+| | dict (final) | **1.9 / 0.98** | 9.8 / 0.86 | 9.6 / 0.81 | 9.4 / 0.82 |
+| G1b | DCLM (16K) | **2.7 / 0.96** | 3.6 / 0.95 | 3.3 / 0.96 | 2.4 / 0.97 |
+| | LongBench (16K) | **2.8 / 0.95** | 3.9 / 0.94 | 3.5 / 0.96 | 2.8 / 0.97 |
+| | dict (final) | **2.5 / 0.96** | 3.0 / 0.96 | 2.8 / 0.97 | 2.3 / 0.98 |
+| Gtiny | DCLM (16K) | **1.6 / 1.00** | 2.4 / 0.99 | 3.6 / 0.97 | 3.4 / 0.96 |
+| | LongBench (16K) | **1.6 / 1.00** | 2.5 / 0.99 | 3.7 / 0.97 | 4.0 / 0.95 |
+| | dict (final) | **1.6 / 1.00** | 2.0 / 0.99 | 3.3 / 0.97 | 3.0 / 0.97 |
+
+## 2. Rank against length (median effective rank over all states)
+
+| model | source | 64 | 128 | 256 | 1K | 4K | 16K |
+|---|---|---|---|---|---|---|---|
+| 0.8B | DCLM (packed) | 6.5 | 6.8 | 7.6 | 8.6 | 8.5 | 8.1 |
+| | LongBench (one document) | 6.3 | 7.2 | 7.6 | 8.1 | 9.2 | **10.2** |
+| 9B | DCLM | 10.2 | 11.1 | 11.9 | 13.0 | 12.4 | 11.5 |
+| | LongBench | 10.0 | 12.2 | 12.5 | 13.3 | 15.3 | **16.4** |
+| G1b | DCLM / LongBench | 3.0 / 3.2 | 3.3 / 3.2 | 3.4 / 3.3 | 3.6 / 3.2 | 3.1 / 3.5 | 3.0 / 3.2 |
+| Gtiny | DCLM / LongBench | 2.8 / 2.9 | 2.9 / 3.0 | 3.0 / 3.1 | 3.3 / 3.0 | 2.8 / 3.1 | 2.8 / 3.0 |
+
+## Reading
+
+1. **The Bind layers keep the lowest-rank memory, in every model and on every source.**
+   - Effective rank is 1.6–5.7, against 2.0–21.8 elsewhere.
+   - σ₁ carries 94–100 % of the energy, so the Bind state is close to one outer product.
+   - In 9B the gap is sixfold: 2.3 against 11.9–17.9 on DCLM.
+
+   This is the state-side picture of Part XXI. Bind's job for retrieval is a per-position
+   re-encoding of token identity; a linear map can stand in for it, and its token mixing is
+   dispensable for retrieval. Its recurrent memory accordingly holds almost a single direction.
+2. **The Query layers are not distinguished by memory rank.**
+   - In 9B they hold the highest-rank states on text (17.9 / 21.8).
+   - On the dictionary task they are level with the feeders (9.6 vs 9.8), and in 0.8B they sit
+     below them.
+
+   What the Query block contributes (Parts XVII, XX) is a computation at the final position, not a
+   larger memory. This is consistent with Part II, where the GDN state does not hold the binding.
+3. **The families differ by an order of magnitude.**
+   - Mamba-2 states carry an effective rank of about 3 out of 64 everywhere (σ₁ share 0.95–1.00).
+   - Gated DeltaNet carries 5–22 out of 128.
+   - Granite's numerical rank saturates almost immediately (thousands of states at 64 after
+     ~100 tokens), so for Granite only the effective rank is informative.
+4. **Length.** The plateau after ~1K tokens on packed DCLM (LinearSwap's setting, reproduced here:
+   0.8B 8.6 → 8.5 → 8.1) comes from switching documents.
+   - Within one long document, Qwen's effective rank is still rising at 16K: 0.8B +11 %, 9B +7 %
+     from 4K to 16K.
+   - Granite is flat on both sources.
+   - We stop at 16K. A 32K mark on LongBench would show where Qwen saturates. It does not affect the
+     role comparison above, which is the same at every source.
+5. **One dead head.** Granite-Tiny layer 12, head 24 has an exactly zero state on 7 of 8 sequences
+   (both sources). It is counted as rank 0.
+
+**Caveats.**
+- 8 sequences per text source (LinearSwap's setting) and 100 dictionary prompts.
+- Per-head medians.
+- Marks count each model's own tokens, so 16K covers slightly different text in Qwen and Granite.
+- Singular values are computed in fp32 LAPACK on the CPU. cuSOLVER's GPU path is pathologically slow
+  for Mamba-2's 64 × 128 states. CPU and GPU agree to 2e-5 σ_max, and numerical ranks are identical
+  to an fp64 reference.

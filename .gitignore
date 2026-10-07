@@ -1,3 +1,22 @@
+# --- Python ---
 __pycache__/
 *.pyc
+*.pyo
 .venv/
+.ipynb_checkpoints/
+
+# --- model weights (downloaded, 16 GB) ---
+models/
+
+# --- run output: stdout of every experiment, regenerable from run_all.sh ---
+# The data the paper cites lives in results/*.json; logs are the console trace.
+logs/
+results/
+# --- LaTeX build artefacts ---
+paper/
+
+# --- scratch / accidental ---
+nohup.out
+*.tmp
+*.swp
+.DS_Store
