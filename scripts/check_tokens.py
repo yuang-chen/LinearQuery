@@ -1,4 +1,4 @@
-import sys; sys.path.insert(0,'/user/yac/LinearAblation')
+import sys; sys.path.insert(0,'/mnt/yuang/LinearQuery')
 from transformers import AutoTokenizer
 from src.task import *
 tok=AutoTokenizer.from_pretrained(MODEL_PATH)

@@ -13,12 +13,12 @@ Same task, metrics and zero-ablation as Part XVI (chat8, 100 items, acc and gap)
 """
 import sys, json, argparse, time, torch
 import numpy as np
-sys.path.insert(0, "/user/yac/LinearAblation")
+sys.path.insert(0, "/mnt/yuang/LinearQuery")
 from src.runner import Runner, hook_ctx
 from src.gen import make_items, batches
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--model", default="/user/yac/LinearSwap/models/Qwen3.5-0.8B")
+ap.add_argument("--model", default="/mnt/yuang/gdn2-in-place/models/Qwen3.5-0.8B")
 ap.add_argument("--tag", default="0.8B")
 ap.add_argument("--variant", default="chat8")
 ap.add_argument("--group_size", type=int, default=3)

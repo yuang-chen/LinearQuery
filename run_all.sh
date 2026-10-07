@@ -3,8 +3,8 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-PY=/user/yac/LinearSwap/.venv/bin/python        # torch 2.9.1, transformers 5.17.0, fla 0.6.0
-PLOT=/user/miniconda3/envs/nha/bin/python       # matplotlib only (the venv above has none)
+PY=/mnt/yuang/gdn2-in-place/.venv/bin/python        # torch 2.9.1, transformers 5.17.0, fla 0.6.0
+PLOT=/mnt/yuang/LinearQuery/.venv-plot/bin/python       # matplotlib only (the venv above has none)
 export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
 mkdir -p results figures logs
 
@@ -95,19 +95,19 @@ done
 
 # 21b. same battery on Qwen3.5-9B, then list8/rev8 q.k split at their top readers
 bash scripts/run_exp21_9b.sh
-$PY scripts/exp21_generalize.py --model /public/jyh/models/Qwen3.5-9B --tag 9B-L19H15 --variant list8 --reader 19,15 --qk_groups 1,2,3,4       2>&1 | tee logs/exp21/9B-L19H15_list8.log
-$PY scripts/exp21_generalize.py --model /public/jyh/models/Qwen3.5-9B --tag 9B-L27H1  --variant list8 --reader 27,1  --qk_groups 1,2,3,4,5,6   2>&1 | tee logs/exp21/9B-L27H1_list8.log
-$PY scripts/exp21_generalize.py --model /public/jyh/models/Qwen3.5-9B --tag 9B-L27H1  --variant rev8  --reader 27,1  --qk_groups 1,2,3,4,5,6   2>&1 | tee logs/exp21/9B-L27H1_rev8.log
-$PY scripts/exp21_generalize.py --model /public/jyh/models/Qwen3.5-9B --tag 9B-L23H12 --variant rev8  --reader 23,12 --qk_groups 1,2,3,4,5     2>&1 | tee logs/exp21/9B-L23H12_rev8.log
+$PY scripts/exp21_generalize.py --model /mnt/yuang/models/Qwen3.5-9B --tag 9B-L19H15 --variant list8 --reader 19,15 --qk_groups 1,2,3,4       2>&1 | tee logs/exp21/9B-L19H15_list8.log
+$PY scripts/exp21_generalize.py --model /mnt/yuang/models/Qwen3.5-9B --tag 9B-L27H1  --variant list8 --reader 27,1  --qk_groups 1,2,3,4,5,6   2>&1 | tee logs/exp21/9B-L27H1_list8.log
+$PY scripts/exp21_generalize.py --model /mnt/yuang/models/Qwen3.5-9B --tag 9B-L27H1  --variant rev8  --reader 27,1  --qk_groups 1,2,3,4,5,6   2>&1 | tee logs/exp21/9B-L27H1_rev8.log
+$PY scripts/exp21_generalize.py --model /mnt/yuang/models/Qwen3.5-9B --tag 9B-L23H12 --variant rev8  --reader 23,12 --qk_groups 1,2,3,4,5     2>&1 | tee logs/exp21/9B-L23H12_rev8.log
 $PY scripts/summarize_exp21.py
 
 # 22. query transplant: is the query group's write sufficient to redirect retrieval (Part XVII)
 $PY scripts/exp22_query_transplant.py --tag 0.8B --variant chat8 2>&1 | tee logs/exp22_0.8B_chat8.log
 $PY scripts/exp22_query_transplant.py --tag 0.8B --variant list8 2>&1 | tee logs/exp22_0.8B_list8.log
 $PY scripts/exp22_query_transplant.py --tag 0.8B --variant rev8 --reader 19,6 2>&1 | tee logs/exp22_0.8B_rev8.log
-$PY scripts/exp22_query_transplant.py --model /public/jyh/models/Qwen3.5-9B --tag 9B --variant chat8 2>&1 | tee logs/exp22_9B_chat8.log
-$PY scripts/exp22_query_transplant.py --model /public/jyh/models/Qwen3.5-9B --tag 9B --variant list8 --reader 19,15 2>&1 | tee logs/exp22_9B_list8.log
-$PY scripts/exp22_query_transplant.py --model /public/jyh/models/Qwen3.5-9B --tag 9B --variant rev8  --reader 27,1  2>&1 | tee logs/exp22_9B_rev8.log
+$PY scripts/exp22_query_transplant.py --model /mnt/yuang/models/Qwen3.5-9B --tag 9B --variant chat8 2>&1 | tee logs/exp22_9B_chat8.log
+$PY scripts/exp22_query_transplant.py --model /mnt/yuang/models/Qwen3.5-9B --tag 9B --variant list8 --reader 19,15 2>&1 | tee logs/exp22_9B_list8.log
+$PY scripts/exp22_query_transplant.py --model /mnt/yuang/models/Qwen3.5-9B --tag 9B --variant rev8  --reader 27,1  2>&1 | tee logs/exp22_9B_rev8.log
 
 # 23. second family: IBM Granite 4.0 H battery + transplant (Part XVIII)
 hf download ibm-granite/granite-4.0-h-1b   --local-dir models/granite-4.0-h-1b
@@ -120,3 +120,26 @@ for t in "G1b models/granite-4.0-h-1b" "Gtiny models/granite-4.0-h-tiny"; do
 done
 $PY scripts/exp22_query_transplant.py --model models/granite-4.0-h-1b   --tag G1b   --variant rev8 --group_size 0 --reader 35,6 2>&1 | tee logs/exp22_G1b_rev8.log
 $PY scripts/exp22_query_transplant.py --model models/granite-4.0-h-tiny --tag Gtiny --variant rev8 --group_size 0 --reader 35,1 2>&1 | tee logs/exp22_Gtiny_rev8.log
+
+# 25. paper exp 2: training-free minimal hybrid, GnA-style (README Part XIX)
+mkdir -p logs/exp25
+$PY scripts/exp25_minimal.py --tag 0.8B                                           2>&1 | tee logs/exp25/0.8B.log
+$PY scripts/exp25_minimal.py --tag G1b   --model models/granite-4.0-h-1b          2>&1 | tee logs/exp25/G1b.log
+$PY scripts/exp25_minimal.py --tag Gtiny --model models/granite-4.0-h-tiny        2>&1 | tee logs/exp25/Gtiny.log
+$PY scripts/exp25_minimal.py --tag 9B    --model /mnt/yuang/models/Qwen3.5-9B    2>&1 | tee logs/exp25/9B.log
+#     (9B was finished in parallel: scripts/exp25c_shard.py --tag 9B --shard i/8, then --merge)
+$PY scripts/exp25b_lmeval_matched.py --tag 0.8B                                    2>&1 | tee logs/exp25/b_0.8B.log
+$PY scripts/exp25b_lmeval_matched.py --tag G1b   --model models/granite-4.0-h-1b   2>&1 | tee logs/exp25/b_G1b.log
+$PY scripts/exp25b_lmeval_matched.py --tag Gtiny --model models/granite-4.0-h-tiny 2>&1 | tee logs/exp25/b_Gtiny.log
+
+# 26-27. paper exp 3: Qwen <-> Granite query-vector transfer and stitched query-block transplant (Part XX)
+bash scripts/run_exp26.sh
+bash scripts/run_exp27.sh
+bash scripts/run_exp26_27_seeds.sh
+$PY scripts/summarize_exp25_27.py
+
+# 28-29. Bind side: Bind-block / whole-circuit transplant and token-level Bind swaps (Part XXI)
+bash scripts/run_exp28_29.sh
+
+# memory-state rank by circuit role (Part XXII)
+bash scripts/run_state_rank.sh            # DCLM + LongBench + dictionary, four models, then the reports

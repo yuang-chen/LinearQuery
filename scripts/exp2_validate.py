@@ -8,7 +8,7 @@ Checks
       recurrent state that position t writes -- only a state patch does.
 """
 import sys, json, argparse, torch
-sys.path.insert(0, "/user/yac/LinearAblation")
+sys.path.insert(0, "/mnt/yuang/LinearQuery")
 from src.task import make_examples
 from src.runner import Runner, OutPatch, Capture, hook_ctx
 from src.positions import token_positions

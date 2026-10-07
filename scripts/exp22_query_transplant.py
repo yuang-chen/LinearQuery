@@ -20,14 +20,14 @@ controls for the query-building one.
 """
 import sys, json, argparse, time, torch
 import numpy as np
-sys.path.insert(0, "/user/yac/LinearAblation")
+sys.path.insert(0, "/mnt/yuang/LinearQuery")
 from src.runner import Runner, hook_ctx
 from src.qkv import AttnWeights
 from src.gen import Builder, chat_wrap
 from src.task import KEY_WORDS, VALUE_WORDS
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--model", default="/user/yac/LinearSwap/models/Qwen3.5-0.8B")
+ap.add_argument("--model", default="/mnt/yuang/gdn2-in-place/models/Qwen3.5-0.8B")
 ap.add_argument("--tag", default="0.8B")
 ap.add_argument("--variant", default="chat8", help="chat8 | list8 | rev8")
 ap.add_argument("--reader", default="", help="reader head 'L,H' (default: from the exp21 run)")

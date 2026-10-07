@@ -11,7 +11,7 @@ The resulting recovery is the effect that reaches the answer *through head h* an
 the final position to the source position (supplementary evidence only).
 """
 import sys, json, argparse, torch
-sys.path.insert(0, "/user/yac/LinearAblation")
+sys.path.insert(0, "/mnt/yuang/LinearQuery")
 from src.task import make_examples
 from src.runner import Runner, OutPatch, Capture, HeadPatch, hook_ctx
 from src.qkv import ProjPatch, ProjCapture, AttnWeights

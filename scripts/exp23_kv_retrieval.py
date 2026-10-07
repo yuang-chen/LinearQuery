@@ -25,11 +25,11 @@ every softmax layer on four models.
 """
 import sys, json, argparse, time, random, torch
 import numpy as np
-sys.path.insert(0, "/user/yac/LinearAblation")
+sys.path.insert(0, "/mnt/yuang/LinearQuery")
 from src.runner import Runner
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--model", default="/user/yac/LinearSwap/models/Qwen3.5-0.8B")
+ap.add_argument("--model", default="/mnt/yuang/gdn2-in-place/models/Qwen3.5-0.8B")
 ap.add_argument("--tag", default="0.8B")
 ap.add_argument("--pairs", default="20", help="dictionary sizes, comma separated (theirs: 10,15,...,50)")
 ap.add_argument("--n", type=int, default=1000, help="samples per configuration (theirs: 1000)")

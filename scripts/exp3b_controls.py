@@ -6,7 +6,7 @@
   out@query / @final : GDN output patches on the query side, to catch query-formation writers
 """
 import sys, json, argparse, torch
-sys.path.insert(0, "/user/yac/LinearAblation")
+sys.path.insert(0, "/mnt/yuang/LinearQuery")
 from src.task import make_examples
 from src.runner import Runner, OutPatch, Capture, hook_ctx
 from src.harness import group_examples, recovery

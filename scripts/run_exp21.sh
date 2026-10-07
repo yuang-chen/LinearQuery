@@ -1,8 +1,8 @@
 #!/bin/bash
 # Generalisation battery (Part XVI): 10 task variants x 2 model sizes, spread over GPUs 0-5.
-cd /user/yac/LinearAblation
-PY=/user/yac/LinearSwap/.venv/bin/python
-M9=/public/jyh/models/Qwen3.5-9B
+cd /mnt/yuang/LinearQuery
+PY=/mnt/yuang/gdn2-in-place/.venv/bin/python
+M9=/mnt/yuang/models/Qwen3.5-9B
 mkdir -p logs/exp21 results/exp21
 run() {  # gpu tag model variants...
   local gpu=$1 tag=$2 model=$3; shift 3

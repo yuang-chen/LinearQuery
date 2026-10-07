@@ -18,7 +18,7 @@ is chance), which still separates conditions when accuracy is at ceiling.
 """
 import sys, json, argparse, math, torch
 import numpy as np
-sys.path.insert(0, "/user/yac/LinearAblation")
+sys.path.insert(0, "/mnt/yuang/LinearQuery")
 from transformers import DynamicCache
 from src.runner import Runner, hook_ctx
 from src.task import make_examples, KEY_WORDS

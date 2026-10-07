@@ -24,7 +24,7 @@ Readouts:
 """
 import sys, json, argparse, numpy as np, torch
 import torch.nn.functional as F
-sys.path.insert(0, "/user/yac/LinearAblation")
+sys.path.insert(0, "/mnt/yuang/LinearQuery")
 from sklearn.linear_model import LogisticRegression
 from sklearn.decomposition import PCA
 from sklearn.model_selection import cross_val_score

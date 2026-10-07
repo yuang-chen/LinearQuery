@@ -13,7 +13,7 @@ C. Head resolution for the strongest softmax layer (per-head o_proj input patche
 D. Q vs K vs V localisation for the strongest head.
 """
 import sys, json, argparse, torch
-sys.path.insert(0, "/user/yac/LinearAblation")
+sys.path.insert(0, "/mnt/yuang/LinearQuery")
 from src.task import make_examples
 from src.runner import Runner, OutPatch, Capture, HeadPatch, hook_ctx
 from src.qkv import ProjPatch, ProjCapture

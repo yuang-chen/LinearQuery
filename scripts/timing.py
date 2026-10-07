@@ -1,4 +1,4 @@
-import sys, time, torch; sys.path.insert(0,'/user/yac/LinearAblation')
+import sys, time, torch; sys.path.insert(0,'/mnt/yuang/LinearQuery')
 from src.task import make_examples
 from src.runner import Runner
 for dt in (torch.bfloat16, torch.float32):

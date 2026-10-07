@@ -1,8 +1,8 @@
 #!/bin/bash
 # Part XVI generalisation battery on Qwen3.5-0.8B: 9 variants (long2048 excluded) over GPUs 0-7.
-cd /user/yac/LinearAblation
-PY=/user/yac/LinearSwap/.venv/bin/python
-M=/user/yac/LinearSwap/models/Qwen3.5-0.8B
+cd /mnt/yuang/LinearQuery
+PY=/mnt/yuang/gdn2-in-place/.venv/bin/python
+M=/mnt/yuang/gdn2-in-place/models/Qwen3.5-0.8B
 mkdir -p logs/exp21 results/exp21
 run() {  # gpu variants...
   local gpu=$1; shift

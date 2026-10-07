@@ -18,7 +18,7 @@ Full tables are in `README.md`; every number here comes from `logs/exp*.log` / `
 
 ## 1. Setting
 
-**Model.** Qwen3.5-0.8B (`/user/yac/LinearSwap/models/Qwen3.5-0.8B`), frozen, **float32**,
+**Model.** Qwen3.5-0.8B (`/mnt/yuang/gdn2-in-place/models/Qwen3.5-0.8B`), frozen, **float32**,
 eager attention where attention weights are read. 24 layers, hidden 1024. Gated DeltaNet (GDN)
 "linear attention" in all layers except **3, 7, 11, 15, 19, 23** (softmax, 8 query heads, 2 KV
 heads, head_dim 256, output-gated). Each GDN layer: 16 value heads × 128, a 4-tap causal
@@ -289,5 +289,5 @@ G4 + G5                                            carry the answer to the outpu
 
 Shared code: `src/task.py` (prompts), `src/positions.py` (token positions), `src/runner.py`
 (model, hooks, patches), `src/qkv.py` (Q/K/V patch/capture, attention weights), `src/harness.py`
-(position-aligned batches). Environment: `/user/yac/LinearSwap/.venv/bin/python`, one GPU
+(position-aligned batches). Environment: `/mnt/yuang/gdn2-in-place/.venv/bin/python`, one GPU
 (`CUDA_VISIBLE_DEVICES=0` was used). Full pipeline: `bash run_all.sh`.

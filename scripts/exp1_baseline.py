@@ -1,6 +1,6 @@
 """Step 1: task validation + baseline accuracy on clean and corrupted prompts."""
 import sys, json, argparse, torch
-sys.path.insert(0, "/user/yac/LinearAblation")
+sys.path.insert(0, "/mnt/yuang/LinearQuery")
 from src.task import make_examples, verify_single_token
 from src.runner import Runner
 from src.positions import token_positions

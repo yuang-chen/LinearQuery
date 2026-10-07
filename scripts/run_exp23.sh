@@ -1,10 +1,9 @@
 #!/bin/bash
 # Part XIX: the G&A paper's KV-Retrieval recipe (goombalab/Gather-and-Aggregate) on our models.
-cd /user/yac/LinearAblation
-export PYTHONPATH=/tmp/claude-0/-user-yac-LinearAblation/f39766c0-3fc9-412b-b0c2-b5aa9c83d9fc/scratchpad/pylibs
-PY=/user/yac/LinearSwap/.venv/bin/python
-Q08=/user/yac/LinearSwap/models/Qwen3.5-0.8B
-Q9=/public/jyh/models/Qwen3.5-9B
+cd /mnt/yuang/LinearQuery
+PY=/mnt/yuang/gdn2-in-place/.venv/bin/python
+Q08=/mnt/yuang/gdn2-in-place/models/Qwen3.5-0.8B
+Q9=/mnt/yuang/models/Qwen3.5-9B
 G1=models/granite-4.0-h-1b
 GT=models/granite-4.0-h-tiny
 GRID=10,15,20,25,30,35,40,45,50

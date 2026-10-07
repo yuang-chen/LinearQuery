@@ -2,7 +2,7 @@
 import random
 from dataclasses import dataclass
 
-MODEL_PATH = "/user/yac/LinearSwap/models/Qwen3.5-0.8B"
+MODEL_PATH = "/mnt/yuang/gdn2-in-place/models/Qwen3.5-0.8B"
 
 # Candidate keys (appear as " key" in the list) and values (appear as "value" right after '=').
 # Both lists were filtered so every word is a single token in the rendered context.

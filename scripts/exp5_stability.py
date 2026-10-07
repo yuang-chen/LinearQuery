@@ -10,7 +10,7 @@ Probes: writer sufficiency (GDN-0 out@value), the state-patch reference, the rea
 V-path (head-path V@src) and layer-level path block/open at the two reader layers.
 """
 import sys, json, argparse, statistics as st, torch
-sys.path.insert(0, "/user/yac/LinearAblation")
+sys.path.insert(0, "/mnt/yuang/LinearQuery")
 from src.task import make_examples, verify_single_token
 from src.runner import Runner, OutPatch, Capture, HeadPatch, hook_ctx
 from src.qkv import ProjPatch, ProjCapture

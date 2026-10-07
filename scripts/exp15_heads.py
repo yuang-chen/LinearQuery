@@ -18,7 +18,7 @@ contribution to the residual stream.
 import sys, json, argparse, itertools, torch
 import torch.nn.functional as F
 import numpy as np
-sys.path.insert(0, "/user/yac/LinearAblation")
+sys.path.insert(0, "/mnt/yuang/LinearQuery")
 from datasets import load_dataset
 from src.runner import Runner, hook_ctx, Capture
 from src.qkv import AttnWeights

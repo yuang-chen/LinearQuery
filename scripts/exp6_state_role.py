@@ -24,7 +24,7 @@ C. ROUTE ISOLATION.  Cut one route and see whether the task still gets solved.
 """
 import sys, json, argparse, statistics as st, torch
 import torch.nn.functional as F
-sys.path.insert(0, "/user/yac/LinearAblation")
+sys.path.insert(0, "/mnt/yuang/LinearQuery")
 from src.task import make_examples
 from src.runner import Runner, Capture, hook_ctx
 from src.qkv import ProjPatch, ProjCapture

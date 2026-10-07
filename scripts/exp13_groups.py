@@ -20,7 +20,7 @@ token mixer's output, which isolates the mixer from the layer-local feed-forward
 """
 import sys, json, argparse, random, torch
 import numpy as np
-sys.path.insert(0, "/user/yac/LinearAblation")
+sys.path.insert(0, "/mnt/yuang/LinearQuery")
 from datasets import load_dataset
 from src.runner import Runner, hook_ctx
 from src.task import make_examples

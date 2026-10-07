@@ -9,7 +9,7 @@ G1's write that points *against* it. Measured in the intact run (WikiText, all p
   cos(dM, w), ||dM|| / ||w||, and ||w + dM|| / ||w|| (how much of G1's write survives).
 """
 import sys, json, torch
-sys.path.insert(0, "/user/yac/LinearAblation")
+sys.path.insert(0, "/mnt/yuang/LinearQuery")
 from datasets import load_dataset
 from src.runner import Runner, hook_ctx, Capture
 

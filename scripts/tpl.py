@@ -1,6 +1,6 @@
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
-MP="/user/yac/LinearSwap/models/Qwen3.5-0.8B"
+MP="/mnt/yuang/gdn2-in-place/models/Qwen3.5-0.8B"
 tok=AutoTokenizer.from_pretrained(MP)
 m=AutoModelForCausalLM.from_pretrained(MP,dtype=torch.bfloat16).cuda().eval()
 tpls=[

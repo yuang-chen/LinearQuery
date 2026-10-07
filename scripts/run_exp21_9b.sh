@@ -1,9 +1,9 @@
 #!/bin/bash
 # Part XVI battery on Qwen3.5-9B: 9 variants (long2048 excluded) over GPUs 0-7.
 # Launches are staggered so the 36 GB fp32 loads do not all hit the disk at once.
-cd /user/yac/LinearAblation
-PY=/user/yac/LinearSwap/.venv/bin/python
-M=/public/jyh/models/Qwen3.5-9B
+cd /mnt/yuang/LinearQuery
+PY=/mnt/yuang/gdn2-in-place/.venv/bin/python
+M=/mnt/yuang/models/Qwen3.5-9B
 mkdir -p logs/exp21 results/exp21
 run() {  # gpu variants...
   local gpu=$1; shift

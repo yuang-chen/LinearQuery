@@ -1,8 +1,8 @@
 #!/bin/bash
 # Part XVIII: the same battery on IBM Granite 4.0 H (Mamba-2 + attention hybrid).
 # --group_size 0: a "group" is every linear layer since the previous softmax layer (5 or 9 here).
-cd /user/yac/LinearAblation
-PY=/user/yac/LinearSwap/.venv/bin/python
+cd /mnt/yuang/LinearQuery
+PY=/mnt/yuang/gdn2-in-place/.venv/bin/python
 mkdir -p logs/exp21 results/exp21
 run(){ local gpu=$1 tag=$2 model=$3; shift 3
   for v in "$@"; do

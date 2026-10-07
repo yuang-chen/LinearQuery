@@ -1,9 +1,8 @@
 #!/bin/bash
 # Part XIX, head sweeps for the two larger models (protocol: pairs=20, ablate each softmax head).
-cd /user/yac/LinearAblation
-export PYTHONPATH=/tmp/claude-0/-user-yac-LinearAblation/f39766c0-3fc9-412b-b0c2-b5aa9c83d9fc/scratchpad/pylibs
-PY=/user/yac/LinearSwap/.venv/bin/python
-Q9=/public/jyh/models/Qwen3.5-9B
+cd /mnt/yuang/LinearQuery
+PY=/mnt/yuang/gdn2-in-place/.venv/bin/python
+Q9=/mnt/yuang/models/Qwen3.5-9B
 GT=models/granite-4.0-h-tiny
 g=(0 3 4 5)
 for s in 1 2 3 4; do

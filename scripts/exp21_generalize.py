@@ -19,13 +19,13 @@ form (the retrieval question is then "which letter", not "which fact").
 """
 import sys, json, argparse, time, torch
 import numpy as np
-sys.path.insert(0, "/user/yac/LinearAblation")
+sys.path.insert(0, "/mnt/yuang/LinearQuery")
 from src.runner import Runner, hook_ctx
 from src.qkv import AttnWeights, ProjPatch, ProjCapture
 from src.gen import make_items, batches
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--model", default="/user/yac/LinearSwap/models/Qwen3.5-0.8B")
+ap.add_argument("--model", default="/mnt/yuang/gdn2-in-place/models/Qwen3.5-0.8B")
 ap.add_argument("--tag", default="0.8B")
 ap.add_argument("--variant", default="chat8")
 ap.add_argument("--n", type=int, default=200)

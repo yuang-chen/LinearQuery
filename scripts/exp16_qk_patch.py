@@ -17,7 +17,7 @@ attention on the source value.
 """
 import sys, json, argparse, torch
 import numpy as np
-sys.path.insert(0, "/user/yac/LinearAblation")
+sys.path.insert(0, "/mnt/yuang/LinearQuery")
 from src.runner import Runner, hook_ctx
 from src.qkv import AttnWeights, ProjPatch, ProjCapture
 from src.task import make_examples

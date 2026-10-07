@@ -19,7 +19,7 @@ Why?  Five candidate explanations, each with its own test:
 """
 import sys, json, argparse, random, re, torch
 import numpy as np
-sys.path.insert(0, "/user/yac/LinearAblation")
+sys.path.insert(0, "/mnt/yuang/LinearQuery")
 from datasets import load_dataset
 from transformers import DynamicCache
 from src.runner import Runner, hook_ctx

@@ -17,7 +17,7 @@ value / other values / <|im_start|> sink (clean prompts, final token).
 """
 import sys, json, argparse, torch
 import numpy as np
-sys.path.insert(0, "/user/yac/LinearAblation")
+sys.path.insert(0, "/mnt/yuang/LinearQuery")
 from datasets import load_dataset
 from src.runner import Runner, hook_ctx, Capture, OutPatch
 from src.qkv import AttnWeights

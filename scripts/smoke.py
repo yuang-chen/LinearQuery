@@ -1,6 +1,6 @@
 import torch, json, os
 from transformers import AutoTokenizer, AutoConfig, AutoModelForCausalLM
-MP = "/user/yac/LinearSwap/models/Qwen3.5-0.8B"
+MP = "/mnt/yuang/gdn2-in-place/models/Qwen3.5-0.8B"
 tok = AutoTokenizer.from_pretrained(MP)
 cfg = AutoConfig.from_pretrained(MP)
 print("layer_types:", cfg.text_config.layer_types)

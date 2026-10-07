@@ -19,7 +19,7 @@ Controls: decode the value's own identity (should be ~1.0), and the key of the P
 """
 import sys, json, argparse, torch
 import numpy as np
-sys.path.insert(0, "/user/yac/LinearAblation")
+sys.path.insert(0, "/mnt/yuang/LinearQuery")
 from src.runner import Runner, hook_ctx
 from src.qkv import ProjCapture
 from src.task import make_examples, KEY_WORDS, VALUE_WORDS

@@ -28,7 +28,7 @@ Generalisation: A is fitted on 80% of token types and R2 reported on the held-ou
 map is not merely memorising the types it saw.
 """
 import sys, json, argparse, torch
-sys.path.insert(0, "/user/yac/LinearAblation")
+sys.path.insert(0, "/mnt/yuang/LinearQuery")
 from datasets import load_dataset
 from src.runner import Runner, hook_ctx
 from src.task import make_examples
