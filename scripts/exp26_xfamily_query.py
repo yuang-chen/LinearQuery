@@ -53,10 +53,17 @@ ap = argparse.ArgumentParser()
 ap.add_argument("--donor", default="0.8B")
 ap.add_argument("--recv", default="G1b")
 ap.add_argument("--variant", default="chat8", help="chat8 | list8 | rev8")
-ap.add_argument("--n_fit", type=int, default=6000)
+ap.add_argument("--n_fit", type=int, default=2000,
+                help="paired fit prompts; learning curves saturate by ~1,600 for every pair tested (6,000 in the paper runs)")
 ap.add_argument("--n_test", type=int, default=200)
 ap.add_argument("--seed", type=int, default=0)
 ap.add_argument("--out", default="")
+ap.add_argument("--recv_query", default="", help="override the receiver's target layers, e.g. 16-24,26-34 "
+                "(several blocks: the donor's address is mapped into all of them at once)")
+ap.add_argument("--watch2", default="", help="a second receiver reader head 'L,H' whose attention is also recorded")
+ap.add_argument("--no_curve", action="store_true", help="skip the learning curves")
+ap.add_argument("--combine_src", default="", help="extra donor sources that concatenate several donor blocks, "
+                "e.g. '2+3' (block indices); evaluated like the single-block sources")
 a = ap.parse_args()
 OUT = a.out or f"results/exp26_xquery_{a.donor}_to_{a.recv}_{a.variant}.json"
 STYLE = {"list8": "list", "rev8": "rev"}.get(a.variant, "chat")
@@ -74,6 +81,9 @@ for M in (D, Y):
     M.model.config.get_text_config()._attn_implementation = "eager"
 D_BLOCKS = D.groups(SPEC[a.donor]["gs"])
 DQ, YQ = SPEC[a.donor]["query"], SPEC[a.recv]["query"]
+if a.recv_query:
+    YQ = [L for part in a.recv_query.split(",") for L in range(int(part.split("-")[0]), int(part.split("-")[-1]) + 1)]
+W2 = tuple(map(int, a.watch2.split(","))) if a.watch2 else None
 RL, RH = SPEC[a.recv]["reader"]
 log(f"donor {a.donor} blocks {D_BLOCKS} query {DQ} | receiver {a.recv} query {YQ} reader L{RL}H{RH}")
 
@@ -189,6 +199,9 @@ def donor_feats(bt, key):
     w = writes(D, [it["d" + key] for it in bt], D_ALL).cpu().double()
     per = {L: w[:, i * HD:(i + 1) * HD] for i, L in enumerate(D_ALL)}
     f = {f"G{bi}": torch.cat([per[L] for L in G], -1) for bi, G in enumerate(D_BLOCKS) if G}
+    for spec in filter(None, a.combine_src.split(",")):
+        idx = [int(i) for i in spec.split("+")]
+        f["+".join(f"G{i}" for i in idx)] = torch.cat([f[f"G{i}"] for i in idx], -1)
     ids = torch.tensor([kid(D, it, "ia" if key == "A" else "ib") for it in bt], device=D.device)
     f["emb"] = EMB(ids).double().cpu()
     return f
@@ -243,10 +256,16 @@ def recv_run(bt, vec=None):
     if vec is not None:
         hooks = [SetFinal(Y, L, vec[:, i * HY:(i + 1) * HY]) for i, L in enumerate(YQ)]
     aw = AttnWeights(Y.mixer(RL))
-    with hook_ctx(hooks + [aw]):
+    aw2 = [AttnWeights(Y.mixer(W2[0]))] if W2 else []
+    with hook_ctx(hooks + [aw] + aw2):
         lg = Y.model(ids, use_cache=False).logits[:, -1].float()
     at = aw.value[:, RH, -1].float()
     ent = bt[0]["yent"]
+    extra = {}
+    if W2:
+        at2 = aw2[0].value[:, W2[1], -1].float()
+        extra = dict(att2A=torch.stack([at2[j, ent[it["ia"]]].sum() for j, it in enumerate(bt)]).tolist(),
+                     att2B=torch.stack([at2[j, ent[it["ib"]]].sum() for j, it in enumerate(bt)]).tolist())
     ea = torch.stack([at[j, ent[it["ia"]]].sum() for j, it in enumerate(bt)])
     eb = torch.stack([at[j, ent[it["ib"]]].sum() for j, it in enumerate(bt)])
     aid = torch.tensor([it["aid"] for it in bt], device=lg.device)
@@ -254,7 +273,7 @@ def recv_run(bt, vec=None):
     am = lg.argmax(-1)
     return dict(ansA=(am == aid).float().tolist(), ansB=(am == bid).float().tolist(),
                 dAB=(lg.gather(1, aid[:, None]) - lg.gather(1, bid[:, None]))[:, 0].tolist(),
-                attA=ea.tolist(), attB=eb.tolist())
+                attA=ea.tolist(), attB=eb.tolist(), **extra)
 
 
 def evaluate(vec_fn):
@@ -272,7 +291,7 @@ def test_r2(f, src):
     return float(1 - ((P - T) ** 2).sum() / ((T - T.mean(0)) ** 2).sum())
 
 
-res = dict(meta=dict(donor=a.donor, recv=a.recv, variant=a.variant, donor_query=DQ, recv_query=YQ,
+res = dict(meta=dict(donor=a.donor, recv=a.recv, variant=a.variant, donor_query=DQ, recv_query=YQ, watch2=W2,
                      reader=[RL, RH], donor_blocks=D_BLOCKS, query_source=q_name, n_fit=len(Yf),
                      n_test=sum(len(b) for b in TB), k_fit=K_FIT, k_test=K_TEST, seed=a.seed))
 C = res["conditions"] = {}
@@ -294,12 +313,14 @@ for s in SOURCES:
 res["r2"] = {s: dict(val=maps[s][1], test=test_r2(maps[s][0], s)) for s in SOURCES}
 for k, c in C.items():
     log(f"{k:22s} ansA {c['ansA']:.2f}  ansB {c['ansB']:.2f}  D(A-B) {c['dAB']:+6.2f}  "
-        f"attA {c['attA']:.2f}  attB {c['attB']:.2f}")
+        f"attA {c['attA']:.2f}  attB {c['attB']:.2f}" + (f"  att2A {c['att2A']:.2f}  att2B {c['att2B']:.2f}" if W2 else ""))
 log("R^2 (val / test on unseen keys): " + "  ".join(
     f"{s}:{v['val']:.2f}/{v['test']:.2f}" for s, v in res["r2"].items()))
 os.makedirs("results", exist_ok=True)
 json.dump(res, open(OUT, "w"), indent=1)
 
+if a.no_curve:
+    log(f"wrote {OUT}"); sys.exit()
 # ------------------------------------------------------------------ learning curves
 # how many paired prompts does each donor source need before its mapped write steers the receiver?
 res["curve"] = {s: [] for s in SOURCES}

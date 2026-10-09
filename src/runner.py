@@ -8,6 +8,12 @@ from .task import MODEL_PATH
 class Runner:
     def __init__(self, model_path=MODEL_PATH, device="cuda:0", dtype=torch.bfloat16):
         self.tok = AutoTokenizer.from_pretrained(model_path)
+        # Tokenizers that prepend BOS to every string (Nemotron-H <s>, Llama-3 <|begin_of_text|>):
+        # drop it, so single-token checks see one token; prompts get the BOS from the rendered chat
+        # template where the template has one (Llama-3), as apply_chat_template would
+        if len(self.tok("x").input_ids) > len(self.tok("x", add_special_tokens=False).input_ids):
+            from tokenizers import processors
+            self.tok.backend_tokenizer.post_processor = processors.Sequence([])
         self.model = AutoModelForCausalLM.from_pretrained(model_path, dtype=dtype).to(device).eval()
         for p in self.model.parameters():
             p.requires_grad_(False)
@@ -37,11 +43,13 @@ class Runner:
     @property
     def n_linear_heads(self):
         """value heads of the linear mixer (GDN value heads / Mamba-2 heads)."""
-        return getattr(self.cfg, "linear_num_value_heads", None) or self.cfg.mamba_n_heads
+        return (getattr(self.cfg, "linear_num_value_heads", None) or getattr(self.cfg, "mamba_n_heads", None)
+                or self.cfg.mamba_num_heads)
 
     @property
     def linear_head_dim(self):
-        return getattr(self.cfg, "linear_value_head_dim", None) or self.cfg.mamba_d_head
+        return (getattr(self.cfg, "linear_value_head_dim", None) or getattr(self.cfg, "mamba_d_head", None)
+                or self.cfg.mamba_head_dim)
 
     def groups(self, size=3):
         """The linear layers feeding each softmax layer: the `size` immediately before it,
@@ -63,8 +71,9 @@ class Runner:
         L = self.layers[i]
         # attention layers of some families keep a `mamba` attribute set to None, so the
         # layer's own type decides which names are eligible
-        names = (("linear_attn", "mamba") if self.layer_types[i] in ("linear_attention", "mamba")
-                 else ("self_attn",))
+        # Nemotron-H keeps every block's module (Mamba, attention or MLP) under `mixer`
+        names = (("linear_attn", "mamba", "mixer") if self.layer_types[i] in ("linear_attention", "mamba")
+                 else ("self_attn", "mixer"))
         for name in names:
             m = getattr(L, name, None)
             if m is not None:

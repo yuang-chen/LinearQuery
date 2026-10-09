@@ -37,11 +37,17 @@ ap.add_argument("--mmlu_shots", type=int, default=5,
 ap.add_argument("--reader", default="", help="force the B6/B7 reader head, e.g. 19,6")
 ap.add_argument("--qk_groups", default="", help="GDN group indices for B6/B7, e.g. 4,3,2,1 "
                 "(default: the two groups before the reader, named Gr-1 / Gr-2)")
+ap.add_argument("--dtype", default="bf16", choices=["bf16", "fp32"],
+                help="compute precision (bf16 = release precision; matches fp32, see results/bf16/compare.md)")
+ap.add_argument("--stop_after", default="", help="B2 or B3: write the result and stop there")
+ap.add_argument("--unit", default="mixer", choices=["mixer", "layer"],
+                help="mixer: intervene on the linear layers' token-mixer output only (MLPs recomputed); "
+                     "layer: on the whole decoder layer, mixer and MLP (GnA's unit of removal)")
 a = ap.parse_args()
 OUT = f"results/exp21/{a.tag}_{a.variant}.json"
 
 t0 = time.time()
-R = Runner(model_path=a.model, dtype=torch.float32)
+R = Runner(model_path=a.model, dtype=torch.float32 if a.dtype == "fp32" else torch.bfloat16)
 R.model.config.get_text_config()._attn_implementation = "eager"
 tok = R.tok
 NH_GDN = R.n_linear_heads
@@ -54,8 +60,15 @@ print(f"[{a.tag} {a.variant}] groups {GROUPS}", flush=True)
 
 
 class Zero:
+    """Remove linear layer L: zero its mixer output, or with --unit layer skip the whole decoder
+    layer (output = input, so neither the mixer nor the MLP writes anything)."""
     def __init__(self, L): self.L = L
     def register(self):
+        if a.unit == "layer":
+            def fn(mod, args, kwargs, out):
+                h = kwargs["hidden_states"] if "hidden_states" in kwargs else args[0]
+                return (h,) + tuple(out[1:]) if isinstance(out, tuple) else h
+            return R.layers[self.L].register_forward_hook(fn, with_kwargs=True)
         return R.mixer(self.L).register_forward_hook(lambda m, a_, o: torch.zeros_like(o))
 
 
@@ -112,7 +125,7 @@ def evaluate(hooks_fn=lambda b: []):
     return dict(acc=ok / tot, gap=float(np.mean(gaps)), gap_sem=float(np.std(gaps) / len(gaps) ** .5))
 
 
-res = dict(meta=dict(model=a.model, tag=a.tag, variant=a.variant, n=N, n_scanned=n_scanned,
+res = dict(meta=dict(model=a.model, tag=a.tag, variant=a.variant, unit=a.unit, dtype=a.dtype, n=N, n_scanned=n_scanned,
                      tokens=B[0].pos["n"], groups=GROUPS))
 base = evaluate()
 res["baseline"] = base
@@ -125,11 +138,24 @@ for gi, G in enumerate(GROUPS):
 print("B2 groups   " + "  ".join(f"G{r['group']}:{r['acc']:.2f}/{r['gap']:+.1f}" for r in res["groups"]),
       flush=True)
 
+def stop_here():
+    import os
+    os.makedirs("results/exp21", exist_ok=True)
+    res["meta"].update(dtype=a.dtype, stopped_after=a.stop_after, seconds=time.time() - t0)
+    json.dump(res, open(OUT, "w"), indent=2)
+    print(f"wrote {OUT} (stopped after {a.stop_after})", flush=True)
+    sys.exit(0)
+
+
+if a.stop_after == "B2":
+    stop_here()
 res["layers"] = []
 for L in R.gdn_layers:
     r = evaluate(lambda b, L=L: [Zero(L)]); r.update(layer=L)
     res["layers"].append(r)
 print("B3 layers   " + "  ".join(f"L{r['layer']}:{r['acc']:.2f}" for r in res["layers"]), flush=True)
+if a.stop_after == "B3":
+    stop_here()
 
 
 # ------------------------------------------------------------------ B4 reader search

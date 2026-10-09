@@ -37,8 +37,10 @@ def chat_wrap(tok):
     tpl = getattr(tok, "chat_template", None) or ""
     if "<|im_start|>" in tpl:
         return CHAT_PRE, CHAT_POST
-    s = tok.apply_chat_template([{"role": "user", "content": "\x00"}], tokenize=False,
-                                add_generation_prompt=True)
+    msgs = [{"role": "user", "content": "\x00"}]
+    if "'reasoning': False" in tpl:          # Nemotron-H reasoning models: thinking off, "<think></think>"
+        msgs.insert(0, {"role": "system", "content": "{'reasoning': False}"})
+    s = tok.apply_chat_template(msgs, tokenize=False, add_generation_prompt=True)
     pre, post = s.split("\x00", 1)
     return pre, post
 LETTERS = "ABCD"

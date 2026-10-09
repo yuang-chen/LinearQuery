@@ -38,11 +38,21 @@ ap.add_argument("--out", default="")
 ap.add_argument("--n_pairs", type=int, default=8)
 ap.add_argument("--per_cfg", type=int, default=25)
 ap.add_argument("--seed", type=int, default=0)
+ap.add_argument("--combine", default="", help="transplant unions of groups instead of single groups, "
+                                             "e.g. '2+3,1+2+3' (group indices)")
+ap.add_argument("--watch", default="", help="extra softmax heads whose attention on A/B is also "
+                                           "recorded, e.g. '40,11;40,25'")
+ap.add_argument("--positions", default="final,question,dict,all")
+ap.add_argument("--dtype", default="bf16", choices=["bf16", "fp32"],
+                help="compute precision (bf16 = release precision; matches fp32, see results/bf16/compare.md)")
+ap.add_argument("--unit", default="mixer", choices=["mixer", "layer"],
+                help="mixer: intervene on the linear layers' token-mixer output only (MLPs recomputed); "
+                     "layer: on the whole decoder layer, mixer and MLP (GnA's unit of removal)")
 a = ap.parse_args()
 OUT = a.out or f"results/exp22_transplant_{a.tag}_{a.variant}.json"
 
 t0 = time.time()
-R = Runner(model_path=a.model, dtype=torch.float32)
+R = Runner(model_path=a.model, dtype=torch.float32 if a.dtype == "fp32" else torch.bfloat16)
 R.model.config.get_text_config()._attn_implementation = "eager"
 tok = R.tok
 GROUPS = ([[L] for L in map(int, a.layers.split(","))] if a.layers
@@ -56,6 +66,11 @@ else:                                   # reuse the reader exp21 found for this 
     d = json.load(open(f"results/exp21/{a.tag}_{a.variant}.json"))
     RL, RH = d["meta"]["reader"]
 NAMES = [f"L{G[0]}" if a.layers else f"G{i}" for i, G in enumerate(GROUPS)]
+if a.combine:                           # unions of groups, e.g. G2+G3 (the query blocks of two readers)
+    specs = [list(map(int, c.split("+"))) for c in a.combine.split(",")]
+    NAMES = ["+".join(f"G{i}" for i in sp) for sp in specs]
+    GROUPS = [sorted(L for i in sp for L in GROUPS[i]) for sp in specs]
+WATCH = [tuple(map(int, w.split(","))) for w in a.watch.split(";")] if a.watch else []
 print(f"[{a.tag} {a.variant}] groups {GROUPS}  reader L{RL}H{RH}", flush=True)
 
 
@@ -138,18 +153,38 @@ print(f"  {N} prompt pairs in {len(B)} batches, {B[0]['n']} tokens", flush=True)
 
 
 # ---------------------------------------------------------------- hooks
+def _layer_io(args, kwargs, out):
+    h = kwargs["hidden_states"] if "hidden_states" in kwargs else args[0]
+    return h, (out[0] if isinstance(out, tuple) else out)
+
+
 class Capture:
+    """Record layer L's write: its mixer output, or with --unit layer the whole decoder layer's
+    write to the residual stream (output - input = mixer write + MLP write)."""
     def __init__(self, L): self.L, self.value = L, None
     def register(self):
+        if a.unit == "layer":
+            def fn(m, args, kwargs, out):
+                h, o = _layer_io(args, kwargs, out)
+                self.value = (o - h).detach().clone()
+            return R.layers[self.L].register_forward_hook(fn, with_kwargs=True)
         def fn(m, args, out):
             self.value = (out[0] if isinstance(out, tuple) else out).detach().clone()
         return R.mixer(self.L).register_forward_hook(fn)
 
 
 class Transplant:
-    """Overwrite a mixer's output at `positions` with the donor run's output."""
+    """Overwrite layer L's write at `positions` with the donor run's: the mixer output, or with
+    --unit layer the whole layer's write (host input + donor's output - donor's input)."""
     def __init__(self, L, positions, donor): self.L, self.pos, self.donor = L, positions, donor
     def register(self):
+        if a.unit == "layer":
+            def fn(m, args, kwargs, out):
+                h, o = _layer_io(args, kwargs, out)
+                t = o.clone()
+                t[:, self.pos] = h[:, self.pos] + self.donor[:, self.pos].to(t.dtype)
+                return (t,) + tuple(out[1:]) if isinstance(out, tuple) else t
+            return R.layers[self.L].register_forward_hook(fn, with_kwargs=True)
         def fn(m, args, out):
             t = (out[0] if isinstance(out, tuple) else out).clone()
             t[:, self.pos] = self.donor[:, self.pos].to(t.dtype)
@@ -165,11 +200,14 @@ def pos_set(b, which):
 
 @torch.no_grad()
 def run(ids, b, hooks=()):
-    aw = AttnWeights(R.mixer(RL))
-    with hook_ctx(list(hooks) + [aw]):
+    """final-position logits and, per watched head (the reader first), attention on each entry"""
+    aws = {L: AttnWeights(R.mixer(L)) for L in {RL} | {L for L, _ in WATCH}}
+    with hook_ctx(list(hooks) + list(aws.values())):
         lg = R.model(ids, use_cache=False).logits[:, -1].float()
-    at = aw.value[:, RH, b["n"] - 1].float()
-    ent = torch.stack([at[:, e].sum(-1) for e in b["entry"]], 1)
+    ent = []
+    for L, H in [(RL, RH)] + WATCH:
+        at = aws[L].value[:, H, b["n"] - 1].float()
+        ent.append(torch.stack([at[:, e].sum(-1) for e in b["entry"]], 1))
     return lg, ent
 
 
@@ -179,14 +217,16 @@ def score(lg, ent, b):
     return dict(ansA=float((am == b["aid"]).float().mean()),
                 ansB=float((am == b["bid"]).float().mean()),
                 dAB=float((lg.gather(1, b["aid"][:, None]) - lg.gather(1, b["bid"][:, None])).mean()),
-                attA=float(ent[:, b["ia"]].mean()), attB=float(ent[:, b["ib"]].mean()))
+                attA=float(ent[0][:, b["ia"]].mean()), attB=float(ent[0][:, b["ib"]].mean()),
+                **{f"L{L}H{H}_{x}": float(e[:, b[i]].mean())
+                   for (L, H), e in zip(WATCH, ent[1:]) for x, i in (("A", "ia"), ("B", "ib"))})
 
 
 def agg(rows):
     return {k: float(np.mean([r[k] for r in rows])) for k in rows[0]}
 
 
-res = dict(meta=dict(model=a.model, tag=a.tag, reader=[RL, RH], groups=GROUPS, n=N,
+res = dict(meta=dict(model=a.model, tag=a.tag, reader=[RL, RH], groups=GROUPS, names=NAMES, watch=WATCH, dtype=a.dtype, unit=a.unit, n=N,
                      tokens=B[0]["n"], n_pairs=a.n_pairs, seed=a.seed))
 
 # ---------------------------------------------------------------- baselines
@@ -200,13 +240,17 @@ print(f"A1 run A (asks A): ansA {res['baseline']['run_A']['ansA']:.2f}  attA "
       f"A1 run B (asks B): ansA {res['baseline']['run_B']['ansA']:.2f}  ansB "
       f"{res['baseline']['run_B']['ansB']:.2f}  attA {res['baseline']['run_B']['attA']:.2f}  attB "
       f"{res['baseline']['run_B']['attB']:.2f}", flush=True)
+for L, H in WATCH:
+    print(f"A1 L{L}H{H} on A/B:  run A {res['baseline']['run_A'][f'L{L}H{H}_A']:.2f}/"
+          f"{res['baseline']['run_A'][f'L{L}H{H}_B']:.2f}   run B {res['baseline']['run_B'][f'L{L}H{H}_A']:.2f}/"
+          f"{res['baseline']['run_B'][f'L{L}H{H}_B']:.2f}", flush=True)
 
 # ---------------------------------------------------------------- transplants
 res["transplant"] = []
 for gi, G in enumerate(GROUPS):
     if not G:
         continue
-    for which in ("final", "question", "dict", "all"):
+    for which in a.positions.split(","):
         rows = []
         for b in B:
             caps = [Capture(L) for L in G]
@@ -219,7 +263,9 @@ for gi, G in enumerate(GROUPS):
         r = agg(rows); r.update(group=gi, layers=G, positions=which)
         res["transplant"].append(r)
         print(f"A2 {NAMES[gi]:>4s} {which:9s} ansA {r['ansA']:.2f}  ansB {r['ansB']:.2f}  "
-              f"D(A-B) {r['dAB']:+6.2f}  attA {r['attA']:.2f}  attB {r['attB']:.2f}", flush=True)
+              f"D(A-B) {r['dAB']:+6.2f}  attA {r['attA']:.2f}  attB {r['attB']:.2f}"
+              + "".join(f"  L{L}H{H} A/B {r[f'L{L}H{H}_A']:.2f}/{r[f'L{L}H{H}_B']:.2f}" for L, H in WATCH),
+              flush=True)
 
 res["meta"]["seconds"] = time.time() - t0
 import os
